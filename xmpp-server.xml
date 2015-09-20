@@ -1,0 +1,192 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<chapter xml:id="xmpp-server">
+  <title>XMPP (Jabber) server installation</title>
+
+  <sect1 id="xmpp-server-choice">
+    <title>Choosing an XMPP server</title>
+
+    <para>It is recommended that you use the <emphasis>Prosody</emphasis>
+    XMPP server.  It is widely used and relatively easy to configure.
+    Latest releases of <emphasis>Prosody</emphasis> are being made
+    available as packages on the major Linux distributions.</para>
+
+    <para>You can also use <emphasis>ejabberd</emphasis> or another
+    server if you prefer.</para>
+
+  </sect1>
+
+  <sect1 id="xmpp-server-prosody">
+    <title>Prosody XMPP server</title>
+
+    <sect2>
+      <title>Package installation</title>
+
+      <para>Install the package using the appropriate tool, as
+      demonstrated in <xref linkend="prosody-install-debian"/> and
+      <xref linkend="prosody-install-redhat"/>.</para>
+
+      <example id="prosody-install-debian">
+        <title>Installing <emphasis>Prosody</emphasis> on Debian/Ubuntu</title>
+
+        <programlisting format="linespecific">$ sudo apt-get install prosody
+$ sudo addgroup prosody ssl-cert </programlisting>
+      </example>
+
+      <example id="prosody-install-redhat">
+        <title>Install <emphasis>Prosody</emphasis> on Fedora/RHEL/CentOS</title>
+        <programlisting format="linespecific">$ sudo yum install prosody
+$ sudo addgroup prosody ssl-cert </programlisting>
+      </example>
+    </sect2>
+
+    <sect2>
+      <title>Configuration</title>
+
+      <para>Prosody can use the certificates created in <xref linkend="tls"/>.
+      In the Prosody configuration, you can refer to the PEM files
+      directly under <code>/etc/ssl</code>.  Alternatively, you can copy
+      the certificate files and private key PEM files to
+      <code>/etc/prosody/certs</code> or create symbolic links from that
+      location to the real PEM files.  Whichever approach you choose,
+      make sure that the private key file (or a copy of it) is readable
+      by the user that Prosody runs as but be careful to ensure they
+      are not world-readable.</para>
+
+      <para>Using the example provided, create configuration files for
+      each domain you want to host under <code>/etc/prosody/conf.d</code>.
+      <xref linkend="prosody-domain-config"/> demonstrates the minimum
+      configuration for a domain.</para>
+
+      <example id="prosody-domain-config">
+        <title>Domain configuration file</title>
+
+        <programlisting format="linespecific">-- Section for VirtualHost example.com
+
+VirtualHost "example.org"
+	ssl = {
+		key = "/etc/ssl/private/example.org-key.pem";
+		certificate = "/etc/ssl/public/example.org.pem";
+	} </programlisting>
+      </example>
+
+      <para>Edit the file <code>/etc/prosody/prosody.cfg.lua</code>.  This
+      is where you can do things like enabling the LDAP authentication
+      module or enabling SQL storage for user data.</para>
+
+      <para>Once configuration is complete, restart the daemon as
+      demonstrated in <xref linkend="prosody-restart"/>.</para>
+
+      <example id="prosody-restart">
+        <title>Restarting the <code>prosody</code> daemon (<code>systemd</code>)</title>
+
+        <programlisting format="linespecific">$ sudo systemctl restart prosody
+Restarting prosody </programlisting>
+      </example>
+
+    </sect2>
+
+    <sect2>
+      <title>User management</title>
+
+      <para>It is not necessary to add users manually.  If users are
+      authenticated by LDAP, for example, Prosody will dynamically
+      create the XMPP account the first time the user logs in.  If such a
+      system is not in use, users can be added manually using the command
+      line utility <code>prosodyctl</code> or using a web interface.</para>
+
+      <para><xref linkend="prosody-add-user"/> demonstrates how to add
+      a user at the command line.</para>
+
+      <example id="prosody-add-user">
+        <title>Using <code>prosodyctl</code> to add a user</title>
+        <programlisting format="linespecific">$ sudo prosodyctl adduser alice@example.org </programlisting>
+      </example>
+
+      <para>To use LDAP authentication, make sure that
+      <code>mod_auth_ldap.lua</code> is in the Prosody <code>lib</code>
+      directory and add the LDAP settings to <code>prosody.cfg.lua</code>
+      as demonstrated in <xref linkend="prosody-cfg-ldap"/>.</para>
+
+      <example id="prosody-cfg-ldap">
+        <title><code>prosody.cfg.lua</code> settings for
+        <code>mod_auth_ldap</code></title>
+
+        <programlisting format="linespecific">authentication = "ldap"
+ldap_server = "ldap-server.example.org"
+ldap_rootdn = ""
+ldap_password = ""
+ldap_filter = "(mail=$user@$host)"
+ldap_scope = "subtree"
+ldap_tls = true;
+ldap_base = "dc=example,dc=org"
+ldap_mode = "bind" </programlisting>
+      </example>
+
+    </sect2>
+
+    <sect2>
+      <title>Further reading</title>
+
+      <para>The <ulink url="https://prosody.im/doc/install">Prosody web
+      site gives more detailed documentation about setting up the user
+      accounts and other steps</ulink>.</para>
+    </sect2>
+
+  </sect1>
+
+  <sect1 id="xmpp-server-ejabberd">
+    <title>ejabberd XMPP server</title>
+
+    <sect2>
+      <title>Package installation</title>
+
+      <para>Install the package using the appropriate tool, as
+      demonstrated in <xref linkend="ejabberd-install-debian"/> and
+      <xref linkend="ejabberd-install-redhat"/>.</para>
+
+      <example id="ejabberd-install-debian">
+        <title>Installing <emphasis>ejabberd</emphasis> on
+        Debian/Ubuntu</title>
+
+        <programlisting format="linespecific">$ sudo apt-get install ejabberd
+$ sudo addgroup ejabberd ssl-cert </programlisting>
+      </example>
+
+      <example id="ejabberd-install-redhat">
+        <title>Install <emphasis>ejabberd</emphasis> on
+        Fedora/RHEL/CentOS</title>
+
+        <programlisting format="linespecific">$ sudo yum install ejabberd
+$ sudo addgroup ejabberd ssl-cert </programlisting>
+      </example>
+    </sect2>
+
+    <sect2>
+      <title>Configuration</title>
+
+      <para>Modify the file <code>/etc/ejabberd/ejabberd.cfg</code>, add
+      the server IP address and the path to the certificate as
+      demonstrated in <xref linkend="ejabberd-interface-config"/>.</para>
+
+      <example id="ejabberd-interface-config">
+        <title><code>ejabberd</code> interface example</title>
+
+        <programlisting format="linespecific">{listen,
+ [
+  {5222, ejabberd_c2s, [
+                        {access, c2s},
+                        {ip, {195, 8, 117, 19}},
+                        {shaper, c2s_shaper},
+                        {max_stanza_size, 65536},
+                        %% {certfile, "/etc/ssl/private/example.org-key_combined.pem"},
+                        starttls_required
+                       ]}, </programlisting>
+      </example>
+
+      <para>Set up the users: go to
+      <emphasis role="bold">http://server1.example.org:5280</emphasis>,
+      log in and set up the user accounts.</para>
+    </sect2>
+  </sect1>
+
+</chapter>

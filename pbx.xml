@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<chapter xml:id="pbx">
+  <title>PBX Setup</title>
+
+  <para>A soft PBX (such as Asterisk or FreeSWITCH) provides features
+  such as voicemail and call queues.  It is perfectly feasible to build
+  an RTC environment without these features.  Many of the typical
+  features in a soft PBX have a particular focus on voice communications,
+  rather than other types of RTC such as IM or video.</para>
+
+  <para>In a federated environment, it is recommended that a SIP proxy
+  is used to handle all connectivity with external parties, including
+  both incoming and outgoing sessions.  The SIP proxy servers have far
+  less features and this inherently makes them easier to configure
+  and secure.</para>
+
+  <para>The soft PBX can be configured to register with the SIP proxy or
+  routing entries can be created in both the SIP proxy and soft PBX to
+  send calls back and forth between them as required.</para>
+
+  <para>OpenTelecoms maintains a guide to
+  <ulink url="http://www.opentelecoms.org/using-repro-with-asterisk-or-freeswitch">
+  using repro with Asterisk or FreeSWITCH</ulink>.</para>
+</chapter>

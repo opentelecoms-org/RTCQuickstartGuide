@@ -1,0 +1,172 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<chapter xml:id="useragents">
+  <title>Client devices and softphones</title>
+
+  <sect1 id="useragents-softphones">
+    <title>Softphones</title>
+    <para>There are a variety of softphones available for Linux, Windows
+    and Mac OS.</para>
+
+    <para>Many users will get high quality audio by connecting a
+    headset to the 3.5mm audio socket on their computer.  However, using
+    headsets with a USB connector yields better results in some cases.</para>
+
+    <para>The <ulink url="http://www.jitsi.org">Jitsi</ulink> softphone is
+    developed in Java and runs on Linux, Windows and Mac OS.  It supports
+    both SIP and XMPP.</para>
+
+    <para>There is a
+    <ulink url="http://www.resiprocate.org/ReproMutualTLSAuthenticationJitsi">
+    detailed guide to setup up Jitsi with client certificates</ulink>
+    in the <emphasis>reSIProcate</emphasis> wiki.</para>
+
+    <para>The <emphasis>GNOME</emphasis> desktop on many common Linux
+    distributions includes the <emphasis>Empathy</emphasis> softphone,
+    supporting IM, voice and video over SIP or XMPP.</para>
+
+    <para>Various other Linux softphones are available, including
+    <emphasis>LinPhone</emphasis> and <emphasis>Ring</emphasis>
+    (formerly <emphasis>SFLphone</emphasis>).</para>
+
+    <para>There are a vast array of Linux messaging applications for XMPP,
+    not necessarily having support for voice or video.  Popular
+    choices include <emphasis>Pidgin</emphasis> and
+    <emphasis>Psi</emphasis>.</para>
+
+    <para>One of the most popular proprietary softphones is
+    <emphasis>Bria</emphasis> from <emphasis>Counterpath</emphasis>.</para>
+  </sect1>
+
+  <sect1 id="useragents-desk-phones">
+    <title>IP desk phones</title>
+
+    <para>A key point to note about desktop phones is that they often
+    have a limited range of codecs and they often support proprietary
+    codecs such as G.729 rather than Internet-optimized codecs such as
+    Opus and iLBC.  Given that a significant number of calls will start
+    in a web browser using WebRTC and the Opus codec, codec
+    compatibility is an important consideration.</para>
+
+    <para>One of the most recognisable IP phones is the Cisco 7940 and
+    its successors.  The Cisco phones are well manufactured with good
+    audio quality (including speakerphone support).  However, there
+    are multiple firmware options available and this can be expensive
+    to purchase and complicated to administer.  If purchasing used
+    Cisco phones on eBay, it is vital to ensure that you are obtaining
+    proper firmware with the phones or that you have some other
+    legal means of obtaining all firmware.  The phones load the
+    firmware and configuration using DHCP and TFTP.</para>
+
+    <para>The <ulink url="http://www.polycom.com">Polycom Soundpoint IP</ulink>
+    phones are very similar in quality to the Cisco phones but without
+    the licensing complications.  They typically support SIP out of
+    the box.  The Polycom phones support configuration over HTTPS.
+    From the era of Soundpoint IP 320 and later models, there is a
+    client certificate in each phone.  This certificate can be used
+    to authenticate when downloading the configuration, ensuring that
+    SIP passwords can't be compromised.  The certificate can also be
+    used to authenticate SIP over TLS connections, this is supported
+    by the <emphasis>repro</emphasis> SIP proxy using the settings
+    <code>EnableCertificateAuthenticator</code> and
+    <code>CommonNameMappings</code>.</para>
+
+    <para>Another popular choice is the
+    <ulink url="http://www.snom.com">SNOM</ulink> device.</para>
+
+    <para>There are various factors to think about when choosing a phone,
+    such as VLAN support, built-in Ethernet hub, power-over-ethernet
+    support, codecs, configuration support, support for NAT traversal
+    (using ICE and TURN) and TLS support.</para>
+  </sect1>
+
+  <sect1 id="useragents-smartphone-apps">
+    <title>Smartphone apps</title>
+
+    <para>On the Android platform, there are several popular free,
+    open source SIP applications including
+    <ulink url="http://www.lumicall.org">Lumicall</ulink> and
+    <emphasis>CSipSimple</emphasis>.</para>
+
+    <para>Users of the Apple iPhone may want to consider a proprietary
+    app such as
+    <ulink url="http://www.counterpath.com/bria-iphone-edition.html">Bria
+    for iPhone</ulink>.</para>
+  </sect1>
+
+  <sect1 id="useragents-click-to-dial">
+    <title>Click-to-dial</title>
+
+    <para>Convenience is a significant factor in the success of
+    any technology.  Click-to-dial brings significant convenience
+    to users.  Many users will dial a contact from their mobile phone,
+    despite the higher cost of the call, simply because of the
+    convenience of accessing the address book through a touch screen.</para>
+
+    <para>Click-to-dial from a computer provides similar convenience.</para>
+
+    <para>This section considers various ways to enable click-to-dial.</para>
+
+    <sect2>
+      <title>The Firefox Telify plugin</title>
+
+      <para>People will frequently encounter phone numbers in their
+      web browser.  They may be browsing an arbitrary web site or
+      they may be accessing a business application that doesn't
+      have any native click to dial support.</para>
+
+      <para>Web application developers can markup phone numbers as
+      hyperlinks using the <code>tel:</code> URI prefix.  This makes
+      the phone number clickable just like a link to another web site
+      or an email address.  Unfortunately, few web developers have
+      taken advantage of this feature.</para>
+
+      <para>The Firefox plugin
+      <ulink url="https://addons.mozilla.org/en-us/firefox/addon/telify/">
+      <emphasis>Telify</emphasis></ulink> solves this problem.  It scans
+      the page you are looking at and dynamically converts phone numbers
+      into links that can be clicked.</para>
+    </sect2>
+
+    <sect2>
+      <title>Mozilla Thunderbird and GNOME Evolution address books</title>
+
+      <para>Many people use a productivity suite like <emphasis>Mozilla
+      Thunderbird</emphasis> or <emphasis>GNOME Evolution</emphasis>
+      for email and address book purposes.</para>
+
+      <para>For Thunderbird users, the
+      <ulink url="https://addons.mozilla.org/en-us/thunderbird/addon/tbdialout/"><emphasis>TBDialOut</emphasis></ulink>
+      plugin makes phone numbers in the address book clickable as
+      <code>tel</code> or <code>sip</code> URIs.  Dialing is then
+      delegated to the URI handler on the user's system.</para>
+
+      <para>For Evolution users, using v3.13.2, there is support for
+      clicking phone numbers and SIP addresses that have been added
+      to the address book.  Evolution will only make them clickable
+      if it detects that a URI handler is installed.</para>
+    </sect2>
+
+    <sect2>
+      <title>Using <code>sipdialer</code></title>
+
+      <para>A simple way to handle the <code>tel</code> and
+      <code>sip</code> URIs is to install the <code>sipdialer</code>
+      from <emphasis>reSIProcate</emphasis>.  The <code>sipdialer</code>
+      utility can send a SIP <code>REFER</code> to various SIP phones
+      that support this mechanism, including Cisco and Polycom.  It is
+      available as a package on Debian, Ubuntu and Fedora.</para>
+    </sect2>
+
+    <sect2>
+      <title>Using Asterisk or FreeSWITCH</title>
+
+      <para>There are various scripts available that can send an
+      instruction over HTTP to an Asterisk or FreeSWITCH server to
+      initiate a phone call.  One of these scripts can be installed as
+      a URI handler for <code>tel</code> and possibly <code>sip</code>
+      URIs on each user's computer.</para>
+    </sect2>
+
+  </sect1>
+
+</chapter>

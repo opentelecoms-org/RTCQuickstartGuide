@@ -1,0 +1,270 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<chapter xml:id="webrtc">
+  <title>WebRTC</title>
+
+  <para><emphasis>WebRTC</emphasis>, also known as
+  <emphasis>RTCWeb</emphasis>, puts two-way media streaming capabilities
+  into the web browser and provides an API to manage them (starting
+  and stopping calls) from the JavaScript embedded in any web page.</para>
+
+  <para>The technology has been pioneered in the two major browsers,
+  <emphasis>Mozilla Firefox</emphasis> and <emphasis>Google Chrome</emphasis>.
+  Other browsers have been following their lead.</para>
+
+  <para>There was some instability in the early years of WebRTC but since
+  mid-2014 the technology has stabilised significantly.</para>
+
+  <para>There have been some pseudo-WebRTC solutions as well, specifically,
+  browser plugins that offer behavior similar to WebRTC with an
+  emphasis on a specific provider.  These solutions are not true WebRTC
+  and they are largely becoming irrelevant now that most users have
+  upgraded to browsers with genuine WebRTC support built in.</para>
+
+  <para>WebRTC provides a mechanism for peer-to-peer media streaming
+  (audio or video) but it does not specify the use of any particular
+  signalling system, the mechanism responsible for locating other users
+  and routing calls to them.</para>
+
+  <sect1 id="webrtc-technical-overview">
+    <title>Technical overview</title>
+
+    <sect2>
+      <title>Media streaming capabilities</title>
+
+      <para>The media streaming capabilities of WebRTC are similar to
+      those used for traditional VoIP and RTC but they differ slightly.</para>
+
+      <para>WebRTC mandates support for two audio codecs,
+      <emphasis>Opus</emphasis> and <emphasis>G.711</emphasis>.  In
+      practice, browsers are unlikely to implement proprietary codecs
+      such as <emphasis>G.729</emphasis> that are implemented in many
+      desk phones.  <emphasis>Opus</emphasis> is superior to many of the
+      legacy codecs but it does mean there is a possibility of
+      transcoding with a slight degradation in quality when there is
+      interoperability with legacy technology.</para>
+
+      <para>Since November 2014, two video codecs,
+      <emphasis>VP8</emphasis> and <emphasis>H.264</emphasis> are
+      mandatory for the browser.  <emphasis>VP8</emphasis> is a
+      royalty-free codec that is likely to be widely adopted by
+      newer technologies.  <emphasis>H.264</emphasis> exists in many
+      legacy video/webcam/teleconferencing solutions and its presence
+      in the browser enables end-to-end video without transcoding,
+      reducing complexity and CPU requirements and avoiding degradation
+      of the picture.</para>
+
+      <para>Despite the support for legacy codecs, many other features
+      of the browser's media stack differ and do not offer direct
+      connectivity to most legacy technology.</para>
+
+      <para>A major feature of WebRTC is the use of Interactive
+      Connectivity Establishment (ICE) for effective NAT discovery
+      and traversal.  Many legacy technologies, including a lot of
+      softphones and desk phones, do not support ICE or have support
+      for its predecessor, STUN.</para>
+
+      <para>The next major feature of WebRTC is encryption.  Many
+      legacy phones support basic SDES encryption, with key exchange
+      in the Session Description Protocol <code>crypto</code> attributes.
+      WebRTC insists on the use of <emphasis>DTLS-SRTP</emphasis> which
+      offers more security but with a complete loss of backwards
+      compatibility.</para>
+
+      <para>The final point is the RTP packet itself.  Many traditional
+      devices and softphones support <emphasis>RTP/AVP</emphasis>.
+      WebRTC requires <emphasis>RTP/AVPF</emphasis>.</para>
+
+      <para>The combined effect of these small differences is that
+      WebRTC media streams have a higher quality than traditional RTC
+      but they can't interoperate directly with the majority of desk
+      phones and softphones already deployed.  Given the extremely wide
+      deployment of web browsers (hundreds of millions of users have
+      already upgraded to browser versions that include WebRTC support)
+      it is envisaged that vendors of related technologies will aim to
+      interoperate with the browser in future versions of their
+      products.</para>
+
+      <para>In the meantime, it is necessary for media streams to be
+      passed through some intermediate network component that can
+      transform the streams between the standards.  This component is
+      referred to by different names, including <emphasis>Session
+      Border Controller (SBC)</emphasis>, <emphasis>Back-to-Back User
+      Agent (B2BUA)</emphasis> and <emphasis>Media Breaker</emphasis>.
+      In practice, it is relatively easy to configure an
+      <emphasis>Asterisk</emphasis> or <emphasis>FreeSWITCH</emphasis>
+      server to perform this role.</para>
+    </sect2>
+
+    <sect2 id="webrtc-tech-signalling">
+      <title>Signalling protocols</title>
+
+      <para>As already mentioned, WebRTC does not provide a signalling
+      protocol for the purpose of locating other users and establishing the
+      media streams to start a call.</para>
+
+      <para>JavaScript does provide the <emphasis>WebSockets</emphasis> API,
+      a mechanism for asychronously passing messages back and forth
+      between JavaScript and a WebSocket server.  Many WebRTC
+      implementors have chosen to use <emphasis>WebSockets</emphasis>
+      as a transport for their signalling protocols.</para>
+
+      <para>SIP and XMPP, the most common signalling protocols from
+      traditional RTC, have both between adapted to support WebRTC.
+      RFC 7118 specifies the SIP over WebSocket transport and many
+      leading SIP implementations have implemented it.  XMPP supports
+      both a HTTP binding and more recently a WebSocket binding
+      specified in RFC 7395.  Using one of these protocols is highly
+      recommended for the vast majority of WebRTC projects.</para>
+    </sect2>
+
+    <sect2>
+      <title>User privacy and security</title>
+
+      <para>While media streaming allows for more powerful applications
+      to be deployed through the web, it also creates a greater risk to
+      user security and privacy.</para>
+
+      <para>When the JavaScript on a site attempts to activate the
+      webcam or microphone, the browser shows a prompt asking the user
+      to authorize the streaming session.  The prompt usually allows
+      the user to choose which devices will be used if they have more
+      than one webcam or microphone/audio source.</para>
+
+      <sect3>
+        <title>Authentication</title>
+
+        <para>Authentication between a browser and a server can take
+        place in various ways.  If a WebSocket connection is used for
+        signalling and if a user has a client certificate in their
+        browser then it should theoretically be possible to use the
+        certificate to authenticate the WebSocket connection.  In
+        practice, this is supported by the <emphasis>repro</emphasis>
+        SIP proxy but it is not yet supported by the browsers.</para>
+
+        <para>Another possibility is the use of cookies or WebSocket
+        URL parameters.  The web server serving the HTML and JavaScript
+        can send an authentication token to the browser and the browser
+        can then present this to the WebSocket signalling server, as
+        a cookie header or as part of the request-URL of the WebSocket
+        upgrade when it establishes a connection.  Both of these
+        mechanisms are also present in the <emphasis>repro</emphasis>
+        SIP proxy.</para>
+
+        <para>Standard SIP DIGEST authentication can also be used over
+        the WebSocket transport.  One benefit of DIGEST authentication
+        is that challenges can be sent from SIP proxies or other
+        network components behind the WebSocket server.</para>
+      </sect3>
+    </sect2>
+
+  </sect1>
+
+  <sect1 id="webrtc-practical">
+    <title>Practical WebRTC deployment</title>
+
+    <para>Although the WebRTC API does not provide a signalling protocol,
+    as described in <xref linkend="webrtc-tech-signalling"/>, this does
+    not mean that deployers need to think about developing something themself.
+    In practice, there are several JavaScript libraries which combine
+    a complete signalling implementation and WebRTC API interaction,
+    giving the web developer a very simple API to start and stop calls.</para>
+
+    <sect2>
+      <title>WebRTC clients and firewalls</title>
+
+      <para>Any type of RTC project faces two major problems engaging users:
+      ensuring that users have suitable software and ensuring that there
+      is a suitable network connection.  WebRTC comprehensively addresses
+      the first problem, ensuring that users have suitable software,
+      by deploying the software as part of the web browser.  This solution
+      is so effective because of the high percentage of users who have
+      web browsers and the vast majority of them are receiving automatic
+      upgrades to the latest version of the browser.  The latter problem,
+      ensuring a suitable network connection, is more complicated.</para>
+
+      <para>The second problem, network connectivity, is explained in
+      <xref linkend="optimal-connectivity-firewalls"/>.  The comments in
+      that section are especially relevant to WebRTC.  WebRTC clients
+      are particularly well suited to work through these problems
+      because of their native support for ICE, TURN, TLS and HTTP
+      proxy servers.</para>
+    </sect2>
+
+    <sect2>
+      <title>JsSIP and JSCommunicator</title>
+
+      <para>For those interested in using SIP for WebRTC signalling,
+      the most compelling solution now involves a combination of JsSIP and
+      <ulink url="http://jscommunicator.org">
+      <emphasis>JSCommunicator</emphasis></ulink>.  JsSIP provides the
+      low-level support for SIP message parsing.  JSCommunicator provides
+      a high-level API and even a fragment of HTML that can be embedded
+      into an existing page to get up and running quickly.</para>
+
+      <para>JSCommunicator works with a <emphasis>repro</emphasis> SIP
+      proxy server configured using the settings in
+      <xref linkend="repro-config-file"/>.</para>
+
+      <para>To deploy JSCommunicator, take a copy of the HTML, CSS and
+      JavaScript from an existing web site or from the Github repository.
+      If using the code from Github, it is necessary to download each
+      dependency and then run the script to combine and minify the
+      JavaScript code (see the <code>README</code> file).  Make any
+      necessary changes to the <code>config.js</code> file and embed
+      the <code>jscommunicator.inc</code> HTML fragment into an existing
+      page template.</para>
+
+    </sect2>
+
+    <sect2>
+      <title>Content Management Systems and other frameworks</title>
+
+      <para>Search the plugin or module catalog for any major Content
+      Management System (CMS) and you will find many plugins claiming
+      to offer WebRTC.  A large number of these are either promoting
+      browser plugins or promoting proprietary services that do not use
+      open standards and lock you into using a specific back-end.  Look
+      for those that offer full source code and support for one of the
+      documented and widely supported signalling protocols, SIP or XMPP,
+      so you will have a free choice to run any of the servers described
+      in this guide or use of any arbitrary provider.</para>
+
+      <para>For <emphasis>Drupal</emphasis> web sites, adding WebRTC
+      is as simple as adding the
+      <ulink url="http://drucall.org"><emphasis>DruCall</emphasis></ulink>
+      module and pointing it to a SIP proxy such as <emphasis>repro</emphasis>.
+      </para>
+
+      <para>The <emphasis>DruCall</emphasis> module is based on
+      JSCommunicator so it also provides a very good example of how to
+      adapt JSCommunicator to other CMS platforms.</para>
+
+      <figure float="none" id="drucall-stack-dia">
+        <title>DruCall/JSCommunicator/JsSIP software stack</title>
+
+        <mediaobject>
+          <imageobject role="print">
+            <imagedata fileref="figs/svg/drucall-stack.svg" width="3in"
+                       format="SVG" />
+          </imageobject>
+
+          <imageobject role="web">
+            <imagedata fileref="figs/svg/drucall-stack.svg"
+                       format="SVG" />
+          </imageobject>
+        </mediaobject>
+      </figure>
+
+      <para><xref linkend="drucall-stack-dia"/> demonstrates the
+      relationship between the JavaScript libraries used in DruCall and
+      the underlying web browser APIs.</para>
+    </sect2>
+
+    <sect2>
+      <title>Troubleshooting</title>
+
+      <para>See <xref linkend="troubleshooting-webrtc"/>.</para>
+    </sect2>
+  </sect1>
+
+</chapter>

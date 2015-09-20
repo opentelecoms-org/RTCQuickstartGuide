@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<bookinfo xmlns="http://docbook.org/ns/docbook" version="5.0">
+  <author>
+    <personname><ulink url="http://danielpocock.com">Daniel Pocock</ulink></personname>
+    <uri>http://danielpocock.com</uri>
+  </author>
+
+  <copyright>
+    <year>2013</year><year>2014</year><year>2015</year>
+    <holder>Daniel Pocock</holder>
+  </copyright>
+</bookinfo>

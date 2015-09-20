@@ -1,0 +1,205 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<chapter xml:id="troubleshooting">
+  <title>Troubleshooting</title>
+
+  <sect1 id="troubleshooting-common-problems">
+    <title>Common problems and solutions</title>
+
+    <sect2>
+      <title>Google Talk/Hangouts users not receiving XMPP chat
+      messages</title>
+
+      <para>If you have been using XMPP for a long time, you may well have
+      some friends in your buddy list who are using <code>gmail.com</code>
+      addresses.  In the beginning, Google largely supported XMPP (with
+      some limitations to TLS support) and it was possible to add
+      <code>gmail.com</code> users to the buddy list and communicate with
+      them using IM, voice and video.</para>
+
+      <para>As of 2014, Google's XMPP support has become somewhat broken.
+      The messages you send to <code>gmail.com</code> contacts using XMPP
+      are never delivered and Google never gives any feedback to indicate
+      there was a problem.  You continue to see the contact's status
+      changes in your buddy list, giving no clue that the Google service
+      is broken.</para>
+
+      <para>Until the Google issues are resolved, suggest to your
+      contacts that they revert their Google account to use Google Talk
+      instead of Hangouts.  Google provides a link for this:
+      <code>https://plus.google.com/downgrade/</code>.  The XMPP Foundation
+      maintains a
+      <ulink url="http://wiki.xmpp.org/web/Jabber_Hosting_Possibilities">
+      list of hosting companies who provide fully functional XMPP
+      support</ulink>.</para>
+    </sect2>
+
+    <sect2>
+      <title>Audio and video quality issues</title>
+
+      <para>If possible, try and start with audio alone and see if the
+      issue persists.  If the problem exists just using audio, then
+      continue troubleshooting with audio only.</para>
+
+      <para>The RTCP protocol, closely related to RTP, provides real-time
+      feedback between the endpoints in an RTP session.  Many phones and
+      softphones can provide visual feedback based on RTCP statistics.
+      Look for these statistics and try to identify the rate of packet
+      loss and the latency.</para>
+
+      <para>Identify which codecs are in use.  If possible, change to a
+      lower bitrate codec and observe if this makes any difference.  Some
+      codecs, such as <emphasis>Opus</emphasis>, have a variable bitrate
+      and should adapt to network conditions.</para>
+
+      <para>If using a softphone, check the computer's metrics, in
+      particular, check that the CPU is not overloaded by other running
+      applications.</para>
+
+      <para>Identify the IP address where the RTP packets are being sent,
+      you may be able to discover this from the RTP statistics in the
+      phone or you may need to use a packet sniffer as described in
+      <xref linkend="troubleshooting-packet-sniffers"/>.</para>
+
+      <para>Perform a <code>traceroute</code> to the remote IP address
+      (see <xref linkend="troubleshooting-os-utilities"/>).  This will
+      frequently reveal the point where latency is occuring.</para>
+
+      <para>If using wifi and <code>traceroute</code> reveals latency or
+      packet loss on the first hop, then it is a good idea to try using
+      a cable connection to try and determine if the wifi is troublesome.
+      Wifi can experience congestion if other wifi routers in your
+      building use the same frequency.  This can be dealt with by using
+      a utility or smartphone app that analyzes the wifi frequencies in
+      your building to help you find a quiet channel and then manually
+      changing the router settings to use that channel.</para>
+
+      <para>If there is latency or packet loss on any hop that includes
+      a cable connection, then you may want to consider replacing the
+      ethernet cable.  Sometimes a faulty cable will appear to work
+      sufficiently for applications like email but it will have a
+      horrible impact on real-time audio/video streams.  If you have
+      access, log in to the devices on each end of the cable and check
+      the interface statistics, looking for any TX or RX errors.  If
+      any interface settings are in automatic mode, set them manually
+      (e.g. set full duplex and set the speed to gigabit).</para>
+
+      <para>Another possible reason for latency or packet loss at an
+      intermediate hop may be network congestion or high CPU load on
+      one of the devices in the path.  Check the charts for each device,
+      they should be monitored as described in
+      <xref linkend="troubleshooting-monitoring"/>.</para>
+    </sect2>
+  </sect1>
+
+  <sect1 id="troubleshooting-techniques">
+    <title>Techniques</title>
+
+    <sect2 id="troubleshooting-monitoring">
+      <title>Monitoring tools</title>
+
+      <para>Monitoring can detect problems before end users notice them,
+      help plan for growth and make troubleshooting easier when an
+      unexpected problem does occur.</para>
+
+      <para>Use systems like <ulink url="http://ganglia.info">
+      <emphasis>Ganglia</emphasis></ulink> and <emphasis>Cacti</emphasis>
+      to gather statistics from all servers and network devices.  Building
+      up graphs of these statistics allows you to see normal usage
+      patterns and spot any spikes more quickly.  These graphs also allow
+      you to visualize what conditions were like during an incident that
+      occurred temporarily.</para>
+
+      <para>Ensure log messages are being aggregated by
+      <emphasis>Syslog</emphasis>.  Using a tool like
+      <ulink url="http://loganalyzer.adiscon.com/">
+      <emphasis>LogAnalyzer</emphasis></ulink> to visualize the log
+      messages in colour makes it much easier to spot unusual activity.</para>
+
+      <para>Use an alerting tool such as <emphasis>Nagios</emphasis>
+      or <emphasis>Icinga</emphasis> to monitor the graphs (see
+      <ulink url="https://github.com/ganglia/ganglia-nagios-bridge"><emphasis>Ganglia-Nagios-Bridge</emphasis></ulink>)
+      and logs (see <ulink url="https://github.com/dpocock/syslog-nagios-bridge"><emphasis>Syslog-Nagios-Bridge</emphasis></ulink>)and also monitor the
+      availability of services such as the SIP and TURN processes and
+      the expiry dates of TLS certificates.</para>
+
+      <para><xref linkend="nagios"/> contains specific instructions to
+      configure Nagios/Icinga to monitor SIP, XMPP and TURN servers.</para>
+    </sect2>
+
+    <sect2 id="troubleshooting-logs">
+      <title>Check the logs</title>
+
+      <para>Check <code>/var/log/syslog</code> and
+      <code>/var/log/daemon.log</code>.</para>
+
+      <para>Many of the RTC processes can also create their own logfiles
+      in other locations.  Refer to the configuration files to see which
+      type of logging each process uses.</para>
+
+      <para>The <code>repro</code> daemon web interface has a control
+      on the <emphasis>Settings</emphasis> page where the log level
+      can be changed at runtime without restarting the daemon.</para>
+    </sect2>
+
+    <sect2 id="troubleshooting-web-admin">
+      <title>Check the web interface</title>
+
+      <para>For those processes that have a web interface, this can be
+      a useful way to see runtime activity at a glance.</para>
+
+      <para>The <code>repro</code> daemon web interface has a
+      <emphasis>Registrations</emphasis> page where all known SIP
+      registrations can be seen.</para>
+    </sect2>
+
+    <sect2 id="troubleshooting-os-utilities">
+      <title>Operating system utilities</title>
+      <para><xref linkend="dns-dig-example"/> demonstrates how to use the
+      <code>dig</code> utility to verify that the DNS entries exist.</para>
+
+      <para>Use the <code>netstat</code> or <code>lsof</code> commands to
+      verify that each process is listening on the correct IP addresses
+      and ports.</para>
+
+      <para>If a process is failing to start and the reason is not
+      clear in the log file or console output, use the <code>strace</code>
+      utility to determine whether any <emphasis>syscall</emphasis>
+      is failing.</para>
+
+      <para><xref linkend="sip-proxy-repro-sclient"/> demonstrates how
+      to use the <emphasis>OpenSSL</emphasis> <code>s_client</code>
+      utility to make a test connection to the SIP proxy on the TLS and
+      WebSocket over TLS ports.</para>
+    </sect2>
+
+    <sect2 id="troubleshooting-packet-sniffers">
+      <title>Packet sniffers</title>
+
+      <para>Use <code>tcpdump</code> to capture the packets to a file
+      on the server.  Copy the capture file to a workstation and inspect
+      it with <emphasis>Wireshark</emphasis>.</para>
+
+      <para>For SIP over UDP or TCP, without encryption, the
+      <code>ngrep</code> utility can be useful for identifying packets
+      containing a particular string.</para>
+    </sect2>
+
+    <sect2 id="troubleshooting-debugging-mode">
+      <title>Debugging mode</title>
+
+      <para>Run the process in debug mode, in the foreground on a terminal,
+      to see what it is doing.  Running the <code>repro</code> daemon
+      this way will allow you to see the SIP packets in the console.</para>
+    </sect2>
+
+    <sect2 id="troubleshooting-webrtc">
+      <title>WebRTC and WebSockets</title>
+
+      <para>Both major browsers have a built-in troubleshooting system
+      for WebRTC.  In the <emphasis>Mozilla Firefox</emphasis> browser,
+      enter the URL <code>about:webrtc</code>.  In the <emphasis>Google
+      Chrome</emphasis> browser, the URL is
+      <code>chrome://webrtc-internals</code>.</para>
+    </sect2>
+  </sect1>
+</chapter>

@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<chapter xml:id="userexperience">
+  <title>User Experience</title>
+
+  <para>Any successful IT project needs to focus on the needs of the user.
+  This is particularly important for communications technology.</para>
+
+  <sect1>
+    <title>First time setup and provisioning</title>
+
+    <para>The most successful RTC projects all have a convenient means of
+    user provisioning.</para>
+
+    <para>In an office environment, this may mean that the softphone or
+    desk phone is automatically configured for the user by a system
+    administrator.  <xref linkend="useragents"/> discusses the
+    provisioning facilities of some types of phone.</para>
+
+    <para>For a generic SIP service, an ISP or a corporate/campus
+    environment with a bring-your-own (BYO) device policy, the ideal
+    setup process should only require the user to enter their SIP/XMPP
+    address and their password and the softphone/device should discover
+    all other parameters using DNS NAPTR and DNS SRV queries.</para>
+
+  </sect1>
+
+  <sect1 id="userexperience-dialing">
+    <title>Dialing</title>
+
+    <para>At first glance, dialing a telephone may appear to be a
+    trivial task.  Some attention to detail is required to maximize
+    user convenience.</para>
+
+    <sect2>
+      <title>Dial plans</title>
+
+      <para>Users find it easier to dial numbers in a local format
+      (without a country code).  Many personal address books and
+      company databases store phone numbers in a local format.  This can
+      lead to confusion in situations where somebody tries to use a
+      number in a different country, for example, if they take their
+      mobile/cell phone to another country and try to dial a number
+      stored in the address book.</para>
+
+      <para>A dial plan should be designed to convert phone numbers to
+      the international format (E.164), even if a user dials the number
+      in a local format.  This makes it easier to send some calls to
+      carriers in different countries and it makes life easier for
+      organizations that expand into multiple countries.  This means the
+      user can dial in the local or international format but the phone
+      system will work either way.</para>
+    </sect2>
+
+    <sect2>
+      <title>Dialing Internet addresses</title>
+
+      <para>In many cases, an email address may also be a SIP address or
+      XMPP address.  Ideally, when a user tries to dial a contact from
+      their phone, the software should identify whether the contact is
+      reachable over SIP or XMPP and use that route for the call if
+      appropriate.</para>
+    </sect2>
+
+  </sect1>
+
+</chapter>

@@ -1,0 +1,142 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<chapter xml:id="optimal-connectivity">
+  <title>Optimizing Connectivity</title>
+
+  <para>People who have tried many of the free RTC softphones have observed
+  that they don't always work through firewalls or NAT networks.  Sometimes
+  these problems give visual feedback, in the form of error messages
+  advising that the call can't proceed.  In other cases, the call appears
+  to be connected but audio only works in one direction or stops after
+  some brief period of time.</para>
+
+  <para>Metcalfe's law tells us that the value of a telecommunications
+  network is proportional to the square of the number of connected users
+  of the system (n<superscript>2</superscript>).</para>
+
+  <para>Therefore, the benefit of making the solution work for all those
+  users who may suffer in certain NAT environments does not just have a
+  gradual or linear impact, the benefit is quadratic.</para>
+
+  <para>Today's RTC technology gives us the tools to deal with these
+  problems in the vast majority of cases.  This chapter gives an overview
+  of the main concerns.</para>
+
+  <sect1 id="optimal-connectivity-turn">
+    <title>Use ICE and a TURN server</title>
+    <para>A TURN server provides a standard way to relay media on behalf
+    of users who are stuck on a NAT network.  The Interactive Connectivity
+    Establishment (ICE) protocol uses the TURN server to help explore
+    network topology and give immediate feedback if the call is not possible,
+    eliminating the menace of ghost calls.</para>
+
+    <para>Several TURN servers are now available in convenient Linux packages,
+    see <xref linkend="turn"/> for details about selecting and installing
+    one.</para>
+  </sect1>
+
+  <sect1 id="optimal-connectivity-tls">
+    <title>Use the TLS transport for SIP packets</title>
+    <para>When SIP packets are sent over UDP, there are several things
+    that go wrong.  The first problem is that large SIP messages can be
+    fragmented by the IP stack and some fragments are not delivered.</para>
+
+    <para>When ICE is used, the SIP packet contains a larger SDP body to
+    encapsulate the ICE candidates.  When a softphone attempts a video call,
+    the combination of the video and audio descriptors further enlarges
+    the SDP.  More and more frequently in modern RTC deployments, SIP
+    packets sent over UDP exceed the maximum transmission unit and are
+    subject to fragmentation.  IP packet fragments are not always routed
+    correctly by other intermediate network components.  This was not a
+    problem in the early days of SIP when the vast majority of devices only
+    supported a limited number of audio codecs and overall packet sizes
+    were well under one kilobyte.</para>
+
+    <para>A more obscure issue is the presence of routers in homes and
+    small offices that claim to have <emphasis>SIP helper</emphasis>
+    capabilities.  These routers try to modify the SIP packets to help
+    them through NAT.  In reality, the modifications made by the router
+    can clash with the ICE protocol or other NAT discovery techniques
+    used by the phone or the server.</para>
+
+    <para>Sending all the SIP packets over a TLS connection eliminates all
+    of these problems.  While there is slightly more effort involved to
+    create a certificate for the server, it saves an enormous amount of
+    ongoing support effort.</para>
+
+    <para>See <xref linkend="tls"/> for details about creating the TLS
+    certificates for SIP and XMPP.</para>
+  </sect1>
+
+  <sect1 id="optimal-connectivity-firewalls">
+    <title>Getting through firewalls</title>
+    <para>When a user is in a developed country, at their home or using a
+    mobile Internet connection, they may be behind a NAT router but the
+    firewall on these devices is usually very permissive for connections
+    initiated by the user.  In the vast majority of cases, the user will be
+    able to initiate outbound TCP connections to any destination (such as
+    a SIP, XMPP or WebSocket server on any arbitrary port number) and will
+    be able to send and receive UDP.</para>
+
+    <para>For some NAT routers, the UDP flows will only work reliably when
+    the peer is using a public IP address.  This problem is automatically
+    detected by ICE connectivity checks and it is resolved by sending the
+    UDP packets through the TURN server.</para>
+
+    <para>For users with more repressive Internet providers, in some less
+    sophisticated wifi hotspots and in some corporate networks there are
+    more aggressive firewall policies.  With a little care, the RTC
+    deployment can be designed to work reliably in many of these
+    environments too.</para>
+
+    <para>The first issue is the signalling connection, whether it is SIP,
+    XMPP or WebSockets.  More restricted corporate networks block
+    outgoing TCP connections, except for those on port 80 or 443, which
+    they redirect to a transparent proxy.</para>
+
+    <para>As a consequence of this TCP blocking, it should be anticipated
+    that the user's softphone may need to use the HTTP proxy for all RTC
+    traffic, including media streaming and signalling.</para>
+
+    <para>HTTP Proxy servers have a number of issues.  Older proxy servers
+    do not understand the WebSocket protocol and newer proxy servers are
+    not always configured to allow the WebSocket protocol by default.
+    To avoid these problems, it is recommended that the WebSocket
+    connection should always use TLS (WebRTC clients uses a
+    <code>wss://</code> URL instead of a <code>ws://</code> URL) and the
+    port 443 only.  Many HTTP proxies are correctly configured to allow
+    the web browser to use the HTTP <code>CONNECT</code> method to
+    initiate pass-through connections to <code>https://</code> URLs using
+    the default port, 443.  Sometimes, however, the HTTP proxy does not
+    allow any port other than 443.  Thanks to the encryption provided by
+    TLS, the proxy server can not observe whether the HTTP
+    <code>CONNECT</code> method is being used to reach a web server, a
+    SIP server, a WebSocket server or even something else such as an
+    <code>ssh</code> server.  Therefore, all services, including SIP over
+    TLS, XMPP client connectivity (<code>c2s</code>), TURN over TLS and
+    WebSockets, should listen on port 443 so that any of them can be
+    reached by a user stuck behind a HTTP proxy.</para>
+
+    <para>The next issue is the transmission of UDP.  In some networks,
+    users simply can not exchange any UDP packets with external hosts.
+    The only resolution to this issue is to tunnel the UDP packets through
+    TCP.  Fortunately, the TURN server can also assist, as the TURN
+    specification includes support for tunneling packets through a TLS
+    connection.  To maximize the chance of success, it is recommended that
+    the TURN server is also configured to listen on port 443 so that the
+    connection to the TURN server will be able to pass through HTTP proxy
+    servers using the HTTP <code>CONNECT</code> method.</para>
+
+    <para>This strategy often requires several different processes (the
+    standard SIP server, the XMPP <code>c2s</code> service, the webserver
+    hosting a WebRTC phone, the WebSocket server and the TURN server) to
+    all listen on the same port, 443.  For multiple processes to use the
+    same port, it is necessary to either have a different public IP
+    address for each process or to use a solution for port multiplexing,
+    such as the <emphasis>sslh</emphasis> daemon.</para>
+
+    <para>With these strategies, connectivity will be possible for the
+    vast majority of Internet users, whether at home, at the office or
+    on the road.</para>
+  </sect1>
+
+</chapter>

@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<appendix xml:id="nagios">
+  <title>Configuring Nagios to monitor SIP, XMPP and TURN</title>
+
+  <para>Users become very frustrated with a service if it is not
+  working when they need it.  Monitoring systems like Nagios help
+  to discover any outage at the first opportunity and inform the right
+  person to fix it.</para>
+
+  <sect1 id="nagios-plugins">
+    <title>Nagios plugins</title>
+
+    <para>It is necessary to download and install the individual
+    Nagios plugin scripts.  Once that is done, the plugins must
+    be declared in the Nagios configuration.  They can be
+    used over and over again to create configurations for
+    monitoring different services on different hosts.</para>
+
+    <para>As the TURN server uses the STUN protocol, a STUN test
+    script is sufficient to test the TURN server is operational.</para>
+
+    <example id="nagios-plugin-stun-configuration">
+      <title>Sample <code>/etc/nagios-plugins/config/stun.cfg</code></title>
+      <programlisting format="linespecific"># can be used to check STUN and TURN servers
+# uses script from http://karlsbakk.net/asterisk/scripts/check_stun
+define command {
+        command_name check_stun
+        command_line /usr/local/lib/nagios/plugins/check_stun $HOSTADDRESS$
+}</programlisting>
+    </example>
+
+    <example id="nagios-plugin-sip-tls-configuration">
+      <title>Sample <code>/etc/nagios-plugins/config/sip.cfg</code></title>
+      <programlisting format="linespecific"># uses script from https://github.com/ibc/nagios-sip-plugin
+define command {
+        command_name check_sip_tls
+        command_line /usr/local/lib/nagios/plugins/check_sip2 -t tls -p $ARG2$ -T 5 -s $ARG1$
+}</programlisting>
+    </example>
+
+    <example id="nagios-plugin-xmpp-configuration">
+      <title>Sample <code>/etc/nagios-plugins/config/xmpp.cfg</code></title>
+      <programlisting format="linespecific"># uses script from https://exchange.icinga.org/jandd/check_xmppng
+# Debian/Ubuntu: apt-get install nagios-check-xmppng
+define command {
+        command_name check_xmpp
+        command_line /usr/lib/nagios/plugins/check_xmppng -H $HOSTADDRESS$ --servername $ARG1$
+}</programlisting>
+    </example>
+
+  </sect1>
+
+  <sect1 id="nagios-service-checks">
+    <title>Nagios service checks</title>
+
+    <para>Once the plugins are declared in the Nagios configuration,
+    they can be used to write service check definitions as demonstrated
+    here.</para>
+
+    <example id="nagios-check-stun-configuration">
+      <title>Sample service check for STUN/TURN</title>
+      <programlisting format="linespecific">define service{
+        use                             generic-service
+        host_name                       stun-server.example.org
+        service_description             STUN/TURN
+        check_command                   check_stun
+}</programlisting>
+    </example>
+
+    <para>The following test SIP on port 5061 and 443:</para>
+
+    <example id="nagios-check-sip-tls-configuration">
+      <title>Sample service check for SIP over TLS</title>
+      <programlisting format="linespecific">define service{
+        use                             generic-service
+        host_name                       server1
+        service_description             SIPS
+        check_command                   check_sip_tls_port!sip-server.sip5060.net!5061
+}</programlisting>
+    </example>
+
+    <example id="nagios-check-sip-tls-configuration-443">
+      <title>Sample service check for SIP over TLS (port 443)</title>
+      <programlisting format="linespecific">define service{
+        use                             generic-service
+        host_name                       server1
+        service_description             SIPS 443
+        check_command                   check_sip_tls_port!sip-server.sip5060.net!443
+}</programlisting>
+    </example>
+
+    <para>The following monitors the XMPP service.  Notice that the argument used for this check must be the XMPP domain, not the server domain or hostname.  In the example, it is <emphasis>example.org</emphasis>.</para>
+
+    <example id="nagios-check-xmpp-configuration">
+      <title>Sample service check for XMPP</title>
+      <programlisting format="linespecific">define service{
+        use                             generic-service
+        host_name                       server1
+        service_description             XMPP
+        check_command                   check_xmpp!example.org
+}</programlisting>
+    </example>
+
+  </sect1>
+
+</appendix>

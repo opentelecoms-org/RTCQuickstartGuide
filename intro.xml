@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<chapter xml:id="intro">
+  <title>Introduction</title>
+
+<para>This quick start guide walks through the essential steps to build a working real-time communications platform with full support for federation with other autonomous domains over the public Internet.</para>
+
+<para>We show the essential steps first: setting up a TURN server, SIP proxy and an XMPP server.  Setting up an Asterisk or FreeSWITCH PBX is not essential, these are supplementary services that should be added in a later stage of the project.</para>
+
+<sect1 id="intro-sip-or-xmpp">
+<title>Choosing between SIP and XMPP</title>
+<para>The IETF has documented two standards for real-time communications that are widely implemented: SIP and XMPP.</para>
+
+<para>This has left many system administrators pondering the question: which one do I need?</para>
+
+<para>Both SIP and XMPP can do all the same things.  SIP can make phone calls, video calls and instant messaging (IM) sessions.  XMPP can also make phone calls, video calls and IM sessions.  There has been a tendency to use SIP more for voice and use XMPP more for IM.</para>
+
+<para>Both have evolved into different markets.  SIP is particularly well supported by telecommunications vendors (for example, companies offering trunking to or from the PSTN) and manufacturers of related hardware, such as ISDN gateways.  Many larger corporate phone systems also have some kind of SIP interface.  XMPP has become very prominent as a system for federated IM and many companies have deployed it for this purpose without necessarily using it for voice and video.  Just as a significant number of voice related products and services use SIP, there is a significant quantity of high quality IM client software and third-party frameworks for interaction with XMPP and this has helped it remain dominant in the IM domain.</para>
+
+<para>In many cases, a SIP user ID and an XMPP user ID look identical, except for the URI prefix and both can be used to reach the same physical person.  For example, <code>sip:alice@example.org</code> and <code>xmpp:alice@example.org</code> both provide a means to contact the same fictitious Internet user prominent in so many of the IETF's publications.</para>
+
+<para>The overwhelming recommendation of the authors of this guide is that to maximise your chance of communicating with as many users as possible, <emphasis>you should operate both SIP and XMPP</emphasis>.</para>
+</sect1>
+
+<sect1 id="intro-os-choice">
+<title>Choice of operating system</title>
+<para>RTC is possible using a range of operating systems, including those popular on desktop computers, servers and smartphones.  This guide does not recommend a specific operating system.  However, we believe that the most recent stable releases of popular GNU/Linux distributions, including Debian, Ubuntu and Fedora, provide a convenient way to get all the necessary software in ready-to-run packages.</para>
+<para>Users of Red Hat Enterprise Linux, CentOS, openSUSE, SLES and other platforms may need to build the packages manually using <code>rpmbuild</code> as described in <xref linkend="rpmbuild"/>.</para>
+<para>Several of the components described in this guide have been tested on a much wider range of platforms.  The <emphasis>reSIProcate</emphasis> products, including the <emphasis>repro</emphasis> SIP proxy and <emphasis>reTurn</emphasis> TURN server, are extremely versatile and known to run successfully on Microsoft Windows, Apple OS, iOS, BSD variants, Android and several Linux based routers including OpenWRT, CeroWRT and DD-WRT.</para>
+</sect1>
+
+<sect1 id="intro-latest-versions">
+<title>Use latest software versions</title>
+<para>It is recommended that the latest software versions are used, especially for components such as the TURN server, SIP proxy and XMPP server as these components need to achieve connectivity with a wide range of peers on the public Internet.</para>
+<para>This does not imply using an unstable or beta version of your preferred Linux distribution, such as Debian <emphasis>sid</emphasis> or Fedora <emphasis>rawhide</emphasis>.  Rather, it is recommended that the current stable release of the operating system is used and the RTC components can then be installed from a source such as Debian's <emphasis>stable-backports</emphasis> or Red Hat's <emphasis>EPEL</emphasis>.</para>
+<para>Sometimes <emphasis>stable-backports</emphasis> or <emphasis>EPEL</emphasis> won't have the latest version of a particular package or you want to test some bleeding edge version of the package to see if it fixes a particular bug.  Many of the packages can be built manually from the source code.  All the leading RTC server projects make this very easy as they support tools like <code>debuild</code> for Debian/Ubuntu (see <xref linkend="debuild"/>) or <code>rpmbuild</code> for RedHat/CentOS/Fedora (see <xref linkend="rpmbuild"/>).</para>
+</sect1>
+
+<sect1 id="intro-using-ipv6">
+<title>Using IPv6</title>
+
+<para>Now that IPv4 address space is fully allocated, it is highly desirable for organizations to include IPv6 when implementing any new network services.</para>
+
+<para>Therefore, both IPv4 and IPv6 are used in all examples throughout this guide.</para>
+
+<para>All of the recommended software products work on both IP versions.</para>
+
+<para>Everything in this guide will still work even if you only use IPv4 or IPv6 alone.</para>
+
+</sect1>
+
+<sect1 id="intro-example-network">
+<title>Example network used in the documentation</title>
+
+<para>For the purposes of this guide, the following conventions are used:</para>
+
+<para>The DNS domain name is <emphasis>example.org</emphasis>.</para>
+
+<para>All the applications run on a server called <emphasis>server1.example.org</emphasis>.  In practice, you could run each service on a different server and you may duplicate services across multiple servers for <emphasis>N+1</emphasis> redundancy.</para>
+
+<para>The ICE/STUN process requires two public IPv4 addresses, either on the same interface or on different interfaces.  In the examples, the server has two IPv4 addresses on the same interface/subnet, they are <emphasis>198.51.100.19</emphasis> and <emphasis>198.51.100.20</emphasis>.  These IP addresses come from the <ulink url="https://tools.ietf.org/html/rfc5737">RFC 5737 documentation subnets</ulink>.</para>
+
+<para>For IPv6, RFC 3849 reserves the address prefix <emphasis>2001:DB8::/32</emphasis> for documentation.  In the examples, <emphasis>server1.example.org</emphasis> uses the address <emphasis>2001:DB8:1000:2000::19/64</emphasis>.</para>
+
+<para>The users have existing email addresses such as <emphasis>first.last@example.org</emphasis> and will use the same addresses for both SIP and XMPP.</para>
+
+<para>The internal phone numbers are four digit extensions, such as <emphasis>8001</emphasis>, <emphasis>8002</emphasis> and <emphasis>8003</emphasis>.</para>
+</sect1>
+
+</chapter>

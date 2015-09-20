@@ -1,0 +1,210 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<chapter xml:id="enum">
+  <title>Adding ENUM to DNS</title>
+
+  <para><emphasis>ENUM</emphasis> is a scheme described in RFC 6116 for
+  mapping E.164 telephone numbers to SIP addresses, XMPP addresses and
+  various other types of resource.  ENUM can enable more rapid discovery of
+  services, network resilience and convenience for people who only have a
+  telephone number or a numeric dialpad.</para>
+
+  <para>Telephone numbers are everywhere.  People have large collections of
+  phone numbers in their mobile telephone address books.  Many organizations
+  have large databases of customer phone numbers that have either been
+  submitted by customers or collected from caller-ID.  In public ENUM,
+  the owner of a number is able to give callers specific options for
+  contacting them.  In private ENUM, organizations can distribute a rich
+  set of routing data in a highly efficient and convenient format, DNS.</para>
+
+  <para><emphasis>ENUM</emphasis> must be considered from two perspectives:
+  publishing your own data for <emphasis>ENUM</emphasis> users and making
+  use of the <emphasis>ENUM</emphasis> data published by other people and
+  organizations.</para>
+
+  <sect1 id="enum-how-enum-works">
+    <title>How ENUM works</title>
+    <para>ENUM works with numbers written in the <emphasis>ITU E.164</emphasis>
+    notation.  For example, a London phone number may be dialed
+    <code>020 7123 4567</code> from within the UK but its
+    <emphasis>E.164</emphasis> representation is <code>+442071234567</code>.
+    <emphasis>E.164</emphasis> numbers are always designated with a leading
+    plus (<code>+</code>) symbol.  The digits following the plus symbol are
+    the country prefix (<code>44</code> in the example) and then any area
+    code and finally the local number itself.  Any other digits, such as the
+    <code>0</code> used when dialing within the UK are not present.  You may
+    have noticed this notation is used for incoming phone calls and text
+    messages on your mobile phone.</para>
+
+    <para>To perform an ENUM query, the first step is to take the number
+    and normalize it into the <emphasis>ITU E.164</emphasis> format.
+    Google's <emphasis>libPhoneNumber</emphasis>, a free software project,
+    is an ideal tool for normalizing phone numbers individually or
+    en-masse.</para>
+
+    <para>Once you have the <emphasis>E.164</emphasis> number, remove the
+    leading plus symbol, reverse the order of the digits and insert periods
+    between them.  For the example number, it becomes
+    <code>7.6.5.4.3.2.1.7.0.2.4.4</code>.</para>
+
+    <para>The next step is to append the ENUM suffix.  The public ENUM suffix
+    is <code>e164.arpa</code>.  To look up the example number in public ENUM,
+    it would be written <code>7.6.5.4.3.2.1.7.0.2.4.4.e164.arpa</code>.
+    Private and in-house ENUM services simply use an alternative suffix.  You
+    may choose to perform multiple ENUM queries concurrently using different
+    suffixes and then choose the best result.</para>
+
+    <para>A DNS query is sent using the query string that has been constructed.
+    The query requests <code>NAPTR</code> records.</para>
+
+    <para>Finally, the ENUM algorithm must inspect the <code>NAPTR</code>
+    records that have been returned and try to identify which, if any, are
+    useful.  For example, if the query only returns a HTTP URL, a SIP proxy
+    may not be able to use it and will ignore the result and use some other
+    mechanism to route the call.</para>
+
+    <para><xref linkend="enum-query-dig"/> demonstrates how to execute an
+    ENUM query from the command line for the UK phone number
+    <code>01865 332244</code> in the public ENUM suffix
+    <code>e164.arpa</code>.</para>
+
+    <example id="enum-query-dig">
+      <title>Using <code>dig</code> to perform ENUM queries</title>
+      <programlisting format="linespecific">$ dig -t naptr 4.4.2.2.3.3.5.6.8.1.4.4.e164.arpa
+
+; > DiG 9.8.4-rpz2+rl005.12-P1 > -t naptr 4.4.2.2.3.3.5.6.8.1.4.4.e164.arpa
+;; global options: +cmd
+;; Got answer:
+;; ->>HEADER ;; flags: qr rd ra; QUERY: 1, ANSWER: 2, AUTHORITY: 3, ADDITIONAL: 4
+
+;; QUESTION SECTION:
+;4.4.2.2.3.3.5.6.8.1.4.4.e164.arpa. IN	NAPTR
+
+;; ANSWER SECTION:
+4.4.2.2.3.3.5.6.8.1.4.4.e164.arpa. 86400 IN NAPTR 100 20 "u" "E2U+pstn:tel" "!^(.*)$!tel:\\1!" .
+4.4.2.2.3.3.5.6.8.1.4.4.e164.arpa. 86400 IN NAPTR 100 10 "u" "E2U+sip" "!^\\+441865332(.*)$!sip:\\1@nominet.org.uk!" .</programlisting>
+    </example>
+
+  </sect1>
+
+  <sect1 id="enum-consume">
+    <title>Consuming ENUM data</title>
+    <para>ENUM data can be consumed at various points.</para>
+
+    <para>The device or softphone where the user starts a call may have the
+    ability to study the number the user has dialed and search for relevant
+    data in ENUM.  The data obtained from ENUM can be presented to the
+    user through the user interface.  The Android apps
+    <emphasis>Lumicall</emphasis> and <emphasis>ENUMdroid</emphasis> both
+    operate in this manner.</para>
+
+    <para>SIP proxy servers and Session Border Controllers (SBCs) may also
+    perform ENUM queries when deciding how to route a call.  In these cases,
+    the device does not have a user interface to allow the user to choose
+    from multiple results.  Typically, the routing system will only look
+    for a SIP address in the ENUM results and will automatically send the
+    call there rather than sending it to a PSTN gateway.</para>
+  </sect1>
+
+  <sect1 id="enum-publish">
+    <title>Publishing ENUM data</title>
+    <para>Setting up <emphasis>ENUM</emphasis> as part of your RTC deployment,
+    in the public ENUM tree, an internal ENUM tree or both, are optional
+    steps that provides more flexibility and resilience for routing
+    calls.</para>
+
+    <sect2>
+      <title>Public ENUM</title>
+      <para>In various countries, it is possible to have your phone
+      numbers registered in the public ENUM tree for <code>e164.arpa</code>.
+      Wikipedia maintains a
+      <ulink url="http://en.wikipedia.org/wiki/Telephone_number_mapping#External_links">
+      detailed list of national ENUM registries</ulink>.</para>
+    </sect2>
+
+    <sect2>
+      <title>Private and third-party ENUM suffixes</title>
+      <para>Even if your country does not have a national ENUM scheme yet,
+      many large organizations are operating an internal ENUM service.
+      If you have a domain name server, you can create <code>NAPTR</code>
+      records in the zone files just as easily as creating an <code>A</code>
+      or <code>CNAME</code> record.  It is relatively easy to construct a
+      script using Python or Java to read from a company telephone directory
+      and write a zone file for the name server.  The file can be regenerated
+      periodically by a <code>cron</code> job.</para>
+
+      <para>If your phone numbers are available in a local LDAP server, the
+      <ulink url="http://www.opentelecoms.org/dlz-ldap-enum">dlz-ldap-enum
+      </ulink> module can be used in a <emphasis>Bind9</emphasis> DNS name
+      server to support real-time queries.</para>
+    </sect2>
+
+    <sect2>
+      <title>Dynamic ENUM from LDAP with <code>dlz-ldap-enum</code></title>
+      <sect3>
+        <title>Installation</title>
+        <para>Install the package using the appropriate tool, as demonstrated
+        in <xref linkend="dlzldapenum-install-debian"/> and
+        <xref linkend="dlzldapenum-install-redhat"/>.</para>
+
+        <example id="dlzldapenum-install-debian">
+          <title>Installing <code>dlz-ldap-enum</code> on Debian/Ubuntu</title>
+          <programlisting format="linespecific">$ sudo apt-get install dlz-ldap-enum</programlisting>
+        </example>
+
+        <example id="dlzldapenum-install-redhat">
+          <title>Install <code>dlz-ldap-enum</code> on Fedora/RHEL/CentOS</title>
+          <programlisting format="linespecific">$ sudo yum install dlz-ldap-enum</programlisting>
+        </example>
+      </sect3>
+
+      <sect3>
+        <title>Configuration</title>
+
+        <para>The configuration file is <code>dlz_ldap_enum.conf</code>.  On
+        a Debian/Ubuntu system, it can be found in <code>/etc/bind</code>
+        while Fedora/RHEL/CentOS users will find it in
+        <code>/etc/named</code>.</para>
+
+        <para>The first step is to customize the file to specify the exact
+        location of the plugin, the ENUM DNS suffix and your LDAP server
+        connection parameters, as demonstrated in
+        <xref linkend="dlzldapenum-config-sample"/>.</para>
+
+        <example id="dlzldapenum-config-sample">
+          <title>Sample <code>dlz_ldap_enum.conf</code></title>
+          <programlisting format="linespecific">dlz "example" {
+    database "dlopen /usr/lib/dlz-ldap-enum/dlz_ldap_enum.so 2
+        v3 simple {cn=admin,dc=example,dc=org} {secret} {127.0.0.1}
+        e164-addr.example.org
+        {localhost. root.example.org. 2 604800 86400 2419200 604800}
+        localhost
+        60
+        ldap:///ou=$zone$,dc=example,dc=org???objectclass=top
+        ldap:///dc=example,dc=org?mail?sub?telephoneNumber=$record$";
+};</programlisting>
+        </example>
+
+        <para>Now add a reference to this file into the main
+        <code>named.conf</code>, which may be under <code>/etc/bind</code> or
+        just <code>/etc</code> depending upon your system.  This is
+        demonstrated in
+        <xref linkend="dlzldapenum-named-config-sample-debian"/> and
+        <xref linkend="dlzldapenum-named-config-sample-redhat"/>.</para>
+
+        <example id="dlzldapenum-named-config-sample-debian">
+          <title>Additions to <code>named.conf</code> for Debian/Ubuntu</title>
+          <programlisting format="linespecific">include "/etc/bind/dlz_ldap_enum.conf";</programlisting>
+        </example>
+
+        <example id="dlzldapenum-named-config-sample-redhat">
+          <title>Additions to <code>named.conf</code> for Fedora/RHEL/CentOS</title>
+          <programlisting format="linespecific">include "/etc/named/dlz_ldap_enum.conf";</programlisting>
+        </example>
+
+      </sect3>
+
+    </sect2>
+
+  </sect1>
+
+</chapter>

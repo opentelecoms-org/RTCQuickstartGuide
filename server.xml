@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<chapter xml:id="server">
+  <title>Server setup</title>
+
+  <para>The packages are available in a convenient format in popular
+  Linux operating systems including
+  <ulink url="http://www.debian.org/distrib/">Debian</ulink>,
+  <ulink url="http://www.ubuntu.com">Ubuntu</ulink> and
+  <ulink url="http://fedoraproject.org/get-fedora-all">Fedora</ulink>.
+  <xref linkend="intro-os-choice"/> discusses the choice of operating
+  system.</para>
+
+  <para>If using <emphasis>Debian 8 (jessie)</emphasis> you must use the
+  reSIProcate 1.10.x packages from
+  <ulink url="http://backports.debian.org/Instructions/">jessie-backports
+  </ulink>.</para>
+
+  <para>Users of Red Hat Enterprise Linux (RHEL) and CentOS can easily
+  build the reSIProcate package using <code>rpmbuild</code>.  All
+  required dependencies are available in the operating system or the
+  EPEL collection.</para>
+
+  <para>It is strongly recommended that you either use
+  <emphasis>1.9.7-4</emphasis> or later.  Previous versions available
+  in older distributions do not have the most recent fixes for OpenSSL
+  <code>SSLv23_method</code> issues.  For any new installations, it is
+  recommended to start with version <emphasis>1.10.0</emphasis> or later
+  as it offers several more improvements in features and interoperability.
+  </para>
+
+  <para>Install the operating system using the normal process, set up an
+  IP address on the machine and make sure network connectivity is
+  working.</para>
+
+  <sect2>
+    <title>Debian/Ubuntu servers</title>
+    <para>To set up both of the IP addresses on the same box (as required
+    by the ICE/STUN/TURN protocol), modify the
+    <code>/etc/network/interfaces</code> file as demonstrated in
+    <xref linkend="server-network-setup-debian"/>.</para>
+
+    <example id="server-network-setup-debian">
+      <title>Adding IP addresses in <code>/etc/network/interfaces</code></title>
+      <programlisting format="linespecific">allow-hotplug eth0
+iface eth0 inet static
+        address 198.51.100.19
+        netmask 255.255.255.0
+        network 198.51.100.0
+        broadcast 198.51.100.255
+        gateway 198.51.100.1
+        up ip addr add dev eth0 198.51.100.20/24 scope global
+
+iface eth0 inet6 static
+        address 2001:DB8:1000:2000::19
+        netmask 64
+        gateway 2001:DB8:1000:2000::1
+        dns-nameservers 2001:DB8:1000:2000::5
+        dns-search example.org</programlisting>
+    </example>
+
+    <para>Notice the line using the <code>ip addr add</code> command to
+    add the additional IP address.</para>
+  </sect2>
+
+  <sect2>
+    <title>Fedora, RHEL and CentOS servers</title>
+
+    <para>To set up both of the IP addresses on the same box (as required
+    by the ICE/STUN/TURN protocol), see the documentation about
+    <ulink url="http://docs.fedoraproject.org/en-US/Fedora/17/html/System_Administrators_Guide/s2-networkscripts-interfaces-alias.html">
+    alias and clone files</ulink> for network interfaces</para>
+
+  </sect2>
+
+</chapter>

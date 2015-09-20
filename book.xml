@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<book xmlns="http://docbook.org/ns/docbook"
+      xmlns:xi="http://www.w3.org/2001/XInclude" version="5.0">
+    <title>Real-Time Communications Quick Start Guide</title>
+    <xi:include href="bookinfo.xml"/>
+    <xi:include href="preface.xml"/>
+    <xi:include href="intro.xml"/>
+    <xi:include href="rtc-architecture.xml"/>
+    <xi:include href="user-experience.xml"/>
+    <xi:include href="optimal-connectivity.xml"/>
+    <xi:include href="dns.xml"/>
+    <xi:include href="firewall.xml"/>
+    <xi:include href="user-authentication.xml"/>
+    <xi:include href="server.xml"/>
+    <xi:include href="tls.xml"/>
+    <xi:include href="turn.xml"/>
+    <xi:include href="sip-proxy.xml"/>
+    <xi:include href="xmpp-server.xml"/>
+    <xi:include href="webrtc.xml"/>
+    <xi:include href="useragents.xml"/>
+    <xi:include href="enum.xml"/>
+    <xi:include href="troubleshooting.xml"/>
+    <xi:include href="pbx.xml"/>
+    <xi:include href="faq.xml"/>
+    <xi:include href="community-support.xml"/>
+    <xi:include href="debuild.xml"/>
+    <xi:include href="rpmbuild.xml"/>
+    <xi:include href="nagios.xml"/>
+
+    <!--<index/> -->
+</book>

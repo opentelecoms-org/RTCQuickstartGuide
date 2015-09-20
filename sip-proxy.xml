@@ -1,0 +1,527 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<chapter xml:id="sip-proxy">
+  <title>SIP proxy server installation</title>
+
+  <sect1 id="sip-proxy-choice">
+    <title>Choose your SIP proxy</title>
+
+    <table id="sip-proxy-comparison">
+      <title>Comparison of SIP proxy servers</title>
+      <tgroup cols="3">
+        <colspec colname="c1" colnum="1" colwidth="1.5*" />
+        <colspec colname="c2" colnum="2" colwidth="2*" />
+        <colspec colname="c3" colnum="3" colwidth="2*" />
+
+        <thead>
+          <row>
+            <entry align="center">Feature</entry>
+            <entry align="center">repro</entry>
+            <entry align="center">Kamailio</entry>
+          </row>
+        </thead>
+
+        <tbody>
+          <row>
+            <entry>Packages</entry>
+            <entry namest="c2" nameend="c3">Available in Debian, Ubuntu
+            and Fedora</entry>
+          </row>
+          <row>
+            <entry>Other</entry>
+            <entry namest="c2" nameend="c3">Either SIP proxy can be installed
+            from source code on any platform</entry>
+          </row>
+          <row>
+            <entry>Ease of installation</entry>
+            <entry>Single config file, federated mode is enabled by simple
+            config settings</entry>
+            <entry>Flexible config file format, which is more like a
+            scripting language and suitable for advanced customization.
+            If a sample config from the Kamailio teams meets your needs,
+            then it is very easy to install.</entry>
+          </row>
+          <row>
+            <entry>Module/plugin support</entry>
+            <entry>Extensions can be developed in C++ or Python</entry>
+            <entry>Modular plugin architecture with many plugins
+            available</entry>
+          </row>
+          <row>
+            <entry>Database/user storage</entry>
+            <entry namest="c2" nameend="c3">Both support a common SQL
+            table structure, so you can start with one and switch to the
+            other, using either PostgreSQL or MySQL server.</entry>
+          </row>
+          <row>
+            <entry>Management UI</entry>
+            <entry>HTML web interface enabled by default</entry>
+            <entry>Optional HTML UI available</entry>
+          </row>
+        </tbody>
+      </tgroup>
+    </table>
+
+    <para><emphasis role="bold">Recommendation:</emphasis> If you are not
+    sure, or can't find a suitable Kamailio configuration file for your
+    needs, start with repro and you can change to Kamailio later if you
+    find a reason to do so.</para>
+
+  </sect1>
+
+  <sect1 id="sip-proxy-repro">
+    <title>repro SIP proxy</title>
+    <sect2>
+      <title>Package installation</title>
+      <para>Install the package using the appropriate tool, as
+      demonstrated in <xref linkend="repro-install-debian"/> and
+      <xref linkend="repro-install-redhat"/>.  If the package is not
+      available for your platform, you may be able to build it using the
+      instruction in <xref linkend="rpmbuild"/>.</para>
+
+      <example id="repro-install-debian">
+        <title>Installing <code>repro</code> on Debian/Ubuntu</title>
+        <programlisting format="linespecific">$ sudo apt-get install repro
+$ sudo addgroup repro ssl-cert</programlisting>
+      </example>
+
+      <example id="repro-install-redhat">
+        <title>Install <code>repro</code> on Fedora/RHEL/CentOS</title>
+        <programlisting format="linespecific">$ sudo yum install resiprocate-repro
+$ sudo addgroup repro ssl-cert</programlisting>
+      </example>
+    </sect2>
+
+    <sect2>
+      <title>Configuration</title>
+      <para>The configuration file is <code>/etc/repro/repro.config</code>.
+      Make essential changes to the configuration file, all other values
+      can remain with default settings.  <xref linkend="repro-config-file"/>
+      demonstrates the main things you need to add or change from default
+      values.</para>
+
+      <para>An important thing to note about the example is that we
+      explicitly configure each transport.  The <code>Transport1...</code>
+      settings declare a TLS transport binding on a specific IP address
+      and port.  When one or more transports are defined in this way,
+      the settings for global transport configuration, such as
+      <code>IPAddress</code> and <code>UDPPort</code>, are completely ignored.
+      For SIP to work reliably, binding to specific IP addresses is highly
+      recommended.  This ensures that outgoing TCP or TLS connections
+      always use the correct source address and that the intended addresses
+      are always included in <code>Via</code> headers.</para>
+
+      <para>The exact location of the <code>*.pem</code> files can be
+      changed if necessary.</para>
+
+      <example id="repro-config-file">
+        <title>Sample values for <code>repro.config</code></title>
+        <programlisting format="linespecific"># To trust email certificates as SIP client certificates:
+TLSUseEmailAsSIP = true
+
+# Transport1 will be for SIP over TLS connections
+# We use port 5061 here but if you have clients connecting from
+# locations with firewalls you could change this to listen on port 443
+Transport1Interface = 198.51.100.19:5061
+Transport1Type = TLS
+Transport1TlsDomain = example.org
+Transport1TlsClientVerification = Optional
+Transport1RecordRouteUri = sip:example.org;transport=TLS
+Transport1TlsPrivateKey = /etc/ssl/private/example.org-key.pem
+Transport1TlsCertificate = /etc/ssl/public/example.org.pem
+
+# Transport2 is the IPv6 version of Transport1
+Transport2Interface = 2001:DB8:1000:2000::19:5061
+Transport2Type = TLS
+Transport2TlsDomain = example.org
+Transport2TlsClientVerification = Optional
+Transport2RecordRouteUri = sip:example.org;transport=TLS
+Transport2TlsPrivateKey = /etc/ssl/private/example.org-key.pem
+Transport2TlsCertificate = /etc/ssl/public/example.org.pem
+
+# Transport3 will be for SIP over WebSocket (WebRTC) connections
+# We use port 8443 here but you could use 443 instead
+Transport3Interface = 198.51.100.19:8443
+Transport3Type = WSS
+Transport3TlsDomain = example.org
+# This would require the browser to send a certificate, but browsers
+# don't currently appear to be able to, so leave it as None:
+Transport3TlsClientVerification = None
+Transport3RecordRouteUri = sip:example.org;transport=WSS
+Transport3TlsPrivateKey = /etc/ssl/private/example.org-key.pem
+Transport3TlsCertificate = /etc/ssl/public/example.org.pem
+
+# Transport4 is the IPv6 version of Transport3
+Transport4Interface = 2001:DB8:1000:2000::19:8443
+Transport4Type = WSS
+Transport4TlsDomain = example.org
+Transport4TlsClientVerification = None
+Transport4RecordRouteUri = sip:example.org;transport=WSS
+Transport4TlsPrivateKey = /etc/ssl/private/example.org-key.pem
+Transport4TlsCertificate = /etc/ssl/public/example.org.pem
+
+# Transport5: this could be for TCP connections to an Asterisk server
+# in your internal network.  Don't allow port 5060 through the external
+# firewall.
+Transport5Interface = 198.51.100.19:5060
+Transport5Type = TCP
+Transport5RecordRouteUri = sip:198.51.100.19:5060;transport=TCP
+
+# Transport6 is the IPv6 version of Transport6
+Transport5Interface = 2001:DB8:1000:2000::19:5060
+Transport5Type = TCP
+Transport5RecordRouteUri = sip:2001:DB8:1000:2000::19:5060;transport=TCP
+
+HttpBindAddress = 198.51.100.19, 2001:DB8:1000:2000::19
+HttpAdminUserFile = /etc/repro/users.txt
+
+RecordRouteUri = sip:example.org;transport=tls
+ForceRecordRouting = true
+EnumSuffixes = e164.arpa, sip5060.net, e164.org
+DisableOutbound = false
+EnableFlowTokens = true
+EnableCertificateAuthenticator = True</programlisting>
+      </example>
+
+      <para><xref linkend="repro-tls-client-verification-modes"/> explains
+      the options that can be used for the <code>ClientVerification</code>
+      parameters on each transport.</para>
+
+      <table id="repro-tls-client-verification-modes">
+        <title>TLS client verification modes</title>
+        <tgroup cols="2">
+          <colspec colname="c1" colnum="1" colwidth="2*" />
+          <colspec colname="c2" colnum="2" colwidth="3*" />
+
+          <thead>
+            <row>
+              <entry align="center"><literal>(Transport&lt;num&gt;)TLSClientVerification</literal></entry>
+              <entry align="center">Impact</entry>
+            </row>
+          </thead>
+
+          <tbody>
+            <row>
+              <entry><literal>None</literal></entry>
+              <entry>The peer is not asked to send a certificate.</entry>
+            </row>
+            <row>
+              <entry><literal>Optional</literal></entry>
+              <entry>The peer is asked to send a certificate.  If the peer
+              sends a valid certificate or if no certificate is sent at all,
+              the connection will be established.</entry>
+            </row>
+            <row>
+              <entry><literal>Mandatory</literal></entry>
+              <entry>Every connection, from client/user devices or external
+              callers must have a client certificate.  This is more secure,
+              but some devices don't support client certificates.</entry>
+            </row>
+          </tbody>
+        </tgroup>
+      </table>
+
+      <para>If you are not sure, start with the setting
+      <code>Optional</code></para>
+
+      <para>As of v1.10.0, <emphasis>repro</emphasis> provides a simpler
+      syntax for configuring database access.  Create the databases and
+      tables as described in <xref linkend="user-authentication-sql"/>.
+      To configure <emphasis>repro</emphasis> to use your tables, see the
+      examples <xref linkend="repro-postgresql-example"/> and
+      <xref linkend="repro-mysql-example"/>.</para>
+
+      <example id="repro-postgresql-example">
+        <title>Using <emphasis>PostgreSQL</emphasis></title>
+        <programlisting format="linespecific">DefaultDatabase = 101
+
+Database101Type = postgresql
+Database101ConnInfo = host=pg1 port=5432 dbname=repro user=repro password=abc</programlisting>
+      </example>
+
+      <example id="repro-mysql-example">
+        <title>Using <emphasis>MySQL</emphasis></title>
+        <programlisting format="linespecific">DefaultDatabase = 101
+
+Database101Type = mysql
+Database101Host = mysql1
+Database101Port = 3306
+Database101DatabaseName = repro
+Database101User = repro
+Database101Password = abc</programlisting>
+      </example>
+
+      <para>If you need help with the configuration settings, please join
+      the mailing list
+      <ulink url="http://list.resiprocate.org/mailman/listinfo/repro-users">
+      repro-users</ulink> and the <emphasis>reSIProcate</emphasis> team
+      will try to help.</para>
+
+      <para>Use the <code>htdigest</code> utility from the Apache web
+      server to set the password for the web interface admin user,
+      as demonstrated in <xref linkend="repro-htdigest-example"/></para>
+
+      <example id="repro-htdigest-example">
+        <title>Using <code>htdigest</code> to set <code>admin</code> user
+        password</title>
+        <programlisting format="linespecific">$ sudo htdigest -c /etc/repro/users.txt repro admin
+Adding password for admin in realm repro.
+New password: 
+Re-type new password: 
+$ </programlisting>
+      </example>
+
+      <para>Now restart the <code>repro</code> daemon to use the new
+      settings, as demonstrated in <xref linkend="repro-restart"/>.</para>
+
+      <example id="repro-restart">
+        <title>Restarting the <code>repro</code> daemon (<code>systemd</code>)</title>
+        <programlisting format="linespecific">$ sudo systemctl restart repro
+Restarting repro</programlisting>
+      </example>
+    </sect2>
+
+    <sect2 id="sip-proxy-repro-sclient">
+      <title>Testing with <code>s_client</code></title>
+
+      <para>You can test that the <code>repro</code> daemon is listening
+      on the correct ports and that the certificates are valid by using
+      the <emphasis>OpenSSL</emphasis> <code>s_client</code> utility.
+      This is demonstrated in <xref linkend="openssl-sclient-debian"/>
+      and <xref linkend="openssl-sclient-redhat"/>.</para>
+
+      <example id="openssl-sclient-debian">
+        <title>Using <code>s_client</code> to test SIP ports
+        (Debian/Ubuntu)</title>
+        <programlisting format="linespecific">$ openssl s_client -connect sip-proxy.example.org:5061 \
+        -CApath /etc/ssl/certs
+...
+     Verify return code: 0 (ok)
+--- </programlisting>
+      </example>
+
+      <example id="openssl-sclient-redhat">
+        <title>Using <code>s_client</code> to test SIP ports (Fedora/RHEL/CentOS)</title>
+        <programlisting format="linespecific">$ openssl s_client -connect sip-proxy.example.org:5061 \
+        -CAfile /etc/ssl/certs/ca-bundle.crt
+...
+     Verify return code: 0 (ok)
+--- </programlisting>
+      </example>
+
+      <para>The output should finish with
+      <code>Verify return code: 0 (ok)</code>.  If you don't see that
+      then the server is not running, the firewall is blocking the
+      connection, the port is wrong or there is some problem with the
+      certificate file or the <code>repro.config</code> configuration file.
+      You may also find clues in Syslog or the <code>repro.log</code> file.</para>
+    </sect2>
+
+    <sect2>
+      <title>Login to web administration</title>
+
+      <para>Go to <code>http://server1.example.org:5080</code> and log in
+      as the <code>admin</code> user you created.</para>
+
+      <para>Click to add a domain.  The screenshot in
+      <xref linkend="repro-adding-domain"/> demonstrates how to add the
+      domain <emphasis>example.org</emphasis>.</para>
+
+      <figure float="none" id="repro-adding-domain">
+        <title>repro web administration: adding a domain</title>
+
+        <mediaobject>
+          <imageobject role="print">
+            <imagedata fileref="figs/web/repro-screenshot.png" width="5in"
+                       format="PNG" />
+          </imageobject>
+
+          <imageobject role="web">
+            <imagedata fileref="figs/web/repro-screenshot.png"
+                       format="PNG" />
+          </imageobject>
+        </mediaobject>
+      </figure>
+
+      <para>Now you <emphasis role="bold">must</emphasis> restart the
+      <code>repro</code> daemon again to use the new domain, as
+      demonstrated in <xref linkend="repro-restart"/>.</para>
+
+    </sect2>
+
+    <sect2>
+      <title>User management</title>
+      <para>It is not necessary to add users manually through the web
+      interface.  If users are identified by TLS client certificates or
+      WebSocket cookie authentication, the SIP proxy does not need to have
+      its own list of users at all.  If users are stored in an SQL database,
+      it is possible for other processes to <code>INSERT</code> new users
+      into the table and <emphasis>repro</emphasis> will see them
+      immediately.</para>
+    </sect2>
+
+    <sect2>
+      <title>Adding a user</title>
+      <para>The screenshot in <xref linkend="repro-add-alice"/>
+      demonstrates adding a user called <emphasis>alice</emphasis> to
+      the domain <emphasis>example.org</emphasis>:</para>
+
+      <figure float="none" id="repro-add-alice">
+        <title>repro web administration: adding a user</title>
+
+        <mediaobject>
+          <imageobject role="print">
+            <imagedata fileref="figs/web/repro-add-alice.png" width="5in"
+                       format="PNG" />
+          </imageobject>
+
+          <imageobject role="web">
+            <imagedata fileref="figs/web/repro-add-alice.png"
+                       format="PNG" />
+          </imageobject>
+        </mediaobject>
+      </figure>
+
+      <para>The list of all users can be easily viewed, as demonstrated
+      in <xref linkend="repro-show-users"/>.</para>
+
+      <figure float="none" id="repro-show-users">
+        <title>repro web administration: listing users</title>
+
+        <mediaobject>
+          <imageobject role="print">
+            <imagedata fileref="figs/web/repro-show-users.png" width="5in"
+                       format="PNG" />
+          </imageobject>
+
+          <imageobject role="web">
+            <imagedata fileref="figs/web/repro-show-users.png"
+                       format="PNG" />
+          </imageobject>
+        </mediaobject>
+      </figure>
+
+    </sect2>
+
+    <sect2>
+      <title>Adding routes for numeric dialing</title>
+
+      <para>Sometimes, when using a SIP phone, it is easier to dial a
+      number than a full SIP address.  In the example.org demonstration,
+      the users have the phone numbers <emphasis role="bold">8001</emphasis>
+      and <emphasis role="bold">8002</emphasis>.
+      <xref linkend="repro-add-route"/> demonstrates how to set up the
+      number <emphasis role="bold">8001</emphasis> for Alice.</para>
+
+      <figure float="none" id="repro-add-route">
+        <title>repro web administration: adding a route</title>
+
+        <mediaobject>
+          <imageobject role="print">
+            <imagedata fileref="figs/web/repro-add-route.png" width="5in"
+                       format="PNG" />
+          </imageobject>
+
+          <imageobject role="web">
+            <imagedata fileref="figs/web/repro-add-route.png"
+                       format="PNG" />
+          </imageobject>
+        </mediaobject>
+      </figure>
+
+      <para>Once the numbers have been added, it is easy to view them all
+      using the `Show Routes' page:</para>
+
+      <figure float="none" id="repro-show-routes">
+        <title>repro web administration: listing routes</title>
+
+        <mediaobject>
+          <imageobject role="print">
+            <imagedata fileref="figs/web/repro-show-routes.png" width="5in"
+                       format="PNG" />
+          </imageobject>
+
+          <imageobject role="web">
+            <imagedata fileref="figs/web/repro-show-routes.png"
+                       format="PNG" />
+          </imageobject>
+        </mediaobject>
+      </figure>
+
+      <para>It is also possible to test the regular expressions to see
+      how they are evaluated.  This can be very useful when using
+      replacement strings (where a single rule automatically maps to
+      many different results), an example is given in
+      <xref linkend="repro-test-routes"/>.</para>
+
+      <figure float="none" id="repro-test-routes">
+        <title>repro web administration: routing test</title>
+
+        <mediaobject>
+          <imageobject role="print">
+            <imagedata fileref="figs/web/repro-test-routes.png" width="5in"
+                       format="PNG" />
+          </imageobject>
+
+          <imageobject role="web">
+            <imagedata fileref="figs/web/repro-test-routes.png"
+                       format="PNG" />
+          </imageobject>
+        </mediaobject>
+      </figure>
+
+      <para>If you need help with the configuration settings, please join
+      the mailing list
+      <ulink url="http://list.resiprocate.org/mailman/listinfo/repro-users">
+      repro-users</ulink> and the <emphasis>reSIProcate</emphasis> team
+      will try to help.</para>
+    </sect2>
+
+  </sect1>
+
+  <sect1 id="sip-proxy-kamailio">
+    <title>Kamailio SIP proxy</title>
+    <sect2>
+      <title>Package installation</title>
+      <para>For Debian/Ubuntu, install the package using <code>apt</code>,
+      as demonstrated in <xref linkend="kamailio-install-debian"/>.
+      Fedora, RHEL and CentOS users need to manually add the appropriate
+      repository from
+      <ulink url="http://rpm.kamailio.org/">
+      <emphasis>rpm.kamailio.org</emphasis></ulink> and then use
+      <code>yum</code> to install, as demonstrated in
+      <xref linkend="kamailio-install-redhat"/>.</para>
+
+      <example id="kamailio-install-debian">
+        <title>Installing <code>kamailio</code> on Debian/Ubuntu</title>
+        <programlisting format="linespecific">$ sudo apt-get install kamailio
+$ sudo addgroup kamailio ssl-cert </programlisting>
+      </example>
+
+      <example id="kamailio-install-redhat">
+        <title>Install <code>kamailio</code> on Fedora/RHEL/CentOS</title>
+        <programlisting format="linespecific">$ sudo yum install kamailio
+$ sudo addgroup kamailio ssl-cert </programlisting>
+      </example>
+    </sect2>
+
+    <sect2>
+      <title>Configuration</title>
+      <para>The configuration file is <code>/etc/kamailio/kamailio.cfg</code>.
+      The configuration file is written in a scripting language specific
+      to the <emphasis>Kamailio</emphasis> project.  It is recommended
+      that you look for and adapt an example configuration file that
+      meets your needs rather than trying to write one from scratch.</para>
+
+      <para>After you complete the configuration, restart the daemon as
+      demonstrated in <xref linkend="repro-restart"/>.</para>
+
+      <example id="kamailio-restart">
+        <title>Restarting the <code>kamailio</code> daemon (<code>systemd</code>)</title>
+        <programlisting format="linespecific">$ sudo systemctl restart kamailio
+Restarting kamailio</programlisting>
+      </example>
+    </sect2>
+
+  </sect1>
+
+</chapter>

@@ -1,0 +1,215 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<chapter xml:id="turn">
+  <title>ICE/STUN/TURN server installation</title>
+
+  <sect1 id="turn-server-choice">
+    <title>Choosing a TURN server</title>
+    <para>There are several TURN servers you can choose from.  Any TURN
+    server works for SIP, TURN, WebRTC and other protocols.</para>
+
+    <para><emphasis>reTurnServer</emphasis> is the TURN server from the
+    reSIProcate project.  It is easy to set up using the packages,
+    instructions are below.</para>
+
+    <para><emphasis>CoTurn</emphasis> evolved from the
+    <emphasis>rfc5766-turn-server</emphasis> project.  See the
+    <ulink url="https://code.google.com/p/coturn/">CoTurn web site
+    for instructions</ulink> and then come back to this document to
+    continue setting up your RTC environment.</para>
+
+    <para><emphasis>TurnServer.org</emphasis> comes from the
+    <ulink url="http://jitsi.org">Jitsi</ulink> team.  See the
+    <ulink url="http://www.turnserver.org">TurnServer.org web site
+    for instructions</ulink> and then come back to this document to
+    continue setting up your RTC environment.</para>
+
+    <para><emphasis>restund</emphasis> is another option.  See
+    <ulink url="http://www.creytiv.com/restund.html">the
+    <code>restund</code> web site</ulink> for details.</para>
+
+    <para>There are various factors to consider when choosing a TURN
+    server.</para>
+
+    <para><emphasis>Scalability</emphasis>: if you need to support
+    thousands of users or more, you will want to test each of the
+    servers for performance and evaluate the clustering capabilities.</para>
+
+    <para><emphasis>Authentication</emphasis>: where do you store your
+    user credentials?  TURN servers use the same HA1 hashed passwords
+    that HTTP DIGEST and SIP authentication uses so if you have such
+    passwords in a database or LDAP server already you will want to
+    evaluate which TURN servers can use that database or look at options
+    for exporting the credentials into a file format for the TURN
+    server.</para>
+
+    <para><emphasis>Packaging</emphasis>: is the TURN server supported
+    in a package on common Linux distributions?  Most of those on the
+    list above can be installed using official packages on Debian,
+    Ubuntu and Fedora.  Many people prefer to use packages so they
+    don't have to spend time building from source code.</para>
+
+    <para><emphasis>IPv6</emphasis>: do you need IPv6 support?</para>
+  </sect1>
+
+  <sect1 id="turn-reTurnServer">
+    <title>reTurnServer from reSIProcate</title>
+
+    <sect2>
+      <title>Installation</title>
+
+      <para>Install the package using the appropriate tool, as
+      demonstrated in <xref linkend="return-install-debian"/> and
+      <xref linkend="return-install-redhat"/>.  If the package is not
+      available for your platform, you may be able to build it using
+      the instructions in <xref linkend="rpmbuild"/>.</para>
+
+      <example id="return-install-debian">
+        <title>Installing <code>reTurnServer</code> on Debian/Ubuntu</title>
+        <programlisting format="linespecific">$ sudo apt-get install resiprocate-turn-server </programlisting>
+      </example>
+
+      <example id="return-install-redhat">
+        <title>Install <code>reTurnServer</code> on Fedora/RHEL/CentOS</title>
+        <programlisting format="linespecific">$ sudo yum install resiprocate-turn-server </programlisting>
+      </example>
+
+    </sect2>
+
+    <sect2>
+      <title>Configuration</title>
+
+      <para>Edit the configuration file,
+      <code>/etc/reTurn/reTurnServer.config</code>, there are certain
+      values that <emphasis role="bold">must</emphasis> be changed from
+      the default values.  These are demonstrated in
+      <xref linkend="return-config-sample"/>.</para>
+
+      <example id="return-config-sample">
+        <title><code>reTurnServer.config</code> entries</title>
+        <programlisting format="linespecific"># your IP addresses go here:
+TurnAddress = 198.51.100.19
+TurnV6Address = 2001:DB8:1000:2000::19
+AltStunAddress = 198.51.100.20
+# your domain goes here, it must match the value used
+# to hash your passwords if they are already hashed
+# using the HA1 algorithm:
+AuthenticationRealm = sip5060.net
+
+UserDatabaseFile = /etc/reTurn/users.txt
+UserDatabaseHashedPasswords = true </programlisting>
+      </example>
+
+      <para>The host <code>server1</code> in this example MUST have
+      two IP addresses, in the example, 198.51.100.19 and 198.51.100.20.
+      This is essential for the ICE/STUN/TURN protocols.</para>
+
+      <para>Now (re)start the <code>reTurnServer</code> daemon to use
+      the new settings as demonstrated in
+      <xref linkend="return-restart-systemd"/></para>
+
+      <example id="return-restart-systemd">
+        <title>Restarting the <code>reTurnServer</code> daemon
+        (<code>systemd</code>)</title>
+        <programlisting format="linespecific">$ sudo systemctl restart resiprocate-turn-server
+Restarting TURN relay: reTurnServer.
+$ </programlisting>
+      </example>
+
+      <para>The TURN server should now be running and listening for
+      client connections.  You can verify it is running as demonstrated
+      in <xref linkend="return-test-netstat"/>.</para>
+
+      <example id="return-test-netstat">
+        <title>Using <code>netstat</code> to verify
+        <code>reTurnServer</code> is running</title>
+        <programlisting format="linespecific">$ sudo netstat -nlp | grep reTurnServer
+udp   0   0 198.51.100.19:3478       0.0.0.0:*              2460/reTurnServer
+udp   0   0 198.51.100.20:3478       0.0.0.0:*              2460/reTurnServer
+...  </programlisting>
+      </example>
+
+      <para>Check the system log for messages or run it in foreground
+      mode on the console if it fails to start.</para>
+    </sect2>
+
+    <sect2>
+      <title>Provisioning users</title>
+      <para>The <code>reTurnServer</code> daemon expects to load a
+      list of users and password hashes from a text file specified
+      by the <code>UserDatabaseFile</code> parameter in
+      <code>reTurnServer.config</code>.</para>
+
+      <para>Note that the order of the columns in this file is not the
+      same as that used by <code>repro</code> and the <code>htdigest</code>
+      utility.</para>
+
+      <para>The file can be generated by using a script to read
+      values from a database table or LDAP directory.</para>
+
+      <para>The <code>reTurnServer</code> caches the file in memory
+      when it starts.  If the file is modified or regenerated while
+      <code>reTurnServer</code> is running, send it the <code>HUP</code>
+      signal to reload the file without restarting.</para>
+
+      <sect3>
+        <title>Synchronizing users from a PostgreSQL table</title>
+
+        <para>When the users are stored in a PostgreSQL table, such as
+        the <code>users</code> table used by the <code>repro</code>
+        daemon, the <code>psql-user-extract</code> script from
+        reSIProcate can be used to maintain the <code>users.txt</code>
+        file for <emphasis>reTurnServer</emphasis>.</para>
+
+        <para>The script is contained in a separate package or it
+        can be downloaded directly from the source repository.</para>
+
+        <para><code>psql-user-extract</code> can be invoked from
+        <code>cron</code>, see <xref linkend="return-psql-crontab"/>.</para>
+
+        <example id="return-psql-crontab">
+          <title><code>crontab</code> entry for
+          <code>psql-user-extract</code></title>
+          <programlisting format="linespecific">* * * * * /usr/lib/resiprocate/reTurnServer/psql-user-extract </programlisting>
+        </example>
+
+        <para><code>psql-user-extract</code> requires a configuration
+        file specifying the database connection parameters, see
+        <xref linkend="return-psql-cfg"/>.</para>
+
+        <example id="return-psql-cfg">
+          <title>Sample <code>/etc/reTurn/psql-user-extract.config</code></title>
+          <programlisting format="linespecific">psql_conninfo = "dbname=repro user=repro host=localhost password=foobar"
+
+# create this directory if it doesn't exist
+dest_file = "/var/cache/reTurn/users.txt"
+
+auth_user_alt = True</programlisting>
+        </example>
+
+      </sect3>
+
+    </sect2>
+
+  </sect1>
+
+  <sect1 id="turn-testing">
+    <title>Testing the TURN server</title>
+
+    <para>As the TURN server speaks the STUN protocol, a simple way to test
+    it is with a STUN client.</para>
+
+    <example id="turn-stun-client-install-debian">
+      <title>Installing the <code>stun</code> client utility</title>
+      <programlisting format="linespecific">$ sudo apt-get install stun</programlisting>
+    </example>
+
+    <example id="turn-stun-client-test">
+      <title>Using the <code>stun</code> client utility</title>
+      <programlisting format="linespecific">$ stun turn-server.example.org
+STUN client version 0.96
+Primary: Firewall
+Return value is 0x00000b</programlisting>
+    </example>
+  </sect1>
+
+</chapter>

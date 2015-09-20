@@ -1,0 +1,184 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<chapter xml:id="dns">
+  <title>DNS setup</title>
+
+  <para>The DNS records to be created are detailed in
+  <xref linkend="dns-records-for-example"/></para>
+
+  <table id="dns-records-for-example">
+    <title>DNS records for the example</title>
+    <tgroup cols="3">
+      <colspec colname="c1" colnum="1" colwidth="2*" />
+      <colspec colname="c2" colnum="2" colwidth="1*" />
+      <colspec colname="c3" colnum="3" colwidth="3*" />
+
+      <thead>
+        <row>
+          <entry align="center">Record Name</entry>
+          <entry align="center">Type</entry>
+          <entry align="center">Value</entry>
+        </row>
+      </thead>
+
+      <tbody>
+        <row>
+          <entry><literal>server1</literal></entry>
+          <entry><literal>A</literal></entry>
+          <entry><literal>198.51.100.19</literal></entry>
+        </row>
+        <row>
+          <entry><literal>server1</literal></entry>
+          <entry><literal>AAAA</literal></entry>
+          <entry><literal>2001:DB8:1000:2000::19</literal></entry>
+        </row>
+        <row>
+          <entry><literal>turn-server</literal></entry>
+          <entry><literal>CNAME</literal></entry>
+          <entry><literal>server1</literal></entry>
+        </row>
+        <row>
+          <entry><literal>sip-proxy</literal></entry>
+          <entry><literal>CNAME</literal></entry>
+          <entry><literal>server1</literal></entry>
+        </row>
+        <row>
+          <entry><literal>xmpp-gw</literal></entry>
+          <entry><literal>CNAME</literal></entry>
+          <entry><literal>server1</literal></entry>
+        </row>
+        <row>
+          <entry><literal>_stun._udp</literal></entry>
+          <entry><literal>SRV</literal></entry>
+          <entry><literal>0 1 3478 turn-server.example.org.</literal></entry>
+        </row>
+        <row>
+          <entry><literal>_sips._tcp</literal></entry>
+          <entry><literal>SRV</literal></entry>
+          <entry><literal>0 1 5061 sip-proxy.example.org.</literal></entry>
+        </row>
+        <row>
+          <entry><literal>_xmpp-client._tcp</literal></entry>
+          <entry><literal>SRV</literal></entry>
+          <entry><literal>5 0 5222 xmpp-gw.example.org.</literal></entry>
+        </row>
+        <row>
+          <entry><literal>_xmpp-server._tcp</literal></entry>
+          <entry><literal>SRV</literal></entry>
+          <entry><literal>5 0 5269 xmpp-gw.example.org.</literal></entry>
+        </row>
+        <row>
+          <entry><literal>@</literal></entry>
+          <entry><literal>NAPTR</literal></entry>
+          <entry><literal>10 0 "s" "SIPS+D2T" "" _sips._tcp.example.org.</literal></entry>
+        </row>
+      </tbody>
+    </tgroup>
+  </table>
+
+  <sect1 id="dns-non-standard-ports">
+    <title>Using non-standard ports</title>
+    <para>RTC makes use of DNS SRV records for load-balancing and failover.
+    A key feature of the SRV record is that the TCP or UDP port number is
+    specified in the record.  <xref linkend="dns-records-for-example"/>
+    demonstrates the use of standard port numbers for SIP, TURN and
+    XMPP.</para>
+
+    <para>If users are connecting to the service from arbitrary locations,
+    including public wi-fi hotspots, hotels and the offices of other companies,
+    they will almost certainly encounter firewalls that only allow traffic
+    to pass on a limited range of port numbers or through HTTP proxy
+    servers.</para>
+
+    <para>For this reason, it is common to operate RTC services on port
+    443 instead of the normal port numbers.  Two or more processes can't
+    listen on the same port number on the same IP address.  When all the
+    RTC processes have to use port 443, it is necessary to have a different
+    IP address for each process.
+    <xref linkend="dns-non-standard-ports-example"/> gives a summary of
+    the ports to change.</para>
+
+    <table id="dns-non-standard-ports-example">
+      <title>Protocols using port 443</title>
+      <tgroup cols="3">
+        <colspec colname="c1" colnum="1" colwidth="2*" />
+        <colspec colname="c2" colnum="2" colwidth="1*" />
+        <colspec colname="c3" colnum="3" colwidth="1*" />
+
+        <thead>
+          <row>
+            <entry align="center">Protocol</entry>
+            <entry align="center">Default port</entry>
+            <entry align="center">Non-standard port</entry>
+          </row>
+        </thead>
+
+        <tbody>
+          <row>
+            <entry>STUN / TURN over TLS</entry>
+            <entry>5349</entry>
+            <entry>443</entry>
+          </row>
+          <row>
+            <entry>SIP over TLS</entry>
+            <entry>5061</entry>
+            <entry>443</entry>
+          </row>
+          <row>
+            <entry>XMPP client</entry>
+            <entry>5222</entry>
+            <entry>443</entry>
+          </row>
+        </tbody>
+      </tgroup>
+    </table>
+  </sect1>
+
+  <sect1 id="dns-sample-zone">
+    <title>Sample DNS zone file</title>
+    <para>See <xref linkend="dns-bind-example-zone"/> for an example of
+    how to write the entries for the zone file.  For the purposes of the
+    example, this file would be <code>/etc/bind/db.example.org</code> on
+    the nameserver host.</para>
+
+    <example id="dns-bind-example-zone">
+      <title>ISC Bind zone file entries</title>
+      <programlisting format="linespecific">; the server where everything will run
+server1            IN     A      198.51.100.19
+server1            IN     AAAA   2001:DB8:1000:2000::19
+
+; some convenient CNAMEs
+turn-server        IN     CNAME  server1
+sip-proxy          IN     CNAME  server1
+xmpp-gw            IN     CNAME  server1
+
+; DNS SRV for STUN / TURN
+_stun._udp  IN SRV    0 1 3467 turn-server.example.org.
+
+; DNS SRV and NAPTR records for SIP
+_sips._tcp  IN SRV    0 1 5061 sip-proxy.example.org.
+@           IN NAPTR  10 0 "s" "SIPS+D2T" "" _sips._tcp.example.org.
+
+; DNS SRV records for XMPP Server and Client modes:
+_xmpp-client._tcp  IN     SRV    5 0 5222 xmpp-gw.example.org.
+_xmpp-server._tcp  IN     SRV    5 0 5269 xmpp-gw.example.org.</programlisting>
+    </example>
+  </sect1>
+
+  <sect1 id="dns-testing">
+    <title>Testing the DNS settings</title>
+
+    <para>Use the <code>dig</code> command to test, as demonstrated in
+    <xref linkend="dns-dig-example"/></para>
+
+    <example id="dns-dig-example">
+      <title>Inspecting DNS entries with <code>dig</code></title>
+      <programlisting format="linespecific">$ dig -t naptr +short example.org
+10 0 "s" "SIPS+D2T" "" _sips._tcp.example.org.
+
+$ dig -t srv +short _sips._tcp.example.org.
+0 1 5061 sip-proxy.example.org.</programlisting>
+    </example>
+
+  </sect1>
+
+</chapter>

@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<chapter xml:id="community-support">
+  <title>Community support</title>
+
+  <para>Many technologies and companies have a presence on the Internet
+  for support and interaction between between users and developers.  This
+  model of community support is particularly relevant for RTC technology.
+  RTC, by definition, requires interoperability between all those using the
+  technology and efficient online collaboration helps to identify and
+  resolve interoperability problems.  Many users also have common problems
+  to solve, such as the collaboration between Internet companies to
+  eliminate spam.</para>
+
+  <para>In the RTC domain, there are a range of online communities with
+  various objectives.  The objectives include supporting specific pieces
+  of software, development of standards, discussion of operational issues
+  between providers and advocacy of open standards and private
+  communication.</para>
+
+  <sect1 id="community-support-mailing-lists">
+    <title>Mailing lists</title>
+
+    <sect2>
+      <title>Strategy and advocacy</title>
+
+      <para>The
+      <ulink url="https://lists.fsfe.org/mailman/listinfo/free-rtc">FSFE
+      Free RTC mailing list</ulink> discusses strategies for promoting
+      and adopting free RTC and free software.</para>
+    </sect2>
+
+    <sect2>
+      <title>Collaboration between operators and service providers</title>
+
+      <para>The <ulink url="http://mail.jabber.org/mailman/listinfo/operators">
+      XSF XMPP operators mailing list</ulink> enables discussion of issues
+      between organizations managing XMPP servers of any size.</para>
+    </sect2>
+
+    <sect2>
+      <title>Server support</title>
+
+      <para>The
+      <ulink url="http://list.resiprocate.org/mailman/listinfo/repro-users">
+      reSIProcate <code>repro</code> users mailing list</ulink> provides
+      community support for people setting up and operating the
+      <code>repro</code> SIP proxy server.</para>
+
+      <para>The <ulink url="http://prosody.im/discuss#mailing_lists">Prosody
+      users mailing list</ulink> provides community support for people
+      setting up and operating the <emphasis>Prosody</emphasis> XMPP
+      server.</para>
+    </sect2>
+
+    <sect2>
+      <title>Softphones</title>
+
+      <para>The <ulink url="http://lists.lumicall.org">Lumicall users mailing
+      list</ulink> supports users of the <emphasis>Lumicall</emphasis>
+      Android app.</para>
+
+      <para>The <ulink url="https://jitsi.org/Development/MailingLists">Jitsi
+      users mailing list</ulink> provides a resource for those setting up
+      and using the Jitsi products, including the popular Jitsi
+      softphone.</para>
+    </sect2>
+  </sect1>
+
+  <sect1 id="community-support-blogs-and-news">
+    <title>Popular blogs and news sites</title>
+
+    <para><ulink url="http://planet.sip5060.net">planet.sip5060.net</ulink>
+    syndicates blogs from leading software developers with a focus on RTC
+    and especially SIP.</para>
+  </sect1>
+</chapter>

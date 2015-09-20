@@ -1,0 +1,221 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<chapter xml:id="user-authentication">
+  <title>User and credential storage</title>
+
+  <para>Most of the products described in this document, including
+  SIP proxies, XMPP servers, TURN servers and soft PBXes offer a range
+  of choices for maintaining a user database and storing user
+  credentials.</para>
+
+  <sect1 id="user-authentication-credentials">
+    <title>Credentials</title>
+
+    <sect2>
+      <title>Password encryption</title>
+
+      <para>It is not strictly necessary to use passwords for SIP, XMPP
+      and TURN, you can use certificate authentication instead.
+      Nonetheless, many people find that some of their users can only
+      support password authentication or they don't want the complexity
+      of managing public key infrastructure (PKI).</para>
+
+      <para>XMPP transmits passwords in cleartext, so all XMPP
+      connections should be secured with TLS to avoid eavesdropping.
+      The benefit of this approach is that XMPP users can be
+      authenticated against any type of pre-hashed passwords or using
+      a method such as LDAP bind to verify the supplied credential.</para>
+
+      <para>SIP and TURN use a DIGEST algorithm very similar to
+      HTTP DIGEST.  The DIGEST algorithm requires the server to have
+      either an unencrypted copy of the password, a password encrypted
+      with the HA1 algorithm or a service (such as RADIUS) that can
+      perform delegated DIGEST authentication.</para>
+
+      <para>If unencrypted passwords are available, then the SIP and
+      TURN servers can use them to construct the HA1 hash value or
+      you can precompute the HA1 values and store them in a database.</para>
+
+      <warning>
+        <para>HA1 hash values should be considered as sensitive as
+        unencrypted values.  Even though the plaintext password can't
+        be recovered in a simple manner, anybody in possession of the
+        HA1 value is able to use it to construct a response to a HTTP
+        or SIP DIGEST challenge, thereby impersonating the user who
+        owns that password.  Therefore, do not keep HA1 hash values in
+        world-readable configuration files or publicly accessible in
+        LDAP.</para>
+      </warning>
+    </sect2>
+
+    <sect2>
+      <title>HA1 in detail</title>
+
+      <para>The HA1 hash includes the username, the password and the realm.
+      A HA1 hash can be easily constructed at the UNIX command line
+      as demonstrated in <xref linkend="auth-make-ha1"/>.</para>
+
+      <example id="auth-make-ha1">
+        <title>Computing HA1</title>
+
+        <programlisting format="linespecific">$ echo -n "alice:example.org:secret" | md5sum
+543e1aec5d3614f03141652d6ada51b2  -
+$ echo -n "alice@example.org:example.org:secret" | md5sum
+1441a999b257bcd0cf5166930039876a  -</programlisting>
+      </example>
+
+      <para>In both examples, the realm is <code>example.org</code>.</para>
+
+      <para>In the first case, the user authenticates using the
+      username <code>alice</code>.  In the second case, the user
+      authenticates using the username <code>alice@example.org</code>.
+      This second permutation is referred to by some products as
+      <emphasis>HA1B</emphasis>.  Some people prefer to use the full
+      <emphasis>user@domain</emphasis> syntax to support virtual hosting
+      with a single <emphasis>realm</emphasis> value on a single SIP
+      proxy or TURN server.</para>
+    </sect2>
+  </sect1>
+
+  <sect1 id="user-authentication-databases">
+    <title>Databases</title>
+
+    <sect2>
+      <title>RADIUS</title>
+
+      <para>IETF <code>draft-sterman-aaa-sip-04</code> describes a
+      mechanism for RADIUS servers to participate in a SIP DIGEST
+      challenge/response without the SIP proxy having a copy of the
+      password or HA1 value at all.  This is implemented by the
+      <emphasis>FreeRADIUS</emphasis> project in the module
+      <ulink url="http://wiki.freeradius.org/modules/Rlm_digest">
+      <code>rlm_digest</code></ulink> and supported by all the major
+      SIP proxy servers.</para>
+
+      <para>At the time of writing, work is in progress to enable RADIUS
+      to participate in TURN authentication in the same way.</para>
+    </sect2>
+
+    <sect2>
+      <title>LDAP</title>
+
+      <para>If LDAP is in use, you may wish to consider storing the
+      HA1 values in the LDAP directory.  Each time a user is created
+      or a user changes their password, the LDAP server will need to
+      update the HA1 hash as well as updating any other copies of the
+      password hashed with other algorithms.</para>
+
+      <para>For example, the <emphasis>OpenLDAP</emphasis> server
+      allows such logic to be implemented in an overlay, this is
+      already demonstrated in the <emphasis>smbk5pwd</emphasis> module
+      for hashing copies of the user's password in various algorithms
+      used by Windows.</para>
+
+      <para>Due to the sensitive nature of the HA1 values, they
+      should be stored in an attribute that is not readable to any
+      other user or anonymous access.  <xref linkend="openldap-acl-ha1"/>
+      demonstrates how to protect the <code>ha1Password</code> so it can
+      only be read by a user
+      <code>cn=sip-proxy,dc=example,dc=org</code>.</para>
+
+      <example id="openldap-acl-ha1">
+        <title><emphasis>OpenLDAP</emphasis> ACL for protecting
+        <code>ha1Password</code></title>
+
+        <programlisting format="linespecific">    access to attr=ha1Password
+        by self =xw
+        by dn="cn=sip-proxy,dc=example,dc=org" read
+        by anonymous auth
+        by * none </programlisting>
+      </example>
+
+      <para>LDAP can also be used to assist in routing as described in
+      <xref linkend="enum"/>.</para>
+
+    </sect2>
+
+    <sect2 id="user-authentication-sql">
+      <title>SQL databases</title>
+
+      <para>Many RTC products have some capability to interact with an
+      SQL database to obtain user credentials, configuration settings
+      and routing information.</para>
+
+      <para>Each product has a different schema, however, it is possible
+      to create a user list table that aggregates all the columns
+      required to satisfy multiple RTC servers.  For example, a single
+      user list table can be created for use by <emphasis>Asterisk</emphasis>
+      and <emphasis>repro</emphasis>.  <emphasis>repro</emphasis> simply
+      ignores many of the columns used by <emphasis>Asterisk</emphasis>.</para>
+
+      <sect3 id="user-authentication-sql-setup-postgresql">
+        <title>Setting up PostgreSQL for SIP users</title>
+
+        <para>The packages for the <emphasis>repro</emphasis> SIP proxy
+        include SQL schema files for creating tables.
+        <xref linkend="postgresql-install-debian"/> demonstrates how
+        to install the <emphasis>PostgreSQL</emphasis> server package.
+        <xref linkend="postgresql-setup-debian"/> demonstrates how
+        to use the <code>createdb</code> command to create a database
+        called <code>repro</code> and use the <code>psql</code>
+        command to log in as the <emphasis>DBA</emphasis> and
+        create a user called <code>repro</code> for the SIP proxy.
+        The final <code>psql</code> command uses the schema file
+        to create the tables.</para>
+
+        <example id="postgresql-install-debian">
+          <title>Install <emphasis>PostgreSQL</emphasis> on Debian or Ubuntu</title>
+          <programlisting format="linespecific">$ sudo apt-get install postgresql postgresql-client</programlisting>
+        </example>
+
+        <example id="postgresql-setup-debian">
+          <title>Configure PostgreSQL</title>
+          <programlisting format="linespecific">$ sudo su - postgres
+postgres$ createdb repro
+postgres$ psql
+postgres=# create user repro password 'abc';
+postgres=# \q
+postgres$ exit
+$ su vi /etc/postgresql/9.4/main/pg_hba.conf
+$ su systemctl restart postgresql
+$ psql -U repro -W repro &lt; /usr/share/doc/repro/create_postgresql_reprodb.sql</programlisting>
+        </example>
+
+      </sect3>
+
+    </sect2>
+
+    <sect2>
+      <title>Product-specific file formats</title>
+
+      <para>Each product also supports some native file formats.
+      For example, <emphasis>repro</emphasis> can store user data in
+      <emphasis>Berkeley DB</emphasis> files while
+      <emphasis>Asterisk</emphasis> can store users in the
+      <code>sip.conf</code> text file.  The <emphasis>Prosody</emphasis>
+      XMPP server can store its data in JSON files.  In some cases, the
+      files are maintained by the administrator using a text editor and
+      in other cases they are updated at runtime by the application.</para>
+
+      <para>To eliminate the risk of runtime dependencies on databases,
+      it is relatively straightforward to create a script that
+      periodically extracts user data from a database and creates files
+      for the relevant processes to consume.  If one of the processes has
+      to start up or continue operating during a database outage, it will
+      be able to do so using the last copy of the file.</para>
+    </sect2>
+
+  </sect1>
+
+  <sect1 id="user-authentication-conclusion">
+    <title>Conclusion</title>
+
+    <para>A guide like this can't proscribe the correct solution for
+    every scenario.  This chapter simply aims to raise awareness of all
+    the options for storing usernames and credentials and making them
+    accessible to RTC processes.  System administrators and developers
+    will need to consider the infrastructure that is already present
+    when deciding which of these options are most relevant for a given
+    site.</para>
+  </sect1>
+
+</chapter>

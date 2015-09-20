@@ -1,0 +1,160 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<chapter xml:id="tls">
+  <title>TLS certificate creation</title>
+
+  <para>Certificates are an essential security mechanism for most
+  federated and distributed technologies on the Internet.</para>
+
+  <para>Certificates may be referred to as X.509 certificates, SSL
+  certificates or TLS certificates.  For most purposes, these terms all
+  mean the same thing and the term TLS certificate is used throughout
+  this documentation.</para>
+
+  <para>The prices of TLS certificates vary significantly.  It is not
+  necessarily useful to purchase the most expensive one.  You do need to
+  make sure that the certificate issued by the Certificate Authority (CA)
+  includes both the <emphasis>TLS client</emphasis> and
+  <emphasis>TLS server</emphasis> Extended Key Usage extensions, some
+  only include the latter.  The free certificates from
+  <emphasis>StartSSL/StartCom</emphasis> do not have the
+  <emphasis>TLS client</emphasis> extension and can't be used.  The
+  <ulink url="https://www.gandi.net/ssl/standard#single">Gandi.net SSL
+  Standard certificate</ulink> which costs about $16 (free with a
+  domain registration or transfer) is known to be suitable.</para>
+
+  <para>Some organizations have <emphasis>wildcard</emphasis>
+  certificates for all servers/subdomains in the organization.  These
+  are not always suitable for RTC purposes, in particular,
+  <ulink url="https://tools.ietf.org/html/rfc5922#section-7.2">RFC 5922
+  section 7.2</ulink> prohibits the use of wildcard certificates for SIP.
+  Some SIP products offer the ability to override this restriction and
+  use wildcard certificates anyway, however, this is not suitable for
+  the public Internet.</para>
+
+  <sect1 id="tls-install-openssl">
+    <title>Install the OpenSSL utility</title>
+
+    <para>Make sure the OpenSSL package is available, it can be installed
+    using the package manager as demonstrated in
+    <xref linkend="tls-install-openssl-debian"/> and
+    <xref linkend="tls-install-openssl-redhat"/>.</para>
+
+    <example id="tls-install-openssl-debian">
+      <title>Installing <code>openssl</code> on Debian/Ubuntu</title>
+      <programlisting format="linespecific">$ sudo apt-get install ssl-cert openssl</programlisting>
+    </example>
+
+    <example id="tls-install-openssl-redhat">
+      <title>Installing <code>openssl</code> on Fedora/RHEL/CentOS</title>
+      <programlisting format="linespecific">$ sudo yum install openssl</programlisting>
+    </example>
+  </sect1>
+
+  <sect1 id="tls-common-name">
+    <title>Certificate Common Name</title>
+    <para>Certificates confirm the identity of a service.  The identity
+    is specified by the <emphasis>Common Name</emphasis> (CN) and in
+    some cases the <code>subjectAltName</code> embedded in the
+    certificate.</para>
+
+    <para>Many web sites use a name such as <code>www.example.org</code> and
+    include the <code>www</code> prefix in the name of their certificate.
+    When purchasing a certificate for SIP and XMPP, it is important to ensure
+    that the certificate contains a CN or <code>subjectAltName</code> that
+    specifies the domain alone.  For the <code>example.org</code> domain,
+    the certificate should include <code>CN=example.org</code> or
+    <code>subjectAltName=example.org</code>.</para>
+
+    <para>In a <emphasis>wildcard certificate</emphasis>, the CN will
+    include an asterisk (<code>*</code>), for example,
+    <code>CN=*.example.org</code>.  This type of certificate can be
+    used for the domain <code>example.org</code> and subdomains or
+    hostnames such as <code>www.example.org</code> or
+    <code>mail.example.org</code>.</para>
+
+    <para>The correct domain needs to be specified when creating the
+    <emphasis>certificate signing request</emphasis> (CSR) and should be
+    confirmed by the CA in their web-based ordering form.</para>
+  </sect1>
+
+  <sect1 id="tls-install-certificate">
+    <title>Install a TLS certificate</title>
+
+    <para>On each Linux platform, there are different locations for
+    private key files and local server certificates.  To simplify the
+    examples, we define environment variables referring to them.
+    See <xref linkend="tls-pki-location-debian"/> and
+    <xref linkend="tls-pki-location-redhat"/>.</para>
+
+    <para>On the server, create an <emphasis>RSA key pair</emphasis>
+    and a <emphasis>certificate signing request</emphasis> (CSR) as
+    demonstrated in <xref linkend="tls-keypair-and-csr"/>.</para>
+
+    <example id="tls-pki-location-debian">
+      <title>PKI directories (Debian/Ubuntu)</title>
+      <programlisting format="linespecific">$ PKI_HOME=/etc/ssl
+$ PRIVATE_KEY_DIR=${PKI_HOME}/private
+$ CERT_DIR=${PKI_HOME}/public
+$ CSR_DIR=${PKI_HOME}/csr</programlisting>
+    </example>
+
+    <example id="tls-pki-location-redhat">
+      <title>PKI directories (Fedora/RHEL/CentOS)</title>
+      <programlisting format="linespecific">$ PKI_HOME=/etc/pki/tls
+$ PRIVATE_KEY_DIR=${PKI_HOME}/private
+$ CERT_DIR=${PKI_HOME}/certs
+$ CSR_DIR=${PKI_HOME}/csr</programlisting>
+    </example>
+
+    <example id="tls-keypair-and-csr">
+      <title>Creating RSA key pair and CSR</title>
+      <programlisting format="linespecific">$ MY_DOMAIN=example.org
+$ sudo mkdir -p $PRIVATE_KEY_DIR
+$ PRIVATE_KEY_PEM=${PRIVATE_KEY_DIR}/${MY_DOMAIN}-key.pem
+$ CSR_PEM=${CSR_DIR}/${MY_DOMAIN}-csr.pem
+$ sudo openssl genrsa -out ${PRIVATE_KEY_PEM} 2048
+$ sudo chmod 0640 ${PRIVATE_KEY_PEM}
+$ sudo chgrp ssl-cert ${PRIVATE_KEY_PEM}
+$ sudo mkdir -p ${CSR_DIR} ${CERT_DIR}
+$ sudo openssl req -new \
+          -key ${PRIVATE_KEY_PEM} \
+          -out ${CSR_PEM} \
+          -subj "/CN=${MY_DOMAIN}"
+$ sudo cat ${CSR_PEM} </programlisting>
+    </example>
+
+    <para>Your CA will ask you to copy the CSR text and paste it into a
+    form on their web site.  The CA will now issue a certificate; it may
+    be displayed in the browser or sent to you by email.  Copy and paste
+    it into the server after the <code>cat</code> command in
+    <xref linkend="tls-install-certificate-commands"/>, pressing
+    <code>CTRL-D</code> or typing <code>EOF</code> to finish.</para>
+
+    <para>If the CA provides an <emphasis>intermediate certificate</emphasis>,
+    you must also append it to the certificate file.  The certificate
+    file should contain the certificate for your domain, following by
+    each intermediate certificate in order up to but not including
+    the root.</para>
+
+    <example id="tls-install-certificate-commands">
+      <title>Installing the certificate</title>
+      <programlisting format="linespecific">$ sudo cat > /etc/ssl/public/${MY_DOMAIN}.pem &lt;&lt; EOF
+-----BEGIN CERTIFICATE-----
+MIIHWTCCBUGgAwIBAgIDCkGKMA0GCSqGSIb3DQEBCwUAMHkxEDAOBgNVBAoTB1Jv
+b3QgQ0ExHjAcBgNVBAsTFWh0dHA6Ly93d3cuY2FjZXJ0Lm9yZzEiMCAGA1UEAxMZ
+Q0EgQ2VydCBTaWduaW5nIEF1dGhvcml0eTEhMB8GCSqGSIb3DQEJARYSc3VwcG9y
+.
+.
+.
+d+pLncdBu8fA46A/5H2kjXPmEkvfoXNzczqA6NXLji/L6hOn1kGLrPo8idck9U60
+4GGSt/M3mMS+lqO3ig==
+-----END CERTIFICATE-----
+EOF </programlisting>
+    </example>
+
+    <para>The certificate is now ready for use by both the SIP and
+    XMPP servers.  It can also be used to secure a web server, SMTP
+    server or any other application.</para>
+  </sect1>
+
+</chapter>

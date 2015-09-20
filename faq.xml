@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<chapter xml:id="faq">
+  <title>Frequently Asked Questions</title>
+
+  <sect2>
+    <title>Can I use a virtual server for SIP or XMPP?</title>
+
+    <para>For small installations (less than 30 concurrent phone calls) a
+    virtual server running on modern hardware is more than sufficient.</para>
+
+    <para>For demanding use-cases, it is recommended that any real-time
+    processes (such as the TURN server or a soft PBX like Asterisk or
+    FreeSWITCH) be on dedicated servers while it may still be possible for
+    the SIP proxy or XMPP server to be on a virtual server.</para>
+  </sect2>
+
+  <sect2>
+    <title>Do I really need to use TLS encryption and certificates?</title>
+
+    <para><emphasis>Yes</emphasis>.  Even if you don't care too much about
+    security or privacy, TLS helps to reduce the risk of nuisance calls from
+    spammers and the risk of impersonation and it also eliminates a range of
+    problems caused by SIP-aware routers that try to modify SIP packets to
+    help them through NAT.</para>
+  </sect2>
+
+</chapter>

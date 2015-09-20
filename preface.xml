@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<preface xml:id="preface">
+  <title>Preface</title>
+
+  <sect2>
+    <title>Who is this document for?</title>
+
+    <para>IT managers, system administrators, developers, web designers
+    and IT users who want best-practice Real-Time Communications (RTC)
+    technology for business or private use.</para>
+  </sect2>
+
+  <sect2>
+    <title>What is Free RTC?</title>
+
+    <para>Running your own, independent, federated and peer-to-peer RTC
+    solutions, including instant messaging (IM), voice-over-IP (VoIP),
+    video/webcam, social networking and WebRTC, using open standards and,
+    in many cases, free, open source software.</para>
+  </sect2>
+
+  <sect2>
+    <title>Why?</title>
+
+    <para>There are many reasons organizations and individuals need to
+    run their own RTC infrastructure:</para>
+
+    <para><emphasis>Resilience:</emphasis> operating RTC servers to the
+    same high standard as the rest of your non-stop infrastructure rather
+    than relying on some vendor who provides a free download for anybody
+    and everybody.</para>
+
+    <para><emphasis>Security:</emphasis> avoid installing proprietary,
+    third party communications apps and plugins.</para>
+
+    <para><emphasis>Privacy:</emphasis> avoid letting sensitive information
+    be harvested by cloud providers.</para>
+
+    <para><emphasis>Brand building:</emphasis> keep users on your own
+    web site, assert your domain name in all communication sessions.</para>
+
+    <para><emphasis>Control:</emphasis> recognize callers who are already
+    logged in to your web site and route their call efficiently based on
+    language, account size or other factors.</para>
+  </sect2>
+
+  <sect2>
+    <title>How?</title>
+
+    <para>This documentation aims to help you choose strong, best of breed,
+    stable and supported components based on
+    <ulink url="https://www.gnu.org/philosophy/free-sw.html">genuinely
+    free software</ulink> and open standards.  There are step-by-step
+    instructions for DNS, firewall and server configuration and testing
+    to achieve maximum chance of success for every call or chat connection
+    your users need to make.</para>
+
+    <para>Thanks to the convenient packages in Linux (Debian, Ubuntu,
+    Fedora and Red Hat/RHEL/CentOS), most IT professionals will be able
+    to set this up in less than one day, the most experienced reader
+    will find that it can be set up in less than an hour.</para>
+  </sect2>
+
+</preface>
+

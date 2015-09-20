@@ -1,0 +1,236 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<chapter xml:id="firewall">
+  <title>Firewall rules</title>
+
+  <sect1 id="firewall-overview">
+    <title>Overview of firewall ports</title>
+    <para><xref linkend="firewall-rules-summary-ipv4"/> and
+    <xref linkend="firewall-rules-summary-ipv6"/> list each firewall rule
+    that is required for the test addresses described in
+    <xref linkend="intro-example-network"/>.</para>
+
+    <table id="firewall-rules-summary-ipv4">
+      <title>Firewall rules summary</title>
+      <tgroup cols="6">
+        <colspec colname="c1" colnum="1" colwidth="1*" />
+        <colspec colname="c2" colnum="2" colwidth="0.4*" />
+        <colspec colname="c3" colnum="3" colwidth="0.4*" />
+        <colspec colname="c4" colnum="4" colwidth="0.4*" />
+        <colspec colname="c5" colnum="5" colwidth="1.8*" />
+        <colspec colname="c6" colnum="6" colwidth="0.4*" />
+
+        <thead>
+          <row>
+            <entry align="center">Purpose</entry>
+            <entry align="center">IP Protocol</entry>
+            <entry align="center">Source Addr</entry>
+            <entry align="center">Source Port</entry>
+            <entry align="center">Dest Addr</entry>
+            <entry align="center">Dest Port</entry>
+          </row>
+        </thead>
+        <tbody>
+          <row>
+            <entry>RTP media (both SIP and XMPP, audio and video)</entry>
+            <entry>UDP</entry>
+            <entry>Any</entry>
+            <entry>Any</entry>
+            <entry><literal>198.51.100.19</literal></entry>
+            <entry>49152 to 65535</entry>
+          </row>
+          <row>
+            <entry>TURN session control</entry>
+            <entry>UDP</entry>
+            <entry>Any</entry>
+            <entry>Any</entry>
+            <entry><literal>198.51.100.19</literal>, <literal>198.51.100.20</literal></entry>
+            <entry>3478</entry>
+          </row>
+          <row>
+            <entry>SIP signalling</entry>
+            <entry>TCP</entry>
+            <entry>Any</entry>
+            <entry>Any</entry>
+            <entry><literal>198.51.100.19</literal></entry>
+            <entry>5061</entry>
+          </row>
+          <row>
+            <entry>SIP over WebSocket (TLS)</entry>
+            <entry>TCP</entry>
+            <entry>Any</entry>
+            <entry>Any</entry>
+            <entry><literal>198.51.100.19</literal></entry>
+            <entry>443</entry>
+          </row>
+          <row>
+            <entry>XMPP Server signalling</entry>
+            <entry>TCP</entry>
+            <entry>Any</entry>
+            <entry>Any</entry>
+            <entry><literal>198.51.100.19</literal></entry>
+            <entry>5222</entry>
+          </row>
+          <row>
+            <entry>XMPP Client signalling</entry>
+            <entry>TCP</entry>
+            <entry>Any</entry>
+            <entry>Any</entry>
+            <entry><literal>198.51.100.19</literal></entry>
+            <entry>5269</entry>
+          </row>
+        </tbody>
+      </tgroup>
+    </table>
+
+    <table id="firewall-rules-summary-ipv6">
+      <title>Firewall rules summary (IPv6)</title>
+      <tgroup cols="6">
+        <colspec colname="c1" colnum="1" colwidth="1*" />
+        <colspec colname="c2" colnum="2" colwidth="0.4*" />
+        <colspec colname="c3" colnum="3" colwidth="0.4*" />
+        <colspec colname="c4" colnum="4" colwidth="0.4*" />
+        <colspec colname="c5" colnum="5" colwidth="1.8*" />
+        <colspec colname="c6" colnum="6" colwidth="0.4*" />
+
+        <thead>
+          <row>
+            <entry align="center">Purpose</entry>
+            <entry align="center">IP Protocol</entry>
+            <entry align="center">Source Addr</entry>
+            <entry align="center">Source Port</entry>
+            <entry align="center">Dest Addr</entry>
+            <entry align="center">Dest Port</entry>
+          </row>
+        </thead>
+        <tbody>
+          <row>
+            <entry>RTP media (both SIP and XMPP, audio and video)</entry>
+            <entry>UDP</entry>
+            <entry>Any</entry>
+            <entry>Any</entry>
+            <entry><literal>2001:DB8:1000:2000::19</literal></entry>
+            <entry>49152 to 65535</entry>
+          </row>
+          <row>
+            <entry>TURN session control</entry>
+            <entry>UDP</entry>
+            <entry>Any</entry>
+            <entry>Any</entry>
+            <entry><literal>2001:DB8:1000:2000::19</literal></entry>
+            <entry>3478</entry>
+          </row>
+          <row>
+            <entry>SIP signalling</entry>
+            <entry>TCP</entry>
+            <entry>Any</entry>
+            <entry>Any</entry>
+            <entry><literal>2001:DB8:1000:2000::19</literal></entry>
+            <entry>5061</entry>
+          </row>
+          <row>
+            <entry>SIP over WebSocket (TLS)</entry>
+            <entry>TCP</entry>
+            <entry>Any</entry>
+            <entry>Any</entry>
+            <entry><literal>2001:DB8:1000:2000::19</literal></entry>
+            <entry>443</entry>
+          </row>
+          <row>
+            <entry>XMPP Server signalling</entry>
+            <entry>TCP</entry>
+            <entry>Any</entry>
+            <entry>Any</entry>
+            <entry><literal>2001:DB8:1000:2000::19</literal></entry>
+            <entry>5222</entry>
+          </row>
+          <row>
+            <entry>XMPP Client signalling</entry>
+            <entry>TCP</entry>
+            <entry>Any</entry>
+            <entry>Any</entry>
+            <entry><literal>2001:DB8:1000:2000::19</literal></entry>
+            <entry>5269</entry>
+          </row>
+        </tbody>
+      </tgroup>
+    </table>
+  </sect1>
+
+  <sect1 id="firewall-nat-considerations">
+    <title>NAT considerations</title>
+    <para>Many networks use NAT to minimize cost, conserve public IP
+    addresses and to avoid direct routing from the public Internet. 
+    RTC applications can work in a NAT environment, however, there are some
+    points to be aware of.</para>
+
+    <para>One common technique used for web servers involves hosting the
+    public IP address on the firewall and creating a port forwarding rule
+    redirecting all incoming connections to the internal IP address of a
+    web server.  This approach works for some types of services, such as 
+    HTTP, but it does not work for all types of RTC traffic.  In particular,
+    it is essential that the TURN server process runs on a host with two
+    public IP addresses.  A SIP server may work with port forwarding, but
+    care needs to be taken to ensure the record-route URI matches the
+    external IP address.  Using SIP over TLS and SIP over WebSockets with
+    port forwarding is more likely to work than trying to port-forward SIP
+    over UDP traffic.</para>
+
+    <para>The TURN server does not need to have an IP address on the
+    private network but it does need to be routable from the private network.
+    The TURN server could be hosted in a DMZ or even using an external
+    hosting provider.</para>
+
+    <para>If you choose to operate a SIP Session Border Controller (SBC),
+    it will probably need to have both a public IP address and a private
+    IP address.</para>
+  </sect1>
+
+  <sect1 id="firewall-example-iptables">
+    <title>Setup with <code>iptables</code> on Linux</title>
+    <para><xref linkend="firewall-setup-iptables-example"/> provides a basic
+    example for Linux firewalls using <code>iptables</code>.  If using a
+    firewall framework like <emphasis>Shorewall</emphasis> then please
+    consult the relevant documentation to open the same ports.</para>
+
+    <example id="firewall-setup-iptables-example">
+      <title>Firewall setup with <code>iptables</code></title>
+      <programlisting format="linespecific">iptables -I INPUT -p udp -d 198.51.100.19 --dport 3478 -j ACCEPT
+iptables -I INPUT -p udp -d 198.51.100.20 --dport 3478 -j ACCEPT
+iptables -I INPUT -p udp -d 198.51.100.19 \
+        --dport 49152:65535 -j ACCEPT
+
+iptables -A INPUT -p tcp -d 198.51.100.19 --dport 5061 -j ACCEPT
+
+iptables -A INPUT -p tcp -d 198.51.100.19 --dport 5222 -j ACCEPT
+iptables -A INPUT -p tcp -d 198.51.100.19 --dport 5269 -j ACCEPT
+
+ip6tables -I INPUT -p udp -d 2001:DB8:1000:2000::19 \
+        --dport 3478 -j ACCEPT
+ip6tables -I INPUT -p udp -d 2001:DB8:1000:2000::19 \
+        --dport 49152:65535 -j ACCEPT
+
+ip6tables -A INPUT -p tcp -d 2001:DB8:1000:2000::19 \
+        --dport 5061 -j ACCEPT
+
+ip6tables -A INPUT -p tcp -d 2001:DB8:1000:2000::19 \
+        --dport 5222 -j ACCEPT
+ip6tables -A INPUT -p tcp -d 2001:DB8:1000:2000::19 \
+        --dport 5269 -j ACCEPT</programlisting>
+    </example>
+
+    <para>It is highly recommended that the firewall rules for RTP packets
+    are placed at the beginning of the chain, as these packets are time
+    sensitive and over 99% of the RTC traffic is carried in the RTP packets.
+    Putting them lower in the chain will mean that the CPU does more work
+    evaluating each packet before it finds the matching rule.  That would
+    lead to wasted CPU cycles and potential latency or congestion issues for
+    all real-time applications on the server.</para>
+
+    <para>When you deploy additional RTC applications (such as Asterisk or
+    FreeSWITCH) behind the firewall, you may want to allow RTP traffic to
+    travel directly to those servers too while only allowing the SIP traffic
+    to go through the SIP proxy.</para>
+
+  </sect1>
+
+</chapter>

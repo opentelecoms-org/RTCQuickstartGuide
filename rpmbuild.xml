@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<appendix xml:id="rpmbuild">
+  <title>Building reSIProcate RPMs on RHEL and CentOS</title>
+
+  <para>reSIProcate packages are available on many recent Linux distributions.
+  On some platforms, including Red Hat Enterprise Linux and CentOS, it may
+  be necessary to build the RPMs from source.  This is a relatively
+  straightforward task.</para>
+
+  <example id="rpmbuild-install-rpmbuild">
+    <title>Installing the <code>rpmbuild</code> command</title>
+    <programlisting format="linespecific">$ sudo yum install rpm-build</programlisting>
+  </example>
+
+  <example id="rpmbuild-install-build-deps">
+    <title>Installing the compiler and dependencies</title>
+    <programlisting format="linespecific">$ sudo yum install gcc-c++ libtool automake autoconf \
+    asio-devel boost-devel cajun-jsonapi-devel c-ares-devel \
+    cppunit-devel gperf db4-cxx-devel db4-devel openssl-devel \
+    mysql-devel pcre-devel perl popt-devel python-devel \
+    python-pycxx-devel freeradius-client-devel xerces-c-devel</programlisting>
+  </example>
+
+  <example id="rpmbuild-setup">
+    <title>Creating the <code>rpmbuild</code> directories</title>
+    <programlisting format="linespecific">$ mkdir ~/rpms
+$ cd ~/rpms
+$ mkdir BUILD BUILDROOT \
+        RPMS/i386 RPMS/noarch RPMS/x86_64 \
+        SOURCES SPECS SRPMS
+$ cat &gt; ~/.rpmmacros &lt;&lt; EOF
+%_topdir	$HOME/rpms
+%__make               /usr/bin/make -j7
+EOF
+$ </programlisting>
+  </example>
+
+  <example id="rpmbuild-create-rpms">
+    <title>Running the <code>rpmbuild</code> command</title>
+    <programlisting format="linespecific">$ wget http://.../resiprocate-1.9.8.tar.gz
+$ rpmbuild -tb resiprocate-1.9.8.tar.gz</programlisting>
+  </example>
+
+</appendix>

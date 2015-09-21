@@ -11,5 +11,5 @@ Before running it for the first time, make sure you install the
 required utilities.  On a Debian/Ubuntu system, they can be
 installed with:
 
-$ sudo apt-get install xsltproc fop
+$ sudo apt-get install xsltproc fop docbook-xsl
 

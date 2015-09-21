@@ -1,5 +1,5 @@
 before_install:
  - sudo apt-get update -qq
- - sudo apt-get install xsltproc fop
+ - sudo apt-get install xsltproc fop docbook-xsl
 script:
  - ./make-book.sh

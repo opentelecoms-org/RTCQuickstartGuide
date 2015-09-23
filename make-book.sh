@@ -19,6 +19,12 @@ XSLTPROC="xsltproc --xinclude"
 XSLTPROC_HTML="$XSLTPROC"
 #XSLTPROC_HTML="$XSLTPROC --stringparam html.stylesheet css/bootstrap.min.css"
 
+# Validate the XML
+
+xmllint \
+    --relaxng http://www.docbook.org/xml/5.0/rng/docbookxi.rng \
+    --noout book.xml
+
 # Prepare the output directory
 
 rm -rf testoutput

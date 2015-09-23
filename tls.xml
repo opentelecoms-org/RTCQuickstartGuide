@@ -20,15 +20,15 @@
   only include the latter.  The free certificates from
   <emphasis>StartSSL/StartCom</emphasis> do not have the
   <emphasis>TLS client</emphasis> extension and can't be used.  The
-  <ulink url="https://www.gandi.net/ssl/standard#single">Gandi.net SSL
-  Standard certificate</ulink> which costs about $16 (free with a
+  <link xlink:href="https://www.gandi.net/ssl/standard#single">Gandi.net SSL
+  Standard certificate</link> which costs about $16 (free with a
   domain registration or transfer) is known to be suitable.</para>
 
   <para>Some organizations have <emphasis>wildcard</emphasis>
   certificates for all servers/subdomains in the organization.  These
   are not always suitable for RTC purposes, in particular,
-  <ulink url="https://tools.ietf.org/html/rfc5922#section-7.2">RFC 5922
-  section 7.2</ulink> prohibits the use of wildcard certificates for SIP.
+  <link xlink:href="https://tools.ietf.org/html/rfc5922#section-7.2">RFC 5922
+  section 7.2</link> prohibits the use of wildcard certificates for SIP.
   Some SIP products offer the ability to override this restriction and
   use wildcard certificates anyway, however, this is not suitable for
   the public Internet.</para>

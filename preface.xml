@@ -51,8 +51,8 @@
 
     <para>This documentation aims to help you choose strong, best of breed,
     stable and supported components based on
-    <ulink url="https://www.gnu.org/philosophy/free-sw.html">genuinely
-    free software</ulink> and open standards.  There are step-by-step
+    <link xlink:href="https://www.gnu.org/philosophy/free-sw.html">genuinely
+    free software</link> and open standards.  There are step-by-step
     instructions for DNS, firewall and server configuration and testing
     to achieve maximum chance of success for every call or chat connection
     your users need to make.</para>

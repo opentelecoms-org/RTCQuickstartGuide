@@ -59,7 +59,7 @@
 
 <para>All the applications run on a server called <emphasis>server1.example.org</emphasis>.  In practice, you could run each service on a different server and you may duplicate services across multiple servers for <emphasis>N+1</emphasis> redundancy.</para>
 
-<para>The ICE/STUN process requires two public IPv4 addresses, either on the same interface or on different interfaces.  In the examples, the server has two IPv4 addresses on the same interface/subnet, they are <emphasis>198.51.100.19</emphasis> and <emphasis>198.51.100.20</emphasis>.  These IP addresses come from the <ulink url="https://tools.ietf.org/html/rfc5737">RFC 5737 documentation subnets</ulink>.</para>
+<para>The ICE/STUN process requires two public IPv4 addresses, either on the same interface or on different interfaces.  In the examples, the server has two IPv4 addresses on the same interface/subnet, they are <emphasis>198.51.100.19</emphasis> and <emphasis>198.51.100.20</emphasis>.  These IP addresses come from the <link xlink:href="https://tools.ietf.org/html/rfc5737">RFC 5737 documentation subnets</link>.</para>
 
 <para>For IPv6, RFC 3849 reserves the address prefix <emphasis>2001:DB8::/32</emphasis> for documentation.  In the examples, <emphasis>server1.example.org</emphasis> uses the address <emphasis>2001:DB8:1000:2000::19/64</emphasis>.</para>
 

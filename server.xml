@@ -6,16 +6,16 @@
 
   <para>The packages are available in a convenient format in popular
   Linux operating systems including
-  <ulink url="http://www.debian.org/distrib/">Debian</ulink>,
-  <ulink url="http://www.ubuntu.com">Ubuntu</ulink> and
-  <ulink url="http://fedoraproject.org/get-fedora-all">Fedora</ulink>.
+  <link xlink:href="http://www.debian.org/distrib/">Debian</link>,
+  <link xlink:href="http://www.ubuntu.com">Ubuntu</link> and
+  <link xlink:href="http://fedoraproject.org/get-fedora-all">Fedora</link>.
   <xref linkend="intro-os-choice"/> discusses the choice of operating
   system.</para>
 
   <para>If using <emphasis>Debian 8 (jessie)</emphasis> you must use the
   reSIProcate 1.10.x packages from
-  <ulink url="http://backports.debian.org/Instructions/">jessie-backports
-  </ulink>.</para>
+  <link xlink:href="http://backports.debian.org/Instructions/">jessie-backports
+  </link>.</para>
 
   <para>Users of Red Hat Enterprise Linux (RHEL) and CentOS can easily
   build the reSIProcate package using <code>rpmbuild</code>.  All
@@ -69,8 +69,8 @@ iface eth0 inet6 static
 
     <para>To set up both of the IP addresses on the same box (as required
     by the ICE/STUN/TURN protocol), see the documentation about
-    <ulink url="http://docs.fedoraproject.org/en-US/Fedora/17/html/System_Administrators_Guide/s2-networkscripts-interfaces-alias.html">
-    alias and clone files</ulink> for network interfaces</para>
+    <link xlink:href="http://docs.fedoraproject.org/en-US/Fedora/17/html/System_Administrators_Guide/s2-networkscripts-interfaces-alias.html">
+    alias and clone files</link> for network interfaces</para>
 
   </sect2>
 

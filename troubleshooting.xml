@@ -30,9 +30,9 @@
       instead of Hangouts.  Google provides a link for this:
       <code>https://plus.google.com/downgrade/</code>.  The XMPP Foundation
       maintains a
-      <ulink url="http://wiki.xmpp.org/web/Jabber_Hosting_Possibilities">
+      <link xlink:href="http://wiki.xmpp.org/web/Jabber_Hosting_Possibilities">
       list of hosting companies who provide fully functional XMPP
-      support</ulink>.</para>
+      support</link>.</para>
     </sect2>
 
     <sect2>
@@ -103,8 +103,8 @@
       help plan for growth and make troubleshooting easier when an
       unexpected problem does occur.</para>
 
-      <para>Use systems like <ulink url="http://ganglia.info">
-      <emphasis>Ganglia</emphasis></ulink> and <emphasis>Cacti</emphasis>
+      <para>Use systems like <link xlink:href="http://ganglia.info">
+      <emphasis>Ganglia</emphasis></link> and <emphasis>Cacti</emphasis>
       to gather statistics from all servers and network devices.  Building
       up graphs of these statistics allows you to see normal usage
       patterns and spot any spikes more quickly.  These graphs also allow
@@ -113,14 +113,14 @@
 
       <para>Ensure log messages are being aggregated by
       <emphasis>Syslog</emphasis>.  Using a tool like
-      <ulink url="http://loganalyzer.adiscon.com/">
-      <emphasis>LogAnalyzer</emphasis></ulink> to visualize the log
+      <link xlink:href="http://loganalyzer.adiscon.com/">
+      <emphasis>LogAnalyzer</emphasis></link> to visualize the log
       messages in colour makes it much easier to spot unusual activity.</para>
 
       <para>Use an alerting tool such as <emphasis>Nagios</emphasis>
       or <emphasis>Icinga</emphasis> to monitor the graphs (see
-      <ulink url="https://github.com/ganglia/ganglia-nagios-bridge"><emphasis>Ganglia-Nagios-Bridge</emphasis></ulink>)
-      and logs (see <ulink url="https://github.com/dpocock/syslog-nagios-bridge"><emphasis>Syslog-Nagios-Bridge</emphasis></ulink>)and also monitor the
+      <link xlink:href="https://github.com/ganglia/ganglia-nagios-bridge"><emphasis>Ganglia-Nagios-Bridge</emphasis></link>)
+      and logs (see <link xlink:href="https://github.com/dpocock/syslog-nagios-bridge"><emphasis>Syslog-Nagios-Bridge</emphasis></link>)and also monitor the
       availability of services such as the SIP and TURN processes and
       the expiry dates of TLS certificates.</para>
 

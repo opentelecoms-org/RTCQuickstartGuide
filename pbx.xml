@@ -21,6 +21,6 @@
   send calls back and forth between them as required.</para>
 
   <para>OpenTelecoms maintains a guide to
-  <ulink url="http://www.opentelecoms.org/using-repro-with-asterisk-or-freeswitch">
-  using repro with Asterisk or FreeSWITCH</ulink>.</para>
+  <link xlink:href="http://www.opentelecoms.org/using-repro-with-asterisk-or-freeswitch">
+  using repro with Asterisk or FreeSWITCH</link>.</para>
 </chapter>

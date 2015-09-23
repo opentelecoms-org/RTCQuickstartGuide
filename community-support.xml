@@ -26,16 +26,16 @@
       <title>Strategy and advocacy</title>
 
       <para>The
-      <ulink url="https://lists.fsfe.org/mailman/listinfo/free-rtc">FSFE
-      Free RTC mailing list</ulink> discusses strategies for promoting
+      <link xlink:href="https://lists.fsfe.org/mailman/listinfo/free-rtc">FSFE
+      Free RTC mailing list</link> discusses strategies for promoting
       and adopting free RTC and free software.</para>
     </sect2>
 
     <sect2>
       <title>Collaboration between operators and service providers</title>
 
-      <para>The <ulink url="http://mail.jabber.org/mailman/listinfo/operators">
-      XSF XMPP operators mailing list</ulink> enables discussion of issues
+      <para>The <link xlink:href="http://mail.jabber.org/mailman/listinfo/operators">
+      XSF XMPP operators mailing list</link> enables discussion of issues
       between organizations managing XMPP servers of any size.</para>
     </sect2>
 
@@ -43,13 +43,13 @@
       <title>Server support</title>
 
       <para>The
-      <ulink url="http://list.resiprocate.org/mailman/listinfo/repro-users">
-      reSIProcate <code>repro</code> users mailing list</ulink> provides
+      <link xlink:href="http://list.resiprocate.org/mailman/listinfo/repro-users">
+      reSIProcate <code>repro</code> users mailing list</link> provides
       community support for people setting up and operating the
       <code>repro</code> SIP proxy server.</para>
 
-      <para>The <ulink url="http://prosody.im/discuss#mailing_lists">Prosody
-      users mailing list</ulink> provides community support for people
+      <para>The <link xlink:href="http://prosody.im/discuss#mailing_lists">Prosody
+      users mailing list</link> provides community support for people
       setting up and operating the <emphasis>Prosody</emphasis> XMPP
       server.</para>
     </sect2>
@@ -57,12 +57,12 @@
     <sect2>
       <title>Softphones</title>
 
-      <para>The <ulink url="http://lists.lumicall.org">Lumicall users mailing
-      list</ulink> supports users of the <emphasis>Lumicall</emphasis>
+      <para>The <link xlink:href="http://lists.lumicall.org">Lumicall users mailing
+      list</link> supports users of the <emphasis>Lumicall</emphasis>
       Android app.</para>
 
-      <para>The <ulink url="https://jitsi.org/Development/MailingLists">Jitsi
-      users mailing list</ulink> provides a resource for those setting up
+      <para>The <link xlink:href="https://jitsi.org/Development/MailingLists">Jitsi
+      users mailing list</link> provides a resource for those setting up
       and using the Jitsi products, including the popular Jitsi
       softphone.</para>
     </sect2>
@@ -71,7 +71,7 @@
   <sect1 id="community-support-blogs-and-news">
     <title>Popular blogs and news sites</title>
 
-    <para><ulink url="http://planet.sip5060.net">planet.sip5060.net</ulink>
+    <para><link xlink:href="http://planet.sip5060.net">planet.sip5060.net</link>
     syndicates blogs from leading software developers with a focus on RTC
     and especially SIP.</para>
   </sect1>

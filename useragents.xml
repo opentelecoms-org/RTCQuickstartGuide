@@ -13,13 +13,13 @@
     headset to the 3.5mm audio socket on their computer.  However, using
     headsets with a USB connector yields better results in some cases.</para>
 
-    <para>The <ulink url="http://www.jitsi.org">Jitsi</ulink> softphone is
+    <para>The <link xlink:href="http://www.jitsi.org">Jitsi</link> softphone is
     developed in Java and runs on Linux, Windows and Mac OS.  It supports
     both SIP and XMPP.</para>
 
     <para>There is a
-    <ulink url="http://www.resiprocate.org/ReproMutualTLSAuthenticationJitsi">
-    detailed guide to setup up Jitsi with client certificates</ulink>
+    <link xlink:href="http://www.resiprocate.org/ReproMutualTLSAuthenticationJitsi">
+    detailed guide to setup up Jitsi with client certificates</link>
     in the <emphasis>reSIProcate</emphasis> wiki.</para>
 
     <para>The <emphasis>GNOME</emphasis> desktop on many common Linux
@@ -59,7 +59,7 @@
     legal means of obtaining all firmware.  The phones load the
     firmware and configuration using DHCP and TFTP.</para>
 
-    <para>The <ulink url="http://www.polycom.com">Polycom Soundpoint IP</ulink>
+    <para>The <link xlink:href="http://www.polycom.com">Polycom Soundpoint IP</link>
     phones are very similar in quality to the Cisco phones but without
     the licensing complications.  They typically support SIP out of
     the box.  The Polycom phones support configuration over HTTPS.
@@ -73,7 +73,7 @@
     <code>CommonNameMappings</code>.</para>
 
     <para>Another popular choice is the
-    <ulink url="http://www.snom.com">SNOM</ulink> device.</para>
+    <link xlink:href="http://www.snom.com">SNOM</link> device.</para>
 
     <para>There are various factors to think about when choosing a phone,
     such as VLAN support, built-in Ethernet hub, power-over-ethernet
@@ -86,13 +86,13 @@
 
     <para>On the Android platform, there are several popular free,
     open source SIP applications including
-    <ulink url="http://www.lumicall.org">Lumicall</ulink> and
+    <link xlink:href="http://www.lumicall.org">Lumicall</link> and
     <emphasis>CSipSimple</emphasis>.</para>
 
     <para>Users of the Apple iPhone may want to consider a proprietary
     app such as
-    <ulink url="http://www.counterpath.com/bria-iphone-edition.html">Bria
-    for iPhone</ulink>.</para>
+    <link xlink:href="http://www.counterpath.com/bria-iphone-edition.html">Bria
+    for iPhone</link>.</para>
   </sect1>
 
   <sect1 id="useragents-click-to-dial">
@@ -123,8 +123,8 @@
       taken advantage of this feature.</para>
 
       <para>The Firefox plugin
-      <ulink url="https://addons.mozilla.org/en-us/firefox/addon/telify/">
-      <emphasis>Telify</emphasis></ulink> solves this problem.  It scans
+      <link xlink:href="https://addons.mozilla.org/en-us/firefox/addon/telify/">
+      <emphasis>Telify</emphasis></link> solves this problem.  It scans
       the page you are looking at and dynamically converts phone numbers
       into links that can be clicked.</para>
     </sect2>
@@ -137,7 +137,7 @@
       for email and address book purposes.</para>
 
       <para>For Thunderbird users, the
-      <ulink url="https://addons.mozilla.org/en-us/thunderbird/addon/tbdialout/"><emphasis>TBDialOut</emphasis></ulink>
+      <link xlink:href="https://addons.mozilla.org/en-us/thunderbird/addon/tbdialout/"><emphasis>TBDialOut</emphasis></link>
       plugin makes phone numbers in the address book clickable as
       <code>tel</code> or <code>sip</code> URIs.  Dialing is then
       delegated to the URI handler on the user's system.</para>

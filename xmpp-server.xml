@@ -129,9 +129,9 @@ ldap_mode = "bind" </programlisting>
     <sect2>
       <title>Further reading</title>
 
-      <para>The <ulink url="https://prosody.im/doc/install">Prosody web
+      <para>The <link xlink:href="https://prosody.im/doc/install">Prosody web
       site gives more detailed documentation about setting up the user
-      accounts and other steps</ulink>.</para>
+      accounts and other steps</link>.</para>
     </sect2>
 
   </sect1>

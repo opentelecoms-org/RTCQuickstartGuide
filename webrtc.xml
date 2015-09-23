@@ -197,8 +197,8 @@
 
       <para>For those interested in using SIP for WebRTC signalling,
       the most compelling solution now involves a combination of JsSIP and
-      <ulink url="http://jscommunicator.org">
-      <emphasis>JSCommunicator</emphasis></ulink>.  JsSIP provides the
+      <link xlink:href="http://jscommunicator.org">
+      <emphasis>JSCommunicator</emphasis></link>.  JsSIP provides the
       low-level support for SIP message parsing.  JSCommunicator provides
       a high-level API and even a fragment of HTML that can be embedded
       into an existing page to get up and running quickly.</para>
@@ -233,7 +233,7 @@
 
       <para>For <emphasis>Drupal</emphasis> web sites, adding WebRTC
       is as simple as adding the
-      <ulink url="http://drucall.org"><emphasis>DruCall</emphasis></ulink>
+      <link xlink:href="http://drucall.org"><emphasis>DruCall</emphasis></link>
       module and pointing it to a SIP proxy such as <emphasis>repro</emphasis>.
       </para>
 

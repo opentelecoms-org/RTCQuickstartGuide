@@ -7,7 +7,7 @@
   <para>This chapter gives a high-level overview of the RTC architecture.
   Each component is explained in more detail in its own chapter.</para>
 
-  <figure float="none" id="arch-dia-1">
+  <figure float="none" xml:id="arch-dia-1">
     <title>Overview</title>
 
     <mediaobject>
@@ -29,7 +29,7 @@
   is setup with SIP and the RTP media streams (dotted lines) pass through
   the TURN server.</para>
 
-  <figure float="none" id="arch-dia-fed-sip">
+  <figure float="none" xml:id="arch-dia-fed-sip">
     <title>SIP federation between two sites</title>
 
     <mediaobject>
@@ -53,7 +53,7 @@
   softphone users are both using NAT addresses, the TURN servers may be
   relaying all the media streams on their behalf.</para>
 
-  <figure float="none" id="arch-dia-webrtc-p2p">
+  <figure float="none" xml:id="arch-dia-webrtc-p2p">
     <title>WebRTC basic peer-to-peer</title>
 
     <mediaobject>
@@ -80,7 +80,7 @@
   possibly because they have discovered they are both on the same
   IP network.</para>
 
-  <figure float="none" id="arch-dia-webrtc-call-center">
+  <figure float="none" xml:id="arch-dia-webrtc-call-center">
     <title>WebRTC from customer web browser to call center</title>
 
     <mediaobject>

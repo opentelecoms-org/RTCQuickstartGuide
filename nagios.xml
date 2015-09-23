@@ -9,7 +9,7 @@
   to discover any outage at the first opportunity and inform the right
   person to fix it.</para>
 
-  <sect1 id="nagios-plugins">
+  <sect1 xml:id="nagios-plugins">
     <title>Nagios plugins</title>
 
     <para>It is necessary to download and install the individual
@@ -21,7 +21,7 @@
     <para>As the TURN server uses the STUN protocol, a STUN test
     script is sufficient to test the TURN server is operational.</para>
 
-    <example id="nagios-plugin-stun-configuration">
+    <example xml:id="nagios-plugin-stun-configuration">
       <title>Sample <code>/etc/nagios-plugins/config/stun.cfg</code></title>
       <programlisting format="linespecific"># can be used to check STUN and TURN servers
 # uses script from http://karlsbakk.net/asterisk/scripts/check_stun
@@ -31,7 +31,7 @@ define command {
 }</programlisting>
     </example>
 
-    <example id="nagios-plugin-sip-tls-configuration">
+    <example xml:id="nagios-plugin-sip-tls-configuration">
       <title>Sample <code>/etc/nagios-plugins/config/sip.cfg</code></title>
       <programlisting format="linespecific"># uses script from https://github.com/ibc/nagios-sip-plugin
 define command {
@@ -40,7 +40,7 @@ define command {
 }</programlisting>
     </example>
 
-    <example id="nagios-plugin-xmpp-configuration">
+    <example xml:id="nagios-plugin-xmpp-configuration">
       <title>Sample <code>/etc/nagios-plugins/config/xmpp.cfg</code></title>
       <programlisting format="linespecific"># uses script from https://exchange.icinga.org/jandd/check_xmppng
 # Debian/Ubuntu: apt-get install nagios-check-xmppng
@@ -52,14 +52,14 @@ define command {
 
   </sect1>
 
-  <sect1 id="nagios-service-checks">
+  <sect1 xml:id="nagios-service-checks">
     <title>Nagios service checks</title>
 
     <para>Once the plugins are declared in the Nagios configuration,
     they can be used to write service check definitions as demonstrated
     here.</para>
 
-    <example id="nagios-check-stun-configuration">
+    <example xml:id="nagios-check-stun-configuration">
       <title>Sample service check for STUN/TURN</title>
       <programlisting format="linespecific">define service{
         use                             generic-service
@@ -71,7 +71,7 @@ define command {
 
     <para>The following test SIP on port 5061 and 443:</para>
 
-    <example id="nagios-check-sip-tls-configuration">
+    <example xml:id="nagios-check-sip-tls-configuration">
       <title>Sample service check for SIP over TLS</title>
       <programlisting format="linespecific">define service{
         use                             generic-service
@@ -81,7 +81,7 @@ define command {
 }</programlisting>
     </example>
 
-    <example id="nagios-check-sip-tls-configuration-443">
+    <example xml:id="nagios-check-sip-tls-configuration-443">
       <title>Sample service check for SIP over TLS (port 443)</title>
       <programlisting format="linespecific">define service{
         use                             generic-service
@@ -93,7 +93,7 @@ define command {
 
     <para>The following monitors the XMPP service.  Notice that the argument used for this check must be the XMPP domain, not the server domain or hostname.  In the example, it is <emphasis>example.org</emphasis>.</para>
 
-    <example id="nagios-check-xmpp-configuration">
+    <example xml:id="nagios-check-xmpp-configuration">
       <title>Sample service check for XMPP</title>
       <programlisting format="linespecific">define service{
         use                             generic-service

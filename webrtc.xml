@@ -27,7 +27,7 @@
   signalling system, the mechanism responsible for locating other users
   and routing calls to them.</para>
 
-  <sect1 id="webrtc-technical-overview">
+  <sect1 xml:id="webrtc-technical-overview">
     <title>Technical overview</title>
 
     <sect2>
@@ -97,7 +97,7 @@
       server to perform this role.</para>
     </sect2>
 
-    <sect2 id="webrtc-tech-signalling">
+    <sect2 xml:id="webrtc-tech-signalling">
       <title>Signalling protocols</title>
 
       <para>As already mentioned, WebRTC does not provide a signalling
@@ -161,7 +161,7 @@
 
   </sect1>
 
-  <sect1 id="webrtc-practical">
+  <sect1 xml:id="webrtc-practical">
     <title>Practical WebRTC deployment</title>
 
     <para>Although the WebRTC API does not provide a signalling protocol,
@@ -241,7 +241,7 @@
       JSCommunicator so it also provides a very good example of how to
       adapt JSCommunicator to other CMS platforms.</para>
 
-      <figure float="none" id="drucall-stack-dia">
+      <figure float="none" xml:id="drucall-stack-dia">
         <title>DruCall/JSCommunicator/JsSIP software stack</title>
 
         <mediaobject>

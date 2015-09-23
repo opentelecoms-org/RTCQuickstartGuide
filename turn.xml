@@ -4,7 +4,7 @@
       xml:id="turn">
   <title>ICE/STUN/TURN server installation</title>
 
-  <sect1 id="turn-server-choice">
+  <sect1 xml:id="turn-server-choice">
     <title>Choosing a TURN server</title>
     <para>There are several TURN servers you can choose from.  Any TURN
     server works for SIP, TURN, WebRTC and other protocols.</para>
@@ -53,7 +53,7 @@
     <para><emphasis>IPv6</emphasis>: do you need IPv6 support?</para>
   </sect1>
 
-  <sect1 id="turn-reTurnServer">
+  <sect1 xml:id="turn-reTurnServer">
     <title>reTurnServer from reSIProcate</title>
 
     <sect2>
@@ -65,12 +65,12 @@
       available for your platform, you may be able to build it using
       the instructions in <xref linkend="rpmbuild"/>.</para>
 
-      <example id="return-install-debian">
+      <example xml:id="return-install-debian">
         <title>Installing <code>reTurnServer</code> on Debian/Ubuntu</title>
         <programlisting format="linespecific">$ sudo apt-get install resiprocate-turn-server </programlisting>
       </example>
 
-      <example id="return-install-redhat">
+      <example xml:id="return-install-redhat">
         <title>Install <code>reTurnServer</code> on Fedora/RHEL/CentOS</title>
         <programlisting format="linespecific">$ sudo yum install resiprocate-turn-server </programlisting>
       </example>
@@ -86,7 +86,7 @@
       the default values.  These are demonstrated in
       <xref linkend="return-config-sample"/>.</para>
 
-      <example id="return-config-sample">
+      <example xml:id="return-config-sample">
         <title><code>reTurnServer.config</code> entries</title>
         <programlisting format="linespecific"># your IP addresses go here:
 TurnAddress = 198.51.100.19
@@ -109,7 +109,7 @@ UserDatabaseHashedPasswords = true </programlisting>
       the new settings as demonstrated in
       <xref linkend="return-restart-systemd"/></para>
 
-      <example id="return-restart-systemd">
+      <example xml:id="return-restart-systemd">
         <title>Restarting the <code>reTurnServer</code> daemon
         (<code>systemd</code>)</title>
         <programlisting format="linespecific">$ sudo systemctl restart resiprocate-turn-server
@@ -121,7 +121,7 @@ $ </programlisting>
       client connections.  You can verify it is running as demonstrated
       in <xref linkend="return-test-netstat"/>.</para>
 
-      <example id="return-test-netstat">
+      <example xml:id="return-test-netstat">
         <title>Using <code>netstat</code> to verify
         <code>reTurnServer</code> is running</title>
         <programlisting format="linespecific">$ sudo netstat -nlp | grep reTurnServer
@@ -168,7 +168,7 @@ udp   0   0 198.51.100.20:3478       0.0.0.0:*              2460/reTurnServer
         <para><code>psql-user-extract</code> can be invoked from
         <code>cron</code>, see <xref linkend="return-psql-crontab"/>.</para>
 
-        <example id="return-psql-crontab">
+        <example xml:id="return-psql-crontab">
           <title><code>crontab</code> entry for
           <code>psql-user-extract</code></title>
           <programlisting format="linespecific">* * * * * /usr/lib/resiprocate/reTurnServer/psql-user-extract </programlisting>
@@ -178,7 +178,7 @@ udp   0   0 198.51.100.20:3478       0.0.0.0:*              2460/reTurnServer
         file specifying the database connection parameters, see
         <xref linkend="return-psql-cfg"/>.</para>
 
-        <example id="return-psql-cfg">
+        <example xml:id="return-psql-cfg">
           <title>Sample <code>/etc/reTurn/psql-user-extract.config</code></title>
           <programlisting format="linespecific">psql_conninfo = "dbname=repro user=repro host=localhost password=foobar"
 
@@ -194,18 +194,18 @@ auth_user_alt = True</programlisting>
 
   </sect1>
 
-  <sect1 id="turn-testing">
+  <sect1 xml:id="turn-testing">
     <title>Testing the TURN server</title>
 
     <para>As the TURN server speaks the STUN protocol, a simple way to test
     it is with a STUN client.</para>
 
-    <example id="turn-stun-client-install-debian">
+    <example xml:id="turn-stun-client-install-debian">
       <title>Installing the <code>stun</code> client utility</title>
       <programlisting format="linespecific">$ sudo apt-get install stun</programlisting>
     </example>
 
-    <example id="turn-stun-client-test">
+    <example xml:id="turn-stun-client-test">
       <title>Using the <code>stun</code> client utility</title>
       <programlisting format="linespecific">$ stun turn-server.example.org
 STUN client version 0.96

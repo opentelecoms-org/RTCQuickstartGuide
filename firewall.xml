@@ -4,14 +4,14 @@
       xml:id="firewall">
   <title>Firewall rules</title>
 
-  <sect1 id="firewall-overview">
+  <sect1 xml:id="firewall-overview">
     <title>Overview of firewall ports</title>
     <para><xref linkend="firewall-rules-summary-ipv4"/> and
     <xref linkend="firewall-rules-summary-ipv6"/> list each firewall rule
     that is required for the test addresses described in
     <xref linkend="intro-example-network"/>.</para>
 
-    <table id="firewall-rules-summary-ipv4">
+    <table xml:id="firewall-rules-summary-ipv4">
       <title>Firewall rules summary</title>
       <tgroup cols="6">
         <colspec colname="c1" colnum="1" colwidth="1*" />
@@ -84,7 +84,7 @@
       </tgroup>
     </table>
 
-    <table id="firewall-rules-summary-ipv6">
+    <table xml:id="firewall-rules-summary-ipv6">
       <title>Firewall rules summary (IPv6)</title>
       <tgroup cols="6">
         <colspec colname="c1" colnum="1" colwidth="1*" />
@@ -158,7 +158,7 @@
     </table>
   </sect1>
 
-  <sect1 id="firewall-nat-considerations">
+  <sect1 xml:id="firewall-nat-considerations">
     <title>NAT considerations</title>
     <para>Many networks use NAT to minimize cost, conserve public IP
     addresses and to avoid direct routing from the public Internet. 
@@ -187,14 +187,14 @@
     IP address.</para>
   </sect1>
 
-  <sect1 id="firewall-example-iptables">
+  <sect1 xml:id="firewall-example-iptables">
     <title>Setup with <code>iptables</code> on Linux</title>
     <para><xref linkend="firewall-setup-iptables-example"/> provides a basic
     example for Linux firewalls using <code>iptables</code>.  If using a
     firewall framework like <emphasis>Shorewall</emphasis> then please
     consult the relevant documentation to open the same ports.</para>
 
-    <example id="firewall-setup-iptables-example">
+    <example xml:id="firewall-setup-iptables-example">
       <title>Firewall setup with <code>iptables</code></title>
       <programlisting format="linespecific">iptables -I INPUT -p udp -d 198.51.100.19 --dport 3478 -j ACCEPT
 iptables -I INPUT -p udp -d 198.51.100.20 --dport 3478 -j ACCEPT

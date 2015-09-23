@@ -4,10 +4,10 @@
       xml:id="sip-proxy">
   <title>SIP proxy server installation</title>
 
-  <sect1 id="sip-proxy-choice">
+  <sect1 xml:id="sip-proxy-choice">
     <title>Choose your SIP proxy</title>
 
-    <table id="sip-proxy-comparison">
+    <table xml:id="sip-proxy-comparison">
       <title>Comparison of SIP proxy servers</title>
       <tgroup cols="3">
         <colspec colname="c1" colnum="1" colwidth="1.5*" />
@@ -70,7 +70,7 @@
 
   </sect1>
 
-  <sect1 id="sip-proxy-repro">
+  <sect1 xml:id="sip-proxy-repro">
     <title>repro SIP proxy</title>
     <sect2>
       <title>Package installation</title>
@@ -80,13 +80,13 @@
       available for your platform, you may be able to build it using the
       instruction in <xref linkend="rpmbuild"/>.</para>
 
-      <example id="repro-install-debian">
+      <example xml:id="repro-install-debian">
         <title>Installing <code>repro</code> on Debian/Ubuntu</title>
         <programlisting format="linespecific">$ sudo apt-get install repro
 $ sudo addgroup repro ssl-cert</programlisting>
       </example>
 
-      <example id="repro-install-redhat">
+      <example xml:id="repro-install-redhat">
         <title>Install <code>repro</code> on Fedora/RHEL/CentOS</title>
         <programlisting format="linespecific">$ sudo yum install resiprocate-repro
 $ sudo addgroup repro ssl-cert</programlisting>
@@ -115,7 +115,7 @@ $ sudo addgroup repro ssl-cert</programlisting>
       <para>The exact location of the <code>*.pem</code> files can be
       changed if necessary.</para>
 
-      <example id="repro-config-file">
+      <example xml:id="repro-config-file">
         <title>Sample values for <code>repro.config</code></title>
         <programlisting format="linespecific"># To trust email certificates as SIP client certificates:
 TLSUseEmailAsSIP = true
@@ -188,7 +188,7 @@ EnableCertificateAuthenticator = True</programlisting>
       the options that can be used for the <code>ClientVerification</code>
       parameters on each transport.</para>
 
-      <table id="repro-tls-client-verification-modes">
+      <table xml:id="repro-tls-client-verification-modes">
         <title>TLS client verification modes</title>
         <tgroup cols="2">
           <colspec colname="c1" colnum="1" colwidth="2*" />
@@ -232,7 +232,7 @@ EnableCertificateAuthenticator = True</programlisting>
       examples <xref linkend="repro-postgresql-example"/> and
       <xref linkend="repro-mysql-example"/>.</para>
 
-      <example id="repro-postgresql-example">
+      <example xml:id="repro-postgresql-example">
         <title>Using <emphasis>PostgreSQL</emphasis></title>
         <programlisting format="linespecific">DefaultDatabase = 101
 
@@ -240,7 +240,7 @@ Database101Type = postgresql
 Database101ConnInfo = host=pg1 port=5432 dbname=repro user=repro password=abc</programlisting>
       </example>
 
-      <example id="repro-mysql-example">
+      <example xml:id="repro-mysql-example">
         <title>Using <emphasis>MySQL</emphasis></title>
         <programlisting format="linespecific">DefaultDatabase = 101
 
@@ -262,7 +262,7 @@ Database101Password = abc</programlisting>
       server to set the password for the web interface admin user,
       as demonstrated in <xref linkend="repro-htdigest-example"/></para>
 
-      <example id="repro-htdigest-example">
+      <example xml:id="repro-htdigest-example">
         <title>Using <code>htdigest</code> to set <code>admin</code> user
         password</title>
         <programlisting format="linespecific">$ sudo htdigest -c /etc/repro/users.txt repro admin
@@ -275,14 +275,14 @@ $ </programlisting>
       <para>Now restart the <code>repro</code> daemon to use the new
       settings, as demonstrated in <xref linkend="repro-restart"/>.</para>
 
-      <example id="repro-restart">
+      <example xml:id="repro-restart">
         <title>Restarting the <code>repro</code> daemon (<code>systemd</code>)</title>
         <programlisting format="linespecific">$ sudo systemctl restart repro
 Restarting repro</programlisting>
       </example>
     </sect2>
 
-    <sect2 id="sip-proxy-repro-sclient">
+    <sect2 xml:id="sip-proxy-repro-sclient">
       <title>Testing with <code>s_client</code></title>
 
       <para>You can test that the <code>repro</code> daemon is listening
@@ -291,7 +291,7 @@ Restarting repro</programlisting>
       This is demonstrated in <xref linkend="openssl-sclient-debian"/>
       and <xref linkend="openssl-sclient-redhat"/>.</para>
 
-      <example id="openssl-sclient-debian">
+      <example xml:id="openssl-sclient-debian">
         <title>Using <code>s_client</code> to test SIP ports
         (Debian/Ubuntu)</title>
         <programlisting format="linespecific">$ openssl s_client -connect sip-proxy.example.org:5061 \
@@ -301,7 +301,7 @@ Restarting repro</programlisting>
 --- </programlisting>
       </example>
 
-      <example id="openssl-sclient-redhat">
+      <example xml:id="openssl-sclient-redhat">
         <title>Using <code>s_client</code> to test SIP ports (Fedora/RHEL/CentOS)</title>
         <programlisting format="linespecific">$ openssl s_client -connect sip-proxy.example.org:5061 \
         -CAfile /etc/ssl/certs/ca-bundle.crt
@@ -328,7 +328,7 @@ Restarting repro</programlisting>
       <xref linkend="repro-adding-domain"/> demonstrates how to add the
       domain <emphasis>example.org</emphasis>.</para>
 
-      <figure float="none" id="repro-adding-domain">
+      <figure float="none" xml:id="repro-adding-domain">
         <title>repro web administration: adding a domain</title>
 
         <mediaobject>
@@ -367,7 +367,7 @@ Restarting repro</programlisting>
       demonstrates adding a user called <emphasis>alice</emphasis> to
       the domain <emphasis>example.org</emphasis>:</para>
 
-      <figure float="none" id="repro-add-alice">
+      <figure float="none" xml:id="repro-add-alice">
         <title>repro web administration: adding a user</title>
 
         <mediaobject>
@@ -386,7 +386,7 @@ Restarting repro</programlisting>
       <para>The list of all users can be easily viewed, as demonstrated
       in <xref linkend="repro-show-users"/>.</para>
 
-      <figure float="none" id="repro-show-users">
+      <figure float="none" xml:id="repro-show-users">
         <title>repro web administration: listing users</title>
 
         <mediaobject>
@@ -414,7 +414,7 @@ Restarting repro</programlisting>
       <xref linkend="repro-add-route"/> demonstrates how to set up the
       number <emphasis role="bold">8001</emphasis> for Alice.</para>
 
-      <figure float="none" id="repro-add-route">
+      <figure float="none" xml:id="repro-add-route">
         <title>repro web administration: adding a route</title>
 
         <mediaobject>
@@ -433,7 +433,7 @@ Restarting repro</programlisting>
       <para>Once the numbers have been added, it is easy to view them all
       using the `Show Routes' page:</para>
 
-      <figure float="none" id="repro-show-routes">
+      <figure float="none" xml:id="repro-show-routes">
         <title>repro web administration: listing routes</title>
 
         <mediaobject>
@@ -455,7 +455,7 @@ Restarting repro</programlisting>
       many different results), an example is given in
       <xref linkend="repro-test-routes"/>.</para>
 
-      <figure float="none" id="repro-test-routes">
+      <figure float="none" xml:id="repro-test-routes">
         <title>repro web administration: routing test</title>
 
         <mediaobject>
@@ -480,7 +480,7 @@ Restarting repro</programlisting>
 
   </sect1>
 
-  <sect1 id="sip-proxy-kamailio">
+  <sect1 xml:id="sip-proxy-kamailio">
     <title>Kamailio SIP proxy</title>
     <sect2>
       <title>Package installation</title>
@@ -493,13 +493,13 @@ Restarting repro</programlisting>
       <code>yum</code> to install, as demonstrated in
       <xref linkend="kamailio-install-redhat"/>.</para>
 
-      <example id="kamailio-install-debian">
+      <example xml:id="kamailio-install-debian">
         <title>Installing <code>kamailio</code> on Debian/Ubuntu</title>
         <programlisting format="linespecific">$ sudo apt-get install kamailio
 $ sudo addgroup kamailio ssl-cert </programlisting>
       </example>
 
-      <example id="kamailio-install-redhat">
+      <example xml:id="kamailio-install-redhat">
         <title>Install <code>kamailio</code> on Fedora/RHEL/CentOS</title>
         <programlisting format="linespecific">$ sudo yum install kamailio
 $ sudo addgroup kamailio ssl-cert </programlisting>
@@ -517,7 +517,7 @@ $ sudo addgroup kamailio ssl-cert </programlisting>
       <para>After you complete the configuration, restart the daemon as
       demonstrated in <xref linkend="repro-restart"/>.</para>
 
-      <example id="kamailio-restart">
+      <example xml:id="kamailio-restart">
         <title>Restarting the <code>kamailio</code> daemon (<code>systemd</code>)</title>
         <programlisting format="linespecific">$ sudo systemctl restart kamailio
 Restarting kamailio</programlisting>

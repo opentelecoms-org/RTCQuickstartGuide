@@ -11,18 +11,18 @@
   build the package from source.  This is a relatively straightforward
   task using the <code>debuild</code> utility.</para>
 
-  <example id="debuild-install-debuild">
+  <example xml:id="debuild-install-debuild">
     <title>Installing the <code>debuild</code> command</title>
     <programlisting format="linespecific">$ sudo apt-get install devscripts
     </programlisting>
   </example>
 
-  <example id="debuild-install-build-deps">
+  <example xml:id="debuild-install-build-deps">
     <title>Installing the compiler and dependencies</title>
     <programlisting format="linespecific">$ sudo apt-get build-dep resiprocate</programlisting>
   </example>
 
-  <example id="debuild-create-deb">
+  <example xml:id="debuild-create-deb">
     <title>Running the <code>debuild</code> command</title>
     <programlisting format="linespecific">$ wget http://.../resiprocate-1.9.8.tar.gz
 $ tar xzf resiprocate-1.9.8.tar.gz
@@ -30,7 +30,7 @@ $ cd resiprocate-1.9.8
 $ debuild -rfakeroot -i -us -uc -b --no-lintian</programlisting>
   </example>
 
-  <example id="debuild-github">
+  <example xml:id="debuild-github">
     <title>Running the <code>debuild</code> command using code from Git</title>
     <programlisting format="linespecific">$ git clone https://github.com/resiprocate/resiprocate
 $ cd resiprocate

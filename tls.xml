@@ -33,7 +33,7 @@
   use wildcard certificates anyway, however, this is not suitable for
   the public Internet.</para>
 
-  <sect1 id="tls-install-openssl">
+  <sect1 xml:id="tls-install-openssl">
     <title>Install the OpenSSL utility</title>
 
     <para>Make sure the OpenSSL package is available, it can be installed
@@ -41,18 +41,18 @@
     <xref linkend="tls-install-openssl-debian"/> and
     <xref linkend="tls-install-openssl-redhat"/>.</para>
 
-    <example id="tls-install-openssl-debian">
+    <example xml:id="tls-install-openssl-debian">
       <title>Installing <code>openssl</code> on Debian/Ubuntu</title>
       <programlisting format="linespecific">$ sudo apt-get install ssl-cert openssl</programlisting>
     </example>
 
-    <example id="tls-install-openssl-redhat">
+    <example xml:id="tls-install-openssl-redhat">
       <title>Installing <code>openssl</code> on Fedora/RHEL/CentOS</title>
       <programlisting format="linespecific">$ sudo yum install openssl</programlisting>
     </example>
   </sect1>
 
-  <sect1 id="tls-common-name">
+  <sect1 xml:id="tls-common-name">
     <title>Certificate Common Name</title>
     <para>Certificates confirm the identity of a service.  The identity
     is specified by the <emphasis>Common Name</emphasis> (CN) and in
@@ -79,7 +79,7 @@
     confirmed by the CA in their web-based ordering form.</para>
   </sect1>
 
-  <sect1 id="tls-install-certificate">
+  <sect1 xml:id="tls-install-certificate">
     <title>Install a TLS certificate</title>
 
     <para>On each Linux platform, there are different locations for
@@ -92,7 +92,7 @@
     and a <emphasis>certificate signing request</emphasis> (CSR) as
     demonstrated in <xref linkend="tls-keypair-and-csr"/>.</para>
 
-    <example id="tls-pki-location-debian">
+    <example xml:id="tls-pki-location-debian">
       <title>PKI directories (Debian/Ubuntu)</title>
       <programlisting format="linespecific">$ PKI_HOME=/etc/ssl
 $ PRIVATE_KEY_DIR=${PKI_HOME}/private
@@ -100,7 +100,7 @@ $ CERT_DIR=${PKI_HOME}/public
 $ CSR_DIR=${PKI_HOME}/csr</programlisting>
     </example>
 
-    <example id="tls-pki-location-redhat">
+    <example xml:id="tls-pki-location-redhat">
       <title>PKI directories (Fedora/RHEL/CentOS)</title>
       <programlisting format="linespecific">$ PKI_HOME=/etc/pki/tls
 $ PRIVATE_KEY_DIR=${PKI_HOME}/private
@@ -108,7 +108,7 @@ $ CERT_DIR=${PKI_HOME}/certs
 $ CSR_DIR=${PKI_HOME}/csr</programlisting>
     </example>
 
-    <example id="tls-keypair-and-csr">
+    <example xml:id="tls-keypair-and-csr">
       <title>Creating RSA key pair and CSR</title>
       <programlisting format="linespecific">$ MY_DOMAIN=example.org
 $ sudo mkdir -p $PRIVATE_KEY_DIR
@@ -138,7 +138,7 @@ $ sudo cat ${CSR_PEM} </programlisting>
     each intermediate certificate in order up to but not including
     the root.</para>
 
-    <example id="tls-install-certificate-commands">
+    <example xml:id="tls-install-certificate-commands">
       <title>Installing the certificate</title>
       <programlisting format="linespecific">$ sudo cat > /etc/ssl/public/${MY_DOMAIN}.pem &lt;&lt; EOF
 -----BEGIN CERTIFICATE-----

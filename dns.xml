@@ -7,7 +7,7 @@
   <para>The DNS records to be created are detailed in
   <xref linkend="dns-records-for-example"/></para>
 
-  <table id="dns-records-for-example">
+  <table xml:id="dns-records-for-example">
     <title>DNS records for the example</title>
     <tgroup cols="3">
       <colspec colname="c1" colnum="1" colwidth="2*" />
@@ -77,7 +77,7 @@
     </tgroup>
   </table>
 
-  <sect1 id="dns-non-standard-ports">
+  <sect1 xml:id="dns-non-standard-ports">
     <title>Using non-standard ports</title>
     <para>RTC makes use of DNS SRV records for load-balancing and failover.
     A key feature of the SRV record is that the TCP or UDP port number is
@@ -99,7 +99,7 @@
     <xref linkend="dns-non-standard-ports-example"/> gives a summary of
     the ports to change.</para>
 
-    <table id="dns-non-standard-ports-example">
+    <table xml:id="dns-non-standard-ports-example">
       <title>Protocols using port 443</title>
       <tgroup cols="3">
         <colspec colname="c1" colnum="1" colwidth="2*" />
@@ -135,14 +135,14 @@
     </table>
   </sect1>
 
-  <sect1 id="dns-sample-zone">
+  <sect1 xml:id="dns-sample-zone">
     <title>Sample DNS zone file</title>
     <para>See <xref linkend="dns-bind-example-zone"/> for an example of
     how to write the entries for the zone file.  For the purposes of the
     example, this file would be <code>/etc/bind/db.example.org</code> on
     the nameserver host.</para>
 
-    <example id="dns-bind-example-zone">
+    <example xml:id="dns-bind-example-zone">
       <title>ISC Bind zone file entries</title>
       <programlisting format="linespecific">; the server where everything will run
 server1            IN     A      198.51.100.19
@@ -166,13 +166,13 @@ _xmpp-server._tcp  IN     SRV    5 0 5269 xmpp-gw.example.org.</programlisting>
     </example>
   </sect1>
 
-  <sect1 id="dns-testing">
+  <sect1 xml:id="dns-testing">
     <title>Testing the DNS settings</title>
 
     <para>Use the <code>dig</code> command to test, as demonstrated in
     <xref linkend="dns-dig-example"/></para>
 
-    <example id="dns-dig-example">
+    <example xml:id="dns-dig-example">
       <title>Inspecting DNS entries with <code>dig</code></title>
       <programlisting format="linespecific">$ dig -t naptr +short example.org
 10 0 "s" "SIPS+D2T" "" _sips._tcp.example.org.

@@ -9,12 +9,12 @@
   be necessary to build the RPMs from source.  This is a relatively
   straightforward task.</para>
 
-  <example id="rpmbuild-install-rpmbuild">
+  <example xml:id="rpmbuild-install-rpmbuild">
     <title>Installing the <code>rpmbuild</code> command</title>
     <programlisting format="linespecific">$ sudo yum install rpm-build</programlisting>
   </example>
 
-  <example id="rpmbuild-install-build-deps">
+  <example xml:id="rpmbuild-install-build-deps">
     <title>Installing the compiler and dependencies</title>
     <programlisting format="linespecific">$ sudo yum install gcc-c++ libtool automake autoconf \
     asio-devel boost-devel cajun-jsonapi-devel c-ares-devel \
@@ -23,7 +23,7 @@
     python-pycxx-devel freeradius-client-devel xerces-c-devel</programlisting>
   </example>
 
-  <example id="rpmbuild-setup">
+  <example xml:id="rpmbuild-setup">
     <title>Creating the <code>rpmbuild</code> directories</title>
     <programlisting format="linespecific">$ mkdir ~/rpms
 $ cd ~/rpms
@@ -37,7 +37,7 @@ EOF
 $ </programlisting>
   </example>
 
-  <example id="rpmbuild-create-rpms">
+  <example xml:id="rpmbuild-create-rpms">
     <title>Running the <code>rpmbuild</code> command</title>
     <programlisting format="linespecific">$ wget http://.../resiprocate-1.9.8.tar.gz
 $ rpmbuild -tb resiprocate-1.9.8.tar.gz</programlisting>

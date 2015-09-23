@@ -26,7 +26,7 @@
 
   </sect1>
 
-  <sect1 id="userexperience-dialing">
+  <sect1 xml:id="userexperience-dialing">
     <title>Dialing</title>
 
     <para>At first glance, dialing a telephone may appear to be a

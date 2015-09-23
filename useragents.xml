@@ -4,7 +4,7 @@
       xml:id="useragents">
   <title>Client devices and softphones</title>
 
-  <sect1 id="useragents-softphones">
+  <sect1 xml:id="useragents-softphones">
     <title>Softphones</title>
     <para>There are a variety of softphones available for Linux, Windows
     and Mac OS.</para>
@@ -39,7 +39,7 @@
     <emphasis>Bria</emphasis> from <emphasis>Counterpath</emphasis>.</para>
   </sect1>
 
-  <sect1 id="useragents-desk-phones">
+  <sect1 xml:id="useragents-desk-phones">
     <title>IP desk phones</title>
 
     <para>A key point to note about desktop phones is that they often
@@ -81,7 +81,7 @@
     (using ICE and TURN) and TLS support.</para>
   </sect1>
 
-  <sect1 id="useragents-smartphone-apps">
+  <sect1 xml:id="useragents-smartphone-apps">
     <title>Smartphone apps</title>
 
     <para>On the Android platform, there are several popular free,
@@ -95,7 +95,7 @@
     for iPhone</link>.</para>
   </sect1>
 
-  <sect1 id="useragents-click-to-dial">
+  <sect1 xml:id="useragents-click-to-dial">
     <title>Click-to-dial</title>
 
     <para>Convenience is a significant factor in the success of

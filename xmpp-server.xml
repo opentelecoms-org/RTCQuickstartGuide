@@ -4,7 +4,7 @@
       xml:id="xmpp-server">
   <title>XMPP (Jabber) server installation</title>
 
-  <sect1 id="xmpp-server-choice">
+  <sect1 xml:id="xmpp-server-choice">
     <title>Choosing an XMPP server</title>
 
     <para>It is recommended that you use the <emphasis>Prosody</emphasis>
@@ -17,7 +17,7 @@
 
   </sect1>
 
-  <sect1 id="xmpp-server-prosody">
+  <sect1 xml:id="xmpp-server-prosody">
     <title>Prosody XMPP server</title>
 
     <sect2>
@@ -27,14 +27,14 @@
       demonstrated in <xref linkend="prosody-install-debian"/> and
       <xref linkend="prosody-install-redhat"/>.</para>
 
-      <example id="prosody-install-debian">
+      <example xml:id="prosody-install-debian">
         <title>Installing <emphasis>Prosody</emphasis> on Debian/Ubuntu</title>
 
         <programlisting format="linespecific">$ sudo apt-get install prosody
 $ sudo addgroup prosody ssl-cert </programlisting>
       </example>
 
-      <example id="prosody-install-redhat">
+      <example xml:id="prosody-install-redhat">
         <title>Install <emphasis>Prosody</emphasis> on Fedora/RHEL/CentOS</title>
         <programlisting format="linespecific">$ sudo yum install prosody
 $ sudo addgroup prosody ssl-cert </programlisting>
@@ -59,7 +59,7 @@ $ sudo addgroup prosody ssl-cert </programlisting>
       <xref linkend="prosody-domain-config"/> demonstrates the minimum
       configuration for a domain.</para>
 
-      <example id="prosody-domain-config">
+      <example xml:id="prosody-domain-config">
         <title>Domain configuration file</title>
 
         <programlisting format="linespecific">-- Section for VirtualHost example.com
@@ -78,7 +78,7 @@ VirtualHost "example.org"
       <para>Once configuration is complete, restart the daemon as
       demonstrated in <xref linkend="prosody-restart"/>.</para>
 
-      <example id="prosody-restart">
+      <example xml:id="prosody-restart">
         <title>Restarting the <code>prosody</code> daemon (<code>systemd</code>)</title>
 
         <programlisting format="linespecific">$ sudo systemctl restart prosody
@@ -99,7 +99,7 @@ Restarting prosody </programlisting>
       <para><xref linkend="prosody-add-user"/> demonstrates how to add
       a user at the command line.</para>
 
-      <example id="prosody-add-user">
+      <example xml:id="prosody-add-user">
         <title>Using <code>prosodyctl</code> to add a user</title>
         <programlisting format="linespecific">$ sudo prosodyctl adduser alice@example.org </programlisting>
       </example>
@@ -109,7 +109,7 @@ Restarting prosody </programlisting>
       directory and add the LDAP settings to <code>prosody.cfg.lua</code>
       as demonstrated in <xref linkend="prosody-cfg-ldap"/>.</para>
 
-      <example id="prosody-cfg-ldap">
+      <example xml:id="prosody-cfg-ldap">
         <title><code>prosody.cfg.lua</code> settings for
         <code>mod_auth_ldap</code></title>
 
@@ -136,7 +136,7 @@ ldap_mode = "bind" </programlisting>
 
   </sect1>
 
-  <sect1 id="xmpp-server-ejabberd">
+  <sect1 xml:id="xmpp-server-ejabberd">
     <title>ejabberd XMPP server</title>
 
     <sect2>
@@ -146,7 +146,7 @@ ldap_mode = "bind" </programlisting>
       demonstrated in <xref linkend="ejabberd-install-debian"/> and
       <xref linkend="ejabberd-install-redhat"/>.</para>
 
-      <example id="ejabberd-install-debian">
+      <example xml:id="ejabberd-install-debian">
         <title>Installing <emphasis>ejabberd</emphasis> on
         Debian/Ubuntu</title>
 
@@ -154,7 +154,7 @@ ldap_mode = "bind" </programlisting>
 $ sudo addgroup ejabberd ssl-cert </programlisting>
       </example>
 
-      <example id="ejabberd-install-redhat">
+      <example xml:id="ejabberd-install-redhat">
         <title>Install <emphasis>ejabberd</emphasis> on
         Fedora/RHEL/CentOS</title>
 
@@ -170,7 +170,7 @@ $ sudo addgroup ejabberd ssl-cert </programlisting>
       the server IP address and the path to the certificate as
       demonstrated in <xref linkend="ejabberd-interface-config"/>.</para>
 
-      <example id="ejabberd-interface-config">
+      <example xml:id="ejabberd-interface-config">
         <title><code>ejabberd</code> interface example</title>
 
         <programlisting format="linespecific">{listen,

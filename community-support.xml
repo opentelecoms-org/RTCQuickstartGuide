@@ -19,7 +19,7 @@
   between providers and advocacy of open standards and private
   communication.</para>
 
-  <sect1 id="community-support-mailing-lists">
+  <sect1 xml:id="community-support-mailing-lists">
     <title>Mailing lists</title>
 
     <sect2>
@@ -68,7 +68,7 @@
     </sect2>
   </sect1>
 
-  <sect1 id="community-support-blogs-and-news">
+  <sect1 xml:id="community-support-blogs-and-news">
     <title>Popular blogs and news sites</title>
 
     <para><link xlink:href="http://planet.sip5060.net">planet.sip5060.net</link>

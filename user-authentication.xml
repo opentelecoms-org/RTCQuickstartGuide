@@ -9,7 +9,7 @@
   of choices for maintaining a user database and storing user
   credentials.</para>
 
-  <sect1 id="user-authentication-credentials">
+  <sect1 xml:id="user-authentication-credentials">
     <title>Credentials</title>
 
     <sect2>
@@ -56,7 +56,7 @@
       A HA1 hash can be easily constructed at the UNIX command line
       as demonstrated in <xref linkend="auth-make-ha1"/>.</para>
 
-      <example id="auth-make-ha1">
+      <example xml:id="auth-make-ha1">
         <title>Computing HA1</title>
 
         <programlisting format="linespecific">$ echo -n "alice:example.org:secret" | md5sum
@@ -78,7 +78,7 @@ $ echo -n "alice@example.org:example.org:secret" | md5sum
     </sect2>
   </sect1>
 
-  <sect1 id="user-authentication-databases">
+  <sect1 xml:id="user-authentication-databases">
     <title>Databases</title>
 
     <sect2>
@@ -119,7 +119,7 @@ $ echo -n "alice@example.org:example.org:secret" | md5sum
       only be read by a user
       <code>cn=sip-proxy,dc=example,dc=org</code>.</para>
 
-      <example id="openldap-acl-ha1">
+      <example xml:id="openldap-acl-ha1">
         <title><emphasis>OpenLDAP</emphasis> ACL for protecting
         <code>ha1Password</code></title>
 
@@ -135,7 +135,7 @@ $ echo -n "alice@example.org:example.org:secret" | md5sum
 
     </sect2>
 
-    <sect2 id="user-authentication-sql">
+    <sect2 xml:id="user-authentication-sql">
       <title>SQL databases</title>
 
       <para>Many RTC products have some capability to interact with an
@@ -149,7 +149,7 @@ $ echo -n "alice@example.org:example.org:secret" | md5sum
       and <emphasis>repro</emphasis>.  <emphasis>repro</emphasis> simply
       ignores many of the columns used by <emphasis>Asterisk</emphasis>.</para>
 
-      <sect3 id="user-authentication-sql-setup-postgresql">
+      <sect3 xml:id="user-authentication-sql-setup-postgresql">
         <title>Setting up PostgreSQL for SIP users</title>
 
         <para>The packages for the <emphasis>repro</emphasis> SIP proxy
@@ -164,12 +164,12 @@ $ echo -n "alice@example.org:example.org:secret" | md5sum
         The final <code>psql</code> command uses the schema file
         to create the tables.</para>
 
-        <example id="postgresql-install-debian">
+        <example xml:id="postgresql-install-debian">
           <title>Install <emphasis>PostgreSQL</emphasis> on Debian or Ubuntu</title>
           <programlisting format="linespecific">$ sudo apt-get install postgresql postgresql-client</programlisting>
         </example>
 
-        <example id="postgresql-setup-debian">
+        <example xml:id="postgresql-setup-debian">
           <title>Configure PostgreSQL</title>
           <programlisting format="linespecific">$ sudo su - postgres
 postgres$ createdb repro
@@ -208,7 +208,7 @@ $ psql -U repro -W repro &lt; /usr/share/doc/repro/create_postgresql_reprodb.sql
 
   </sect1>
 
-  <sect1 id="user-authentication-conclusion">
+  <sect1 xml:id="user-authentication-conclusion">
     <title>Conclusion</title>
 
     <para>A guide like this can't proscribe the correct solution for

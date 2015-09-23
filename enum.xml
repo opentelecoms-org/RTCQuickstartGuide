@@ -23,7 +23,7 @@
   use of the <emphasis>ENUM</emphasis> data published by other people and
   organizations.</para>
 
-  <sect1 id="enum-how-enum-works">
+  <sect1 xml:id="enum-how-enum-works">
     <title>How ENUM works</title>
     <para>ENUM works with numbers written in the <emphasis>ITU E.164</emphasis>
     notation.  For example, a London phone number may be dialed
@@ -69,7 +69,7 @@
     <code>01865 332244</code> in the public ENUM suffix
     <code>e164.arpa</code>.</para>
 
-    <example id="enum-query-dig">
+    <example xml:id="enum-query-dig">
       <title>Using <code>dig</code> to perform ENUM queries</title>
       <programlisting format="linespecific">$ dig -t naptr 4.4.2.2.3.3.5.6.8.1.4.4.e164.arpa
 
@@ -88,7 +88,7 @@
 
   </sect1>
 
-  <sect1 id="enum-consume">
+  <sect1 xml:id="enum-consume">
     <title>Consuming ENUM data</title>
     <para>ENUM data can be consumed at various points.</para>
 
@@ -107,7 +107,7 @@
     call there rather than sending it to a PSTN gateway.</para>
   </sect1>
 
-  <sect1 id="enum-publish">
+  <sect1 xml:id="enum-publish">
     <title>Publishing ENUM data</title>
     <para>Setting up <emphasis>ENUM</emphasis> as part of your RTC deployment,
     in the public ENUM tree, an internal ENUM tree or both, are optional
@@ -148,12 +148,12 @@
         in <xref linkend="dlzldapenum-install-debian"/> and
         <xref linkend="dlzldapenum-install-redhat"/>.</para>
 
-        <example id="dlzldapenum-install-debian">
+        <example xml:id="dlzldapenum-install-debian">
           <title>Installing <code>dlz-ldap-enum</code> on Debian/Ubuntu</title>
           <programlisting format="linespecific">$ sudo apt-get install dlz-ldap-enum</programlisting>
         </example>
 
-        <example id="dlzldapenum-install-redhat">
+        <example xml:id="dlzldapenum-install-redhat">
           <title>Install <code>dlz-ldap-enum</code> on Fedora/RHEL/CentOS</title>
           <programlisting format="linespecific">$ sudo yum install dlz-ldap-enum</programlisting>
         </example>
@@ -172,7 +172,7 @@
         connection parameters, as demonstrated in
         <xref linkend="dlzldapenum-config-sample"/>.</para>
 
-        <example id="dlzldapenum-config-sample">
+        <example xml:id="dlzldapenum-config-sample">
           <title>Sample <code>dlz_ldap_enum.conf</code></title>
           <programlisting format="linespecific">dlz "example" {
     database "dlopen /usr/lib/dlz-ldap-enum/dlz_ldap_enum.so 2
@@ -193,12 +193,12 @@
         <xref linkend="dlzldapenum-named-config-sample-debian"/> and
         <xref linkend="dlzldapenum-named-config-sample-redhat"/>.</para>
 
-        <example id="dlzldapenum-named-config-sample-debian">
+        <example xml:id="dlzldapenum-named-config-sample-debian">
           <title>Additions to <code>named.conf</code> for Debian/Ubuntu</title>
           <programlisting format="linespecific">include "/etc/bind/dlz_ldap_enum.conf";</programlisting>
         </example>
 
-        <example id="dlzldapenum-named-config-sample-redhat">
+        <example xml:id="dlzldapenum-named-config-sample-redhat">
           <title>Additions to <code>named.conf</code> for Fedora/RHEL/CentOS</title>
           <programlisting format="linespecific">include "/etc/named/dlz_ldap_enum.conf";</programlisting>
         </example>

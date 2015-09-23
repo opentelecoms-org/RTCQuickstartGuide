@@ -4,7 +4,7 @@
       xml:id="troubleshooting">
   <title>Troubleshooting</title>
 
-  <sect1 id="troubleshooting-common-problems">
+  <sect1 xml:id="troubleshooting-common-problems">
     <title>Common problems and solutions</title>
 
     <sect2>
@@ -93,10 +93,10 @@
     </sect2>
   </sect1>
 
-  <sect1 id="troubleshooting-techniques">
+  <sect1 xml:id="troubleshooting-techniques">
     <title>Techniques</title>
 
-    <sect2 id="troubleshooting-monitoring">
+    <sect2 xml:id="troubleshooting-monitoring">
       <title>Monitoring tools</title>
 
       <para>Monitoring can detect problems before end users notice them,
@@ -128,7 +128,7 @@
       configure Nagios/Icinga to monitor SIP, XMPP and TURN servers.</para>
     </sect2>
 
-    <sect2 id="troubleshooting-logs">
+    <sect2 xml:id="troubleshooting-logs">
       <title>Check the logs</title>
 
       <para>Check <code>/var/log/syslog</code> and
@@ -143,7 +143,7 @@
       can be changed at runtime without restarting the daemon.</para>
     </sect2>
 
-    <sect2 id="troubleshooting-web-admin">
+    <sect2 xml:id="troubleshooting-web-admin">
       <title>Check the web interface</title>
 
       <para>For those processes that have a web interface, this can be
@@ -154,7 +154,7 @@
       registrations can be seen.</para>
     </sect2>
 
-    <sect2 id="troubleshooting-os-utilities">
+    <sect2 xml:id="troubleshooting-os-utilities">
       <title>Operating system utilities</title>
       <para><xref linkend="dns-dig-example"/> demonstrates how to use the
       <code>dig</code> utility to verify that the DNS entries exist.</para>
@@ -174,7 +174,7 @@
       WebSocket over TLS ports.</para>
     </sect2>
 
-    <sect2 id="troubleshooting-packet-sniffers">
+    <sect2 xml:id="troubleshooting-packet-sniffers">
       <title>Packet sniffers</title>
 
       <para>Use <code>tcpdump</code> to capture the packets to a file
@@ -186,7 +186,7 @@
       containing a particular string.</para>
     </sect2>
 
-    <sect2 id="troubleshooting-debugging-mode">
+    <sect2 xml:id="troubleshooting-debugging-mode">
       <title>Debugging mode</title>
 
       <para>Run the process in debug mode, in the foreground on a terminal,
@@ -194,7 +194,7 @@
       this way will allow you to see the SIP packets in the console.</para>
     </sect2>
 
-    <sect2 id="troubleshooting-webrtc">
+    <sect2 xml:id="troubleshooting-webrtc">
       <title>WebRTC and WebSockets</title>
 
       <para>Both major browsers have a built-in troubleshooting system

@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<chapter xml:id="faq">
+<chapter xmlns="http://docbook.org/ns/docbook"
+      xmlns:xlink="http://www.w3.org/1999/xlink" version="5.0"
+      xml:id="faq">
   <title>Frequently Asked Questions</title>
 
   <sect2>

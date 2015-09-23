@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<chapter xml:id="user-authentication">
+<chapter xmlns="http://docbook.org/ns/docbook"
+      xmlns:xlink="http://www.w3.org/1999/xlink" version="5.0"
+      xml:id="user-authentication">
   <title>User and credential storage</title>
 
   <para>Most of the products described in this document, including

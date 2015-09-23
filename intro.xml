@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<chapter xml:id="intro">
+<chapter xmlns="http://docbook.org/ns/docbook"
+      xmlns:xlink="http://www.w3.org/1999/xlink" version="5.0"
+      xml:id="intro">
   <title>Introduction</title>
 
 <para>This quick start guide walks through the essential steps to build a working real-time communications platform with full support for federation with other autonomous domains over the public Internet.</para>

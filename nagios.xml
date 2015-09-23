@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<appendix xml:id="nagios">
+<appendix xmlns="http://docbook.org/ns/docbook"
+      xmlns:xlink="http://www.w3.org/1999/xlink" version="5.0"
+      xml:id="nagios">
   <title>Configuring Nagios to monitor SIP, XMPP and TURN</title>
 
   <para>Users become very frustrated with a service if it is not

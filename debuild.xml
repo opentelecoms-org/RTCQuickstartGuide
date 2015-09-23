@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<appendix xml:id="debuild">
+<appendix xmlns="http://docbook.org/ns/docbook"
+      xmlns:xlink="http://www.w3.org/1999/xlink" version="5.0"
+      xml:id="debuild">
   <title>Building reSIProcate packages on Debian/Ubuntu</title>
 
   <para>reSIProcate packages are usually available in

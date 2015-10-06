@@ -34,6 +34,11 @@
   IP address on the machine and make sure network connectivity is
   working.</para>
 
+  <para>If you are not familiar with server installation, a useful
+  resource is the
+  <link tag="block" xlink:href="http://debian-handbook.info">
+  Debian Administrator's Handbook</link>.</para>
+
   <sect2>
     <title>Debian/Ubuntu servers</title>
     <para>To set up both of the IP addresses on the same box (as required

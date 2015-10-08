@@ -9,7 +9,7 @@
 
   <para>Certificates may be referred to as X.509 certificates, SSL
   certificates or TLS certificates.  For most purposes, these terms all
-  mean the same thing and the term TLS certificate is used throughout
+  refer to the same thing and the term TLS certificate is used throughout
   this documentation.</para>
 
   <para>The prices of TLS certificates vary significantly.  It is not
@@ -24,14 +24,56 @@
   Standard certificate</link> which costs about $16 (free with a
   domain registration or transfer) is known to be suitable.</para>
 
-  <para>Some organizations have <emphasis>wildcard</emphasis>
-  certificates for all servers/subdomains in the organization.  These
-  are not always suitable for RTC purposes, in particular,
-  <link xlink:href="https://tools.ietf.org/html/rfc5922#section-7.2">RFC 5922
-  section 7.2</link> prohibits the use of wildcard certificates for SIP.
-  Some SIP products offer the ability to override this restriction and
-  use wildcard certificates anyway, however, this is not suitable for
-  the public Internet.</para>
+  <sect1 xml:id="tls-common-name">
+    <title>Certificate Common Name</title>
+    <para>Certificates confirm the identity of a service.  The identity
+    is specified by the <emphasis>Common Name</emphasis> (CN) and in
+    some cases the <literal>subjectAltName</literal> embedded in the
+    certificate.</para>
+
+    <para>Some vendors refer to <literal>subjectAltName</literal>
+    certificates as SAN certificates.  This acronym is more commonly used
+    for Storage Area Network and can cause confusion.</para>
+
+    <para>Early versions of the federated XMPP specification proposed a
+    custom OID, <literal>xmppAddr</literal>, rather than using
+    <literal>subjectAltName</literal>.  This practice was not widely
+    supported by certificate authorities.  Furthermore, it meant that
+    such certificates could not be used for purposes other than XMPP,
+    such as SMTP email or SIP.  The XMPP specification has since been
+    relaxed and it is now possible to use a single certificate on a server
+    for SIP, XMPP, SMTP and other purposes.</para>
+
+    <para>Many web sites use a name such as <literal>www.example.org</literal>
+    and include the <literal>www</literal> prefix in the CN in their
+    certificate.  When purchasing a certificate for SIP and XMPP, it is
+    important to ensure that the certificate contains a CN or
+    <literal>subjectAltName</literal> that specifies the domain alone.  For
+    the <literal>example.org</literal> domain, the certificate should include
+    <literal>CN=example.org</literal> or
+    <literal>subjectAltName=example.org</literal>.</para>
+
+    <para>In a <emphasis>wildcard certificate</emphasis>, the CN will
+    include an asterisk (<literal>*</literal>), for example,
+    <literal>CN=*.example.org</literal>.  This type of certificate can be
+    used for the domain <literal>example.org</literal> and subdomains or
+    hostnames such as <literal>www.example.org</literal> or
+    <literal>mail.example.org</literal>.</para>
+
+    <para>Some organizations have <emphasis>wildcard</emphasis>
+    certificates for all servers/subdomains in the organization.  These
+    are not always suitable for RTC purposes, in particular,
+    <link xlink:href="https://tools.ietf.org/html/rfc5922#section-7.2">RFC 5922
+    section 7.2</link> prohibits the use of wildcard certificates for SIP.
+    Some SIP products offer the ability to override this restriction and
+    use wildcard certificates anyway, however, this is not suitable for
+    the public Internet as you can't be sure that other servers will
+    have the same override enabled.</para>
+
+    <para>The correct domain needs to be specified when creating the
+    <emphasis>certificate signing request</emphasis> (CSR) and should be
+    confirmed by the CA in their web-based ordering form.</para>
+  </sect1>
 
   <sect1 xml:id="tls-install-openssl">
     <title>Install the OpenSSL utility</title>
@@ -42,41 +84,14 @@
     <xref linkend="tls-install-openssl-redhat"/>.</para>
 
     <example xml:id="tls-install-openssl-debian">
-      <title>Installing <code>openssl</code> on Debian/Ubuntu</title>
+      <title>Installing <literal>openssl</literal> on Debian/Ubuntu</title>
       <programlisting format="linespecific">$ sudo apt-get install ssl-cert openssl</programlisting>
     </example>
 
     <example xml:id="tls-install-openssl-redhat">
-      <title>Installing <code>openssl</code> on Fedora/RHEL/CentOS</title>
+      <title>Installing <literal>openssl</literal> on Fedora/RHEL/CentOS</title>
       <programlisting format="linespecific">$ sudo yum install openssl</programlisting>
     </example>
-  </sect1>
-
-  <sect1 xml:id="tls-common-name">
-    <title>Certificate Common Name</title>
-    <para>Certificates confirm the identity of a service.  The identity
-    is specified by the <emphasis>Common Name</emphasis> (CN) and in
-    some cases the <code>subjectAltName</code> embedded in the
-    certificate.</para>
-
-    <para>Many web sites use a name such as <code>www.example.org</code> and
-    include the <code>www</code> prefix in the name of their certificate.
-    When purchasing a certificate for SIP and XMPP, it is important to ensure
-    that the certificate contains a CN or <code>subjectAltName</code> that
-    specifies the domain alone.  For the <code>example.org</code> domain,
-    the certificate should include <code>CN=example.org</code> or
-    <code>subjectAltName=example.org</code>.</para>
-
-    <para>In a <emphasis>wildcard certificate</emphasis>, the CN will
-    include an asterisk (<code>*</code>), for example,
-    <code>CN=*.example.org</code>.  This type of certificate can be
-    used for the domain <code>example.org</code> and subdomains or
-    hostnames such as <code>www.example.org</code> or
-    <code>mail.example.org</code>.</para>
-
-    <para>The correct domain needs to be specified when creating the
-    <emphasis>certificate signing request</emphasis> (CSR) and should be
-    confirmed by the CA in their web-based ordering form.</para>
   </sect1>
 
   <sect1 xml:id="tls-install-certificate">
@@ -128,9 +143,9 @@ $ sudo cat ${CSR_PEM} </programlisting>
     <para>Your CA will ask you to copy the CSR text and paste it into a
     form on their web site.  The CA will now issue a certificate; it may
     be displayed in the browser or sent to you by email.  Copy and paste
-    it into the server after the <code>cat</code> command in
+    it into the server after the <literal>cat</literal> command in
     <xref linkend="tls-install-certificate-commands"/>, pressing
-    <code>CTRL-D</code> or typing <code>EOF</code> to finish.</para>
+    <literal>CTRL-D</literal> or typing <literal>EOF</literal> to finish.</para>
 
     <para>If the CA provides an <emphasis>intermediate certificate</emphasis>,
     you must also append it to the certificate file.  The certificate

@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<appendix xmlns="http://docbook.org/ns/docbook"
+      xmlns:xlink="http://www.w3.org/1999/xlink" version="5.0"
+      xml:id="voip-fraud">
+  <title>Mitigating VoIP fraud risk</title>
+
+  <para>VoIP fraud is not a new problem, it is just an old problem with a new
+  target.  Fraud is not a reason to avoid VoIP and RTC technology.  Fraud
+  has been a regular problem for companies with traditional ISDN phone systems.
+  Managing the risk requires a balanced approach.</para>
+
+  <sect1 xml:id="voip-fraud-insurance">
+    <title>Legal insurance</title>
+
+    <para>In the event that your phone account is misused, you may end up in
+    a legal dispute with your phone company.  Check that you have a
+    satisfactory legal costs insurance policy.  Verify that the terms and
+    conditions include cover for disputes with utility companies.</para>
+  </sect1>
+
+  <sect1 xml:id="voip-fraud-trade-body-membership">
+    <title>Trade body membership</title>
+
+    <para>If you are operating a business, are you a member of any trade
+    organizations, such as the local chamber of commerce?</para>
+
+    <para>These organizations sometimes provide useful advice and
+    sometimes arrange legal insurance on behalf of members.</para>
+  </sect1>
+
+  <sect1 xml:id="voip-fraud-set-credit-limit">
+    <title>Set a credit limit</title>
+
+    <para>If you leave the cookies out on the table, it won't be long until
+    children start eating them and they will keep eating until they are all
+    gone. Likewise, if your VoIP PBX is hacked, the bad guys are going to use
+    it to relay calls to high cost destinations: <emphasis>and they are not
+    going to stop until you switch the system off or the phone company cuts
+    the line</emphasis>.</para>
+
+    <para>The number one thing you can do to protect your phone system does
+    not involve any technical changes. It simply involves writing a letter.
+    </para>
+
+    <para>Write to your phone company and tell them the amount of daily and
+    monthly expenditure you authorise. Make it clear that this is both a
+    security precaution and that any severe violation may jeopordise your
+    business to the extent that you may not be able to pay bills in future.
+    </para>
+
+    <blockquote>
+      <para>Dear Sir,</para>
+
+      <para>My phone number is ___________ and my account number
+      is ____________</para>
+
+      <para>I am writing to inform you that the total authorized expenditure
+      for this account is $_______ per day and $________ per month.</para>
+
+      <para>Any services supplied in excess of this authorization will be
+      treated as if they were supplied in error and we accept no liability for
+      them.</para>
+
+      <para>Furthermore, I am informing you that we explicitly do not require
+      the use of any of the services listed below, that the supply of these
+      services is not authorized and that if any of these services are
+      supplied to us or billed to us without management authorization,
+      it is an error of the phone company and therefore it will not be paid.
+      </para>
+
+      <itemizedlist>
+        <listitem>Calls to premium rate numbers</listitem>
+        <listitem>Reverse charge calls charged at a rate in excess of $___ per minute</listitem>
+        <listitem>Calls to numbers where a share of the call charge is paid out to the recipient of the call (such as the UK 0871 numbers)</listitem>
+        <listitem>Premium-rate text messaging services</listitem>
+        <listitem>Data roaming charges</listitem>
+        <listitem>Data charges for data usage in excess of bundled data allowances</listitem>
+      </itemizedlist>
+
+      <para>This letter has been sent to you by recorded delivery and takes
+      effect on receipt.</para>
+
+      <para>Sincerely,</para>
+
+      <para>____________________</para>
+
+      <para>Director/Manager/President</para>
+
+    </blockquote>
+  </sect1>
+
+  <sect1 xml:id="voip-fraud-use-distinct-inbound-service">
+    <title>Use a different phone company for inbound numbers</title>
+
+    <para>If you do ever end up with an inflated bill that has come about
+    because of illegal use of your VoIP system, and if your phone company
+    has somehow lost the letter you sent specifying your maximum authorized
+    expenditure, they might try and bully you into paying the bill anyway.
+    </para>
+
+    <para>Phone companies have large accounts departments that are very
+    experienced at manipulating and bullying customers to pay a bill whether
+    it is correct or not. A recent report by analysts Juniper Research
+    suggested that phone companies lose over $58 billion per year due to
+    their own technical faults in billing technology. The magnitude of this
+    figure emphasises one particular point: phone companies may sometimes
+    underbill you, they may sometimes overbill you, but if customers were
+    watching their bills more closely, phone companies wouldn't be making so
+    many mistakes.</para>
+
+    <para>With such unreliable systems, the phone company has very little
+    evidence they can rely on to force you to pay a bill. So they simply cut
+    off customer's numbers.</para>
+
+    <para>This is why this point is so vital: use two different phone
+    companies.</para>
+
+    <para>All your outgoing calls go through one company (company A).</para>
+
+    <para>All your phone numbers and incoming calls come through a different
+    company (company B).</para>
+
+    <para>If your VoIP system is hacked or misused in some way, company A
+    might cut off your line - but you will still be receiving incoming
+    calls normally thanks to company B.</para>
+  </sect1>
+</appendix>

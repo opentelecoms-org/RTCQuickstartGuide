@@ -23,6 +23,18 @@
   use of the <emphasis>ENUM</emphasis> data published by other people and
   organizations.</para>
 
+  <para>For many people, the first impression of ENUM is the public ENUM tree.
+  Given that many countries have not yet formally adopted ENUM, the
+  public ENUM tree still has some big gaps and is not universally useful
+  for every telephone number that exists in the PSTN.  Fortunately,
+  the story does not end there.  There are several unofficial ENUM trees
+  and there are many ways that ENUM can be used within an organization.</para>
+
+  <para>ENUM is worth looking at for various reasons, including the
+  widespread support in many open source products, the relative simplicity
+  of using distributed and fault-tolerant DNS servers to serve such data
+  and the ease of troubleshooing using basic DNS tools.</para>
+
   <sect1 xml:id="enum-how-enum-works">
     <title>How ENUM works</title>
     <para>ENUM works with numbers written in the <emphasis>ITU E.164</emphasis>

@@ -7,102 +7,179 @@
   <para>This chapter gives a high-level overview of the RTC architecture.
   Each component is explained in more detail in its own chapter.</para>
 
-  <figure float="none" xml:id="arch-dia-1">
-    <title>Overview</title>
+  <sect1 xml:id="rtc-architecture-big-picture">
+    <title>The big picture</title>
+    <figure float="none" xml:id="arch-dia-1">
+      <title>Overview</title>
+  
+      <mediaobject>
+        <imageobject role="print">
+          <imagedata fileref="figs/svg/arch-overview.svg" width="5in"
+            format="SVG" />
+        </imageobject>
+  
+        <imageobject role="web">
+          <imagedata fileref="figs/svg/arch-overview.svg"
+            format="SVG" />
+        </imageobject>
+      </mediaobject>
+    </figure>
 
-    <mediaobject>
-      <imageobject role="print">
-        <imagedata fileref="figs/svg/arch-overview.svg" width="5in"
-          format="SVG" />
-      </imageobject>
+    <para><xref linkend="arch-dia-1"/> demonstrates each of the components
+    and how they are interconnected.  The diagram includes an example of
+    an external softphone user calling an internal softphone user, the call
+    is setup with SIP and the RTP media streams (dotted lines) pass through
+    the TURN server.</para>
 
-      <imageobject role="web">
-        <imagedata fileref="figs/svg/arch-overview.svg"
-          format="SVG" />
-      </imageobject>
-    </mediaobject>
-  </figure>
+    <sect2 xml:id="rtc-architecture-use-tls">
+      <title>TLS is essential</title>
 
-  <para><xref linkend="arch-dia-1"/> demonstrates each of the components
-  and how they are interconnected.  The diagram includes an example of
-  an external softphone user calling an internal softphone user, the call
-  is setup with SIP and the RTP media streams (dotted lines) pass through
-  the TURN server.</para>
+      <para>SIP, XMPP and WebSockets can be easily configured to run without
+      TLS encryption.  Unfortunately, doing so would lead to many of the
+      same problems as email, including spam and impersonation.</para>
 
-  <figure float="none" xml:id="arch-dia-fed-sip">
-    <title>SIP federation between two sites</title>
+      <para>Impersonation is even more troublesome in RTC than in an email
+      exchange.  If a user replies to an email with a forged
+      <literal>From</literal> header, the reply will go to the person
+      who was impersonated.  The imposter is unable to receive replies to
+      the emails they send.  If a user answers a phone call from a forged SIP
+      address, however, they are immediately engaged in two-way communication
+      with the imposter.</para>
 
-    <mediaobject>
-      <imageobject role="print">
-        <imagedata fileref="figs/svg/arch-fed-sip.svg" width="5in"
-          format="SVG" />
-      </imageobject>
+      <para>Therefore, when RTC protocols are used on the public Internet,
+      TLS should always be used.  Additional reasons for using TLS are
+      discussed in <xref linkend="optimal-connectivity-tls"/>.</para>
 
-      <imageobject role="web">
-        <imagedata fileref="figs/svg/arch-fed-sip.svg"
-          format="SVG" />
-      </imageobject>
-    </mediaobject>
-  </figure>
+      <para>SMTP is a much older protocol than SIP and XMPP and while it
+      does now boast support for STARTTLS,
+      <link xlink:href="http://tools.ietf.org/html/rfc6125#appendix-B.4">
+      it doesn't clearly specify a mechanism for validation of message
+      headers against the certificates</link>.</para>
+    </sect2>
 
-  <para><xref linkend="arch-dia-fed-sip"/> emphasizes those components
-  that are involved in routing a federated SIP call from one site,
-  <emphasis>example.org</emphasis>, to another site,
-  <emphasis>example.edu</emphasis>.  For simplicity, this diagram does
-  not show the firewalls, soft PBX or other components.  Assuming the
-  softphone users are both using NAT addresses, the TURN servers may be
-  relaying all the media streams on their behalf.</para>
+    <sect2 xml:id="rtc-architecture-sip-proxy">
+      <title>All SIP connectivity through a SIP proxy</title>
+      <para>The SIP proxy acts as a router between the external peers,
+      internal peers and the soft PBX.  The soft PBX is typically a server
+      running Asterisk or FreeSWITCH.  It is important to note that the
+      soft PBX does not connect directly to the public Internet and none of
+      the internal users connect directly to the soft PBX.</para>
 
-  <figure float="none" xml:id="arch-dia-webrtc-p2p">
-    <title>WebRTC basic peer-to-peer</title>
+      <para>SIP proxy servers are generally more stable and more secure than
+      soft PBXes.  SIP proxy servers typically have more
+      connectivity options, including best-of-breed support for IPv6, TLS
+      and WebRTC.  In particular, the Asterisk PBX advertises support for TLS
+      but it doesn't support mutual TLS certificate verification, something
+      that works seamlessly in the SIP proxy <emphasis>repro</emphasis>.
+      This means that Asterisk accepts TLS connections from users and other
+      servers but is unable to verify local devices with built-in certificates
+      such as Polycom phones.  If Asterisk is configured to accept TLS
+      connections from the public Internet, Asterisk accepts any call from
+      the peer without validating the domain in the <literal>From</literal>
+      header.</para>
 
-    <mediaobject>
-      <imageobject role="print">
-        <imagedata fileref="figs/svg/arch-webrtc.svg" width="3in"
-          format="SVG" />
-      </imageobject>
+      <para>Soft PBXes tend to have many more features and vastly
+      more configuration options, this also means upgrades to the SIP proxy
+      are relatively easy compared to upgrades of the soft PBX.  Finally,
+      some people like to be able to make configuration changes to their PBX
+      during business hours.  If users are maintaining connections and
+      SIP registrations through the SIP proxy, they are much less likely to
+      notice if the soft PBX is restarted or crashes.</para>
 
-      <imageobject role="web">
-        <imagedata fileref="figs/svg/arch-webrtc.svg"
-          format="SVG" />
-      </imageobject>
-    </mediaobject>
-  </figure>
+      <para>One consequence of this design strategy is that it is usually
+      best to install, test and configure the SIP proxy before starting
+      a soft PBX installation.  In this guide, SIP proxy installation is
+      covered in <xref linkend="sip-proxy"/> and soft PBXes are discussed
+      in <xref linkend="pbx"/>.</para>
+    </sect2>
+  </sect1>
 
-  <para><xref linkend="arch-dia-webrtc-p2p"/> demonstrates how two
-  browsers can communicate with each other using WebRTC.  The web
-  browsers start by downloading the HTML, CSS and JavaScript from a
-  normal web server such as Apache <code>httpd</code>.  The JavaScript
-  uses the WebSocket protocol to initiate a connection to the SIP proxy.
-  When a call is made, the request is sent over the WebSocket connection
-  and the media streams pass through the TURN server.  In this case, the
-  browsers are not relaying the media streams through the TURN server,
-  possibly because they have discovered they are both on the same
-  IP network.</para>
+  <sect1 xml:id="rtc-architecture-federation-sip">
+    <title>SIP federation between two autonomous sites</title>
 
-  <figure float="none" xml:id="arch-dia-webrtc-call-center">
-    <title>WebRTC from customer web browser to call center</title>
+    <figure float="none" xml:id="arch-dia-fed-sip">
+      <title>SIP federation between two sites</title>
+  
+      <mediaobject>
+        <imageobject role="print">
+          <imagedata fileref="figs/svg/arch-fed-sip.svg" width="5in"
+            format="SVG" />
+        </imageobject>
+  
+        <imageobject role="web">
+          <imagedata fileref="figs/svg/arch-fed-sip.svg"
+            format="SVG" />
+        </imageobject>
+      </mediaobject>
+    </figure>
 
-    <mediaobject>
-      <imageobject role="print">
-        <imagedata fileref="figs/svg/arch-webrtc-call-center.svg" width="5in"
-          format="SVG" />
-      </imageobject>
+    <para><xref linkend="arch-dia-fed-sip"/> emphasizes those components
+    that are involved in routing a federated SIP call from one site,
+    <emphasis>example.org</emphasis>, to another site,
+    <emphasis>example.edu</emphasis>.  For simplicity, this diagram does
+    not show the firewalls, soft PBX or other components.  Assuming the
+    softphone users are both using NAT addresses, the TURN servers may be
+    relaying all the media streams on their behalf.</para>
+  </sect1>
 
-      <imageobject role="web">
-        <imagedata fileref="figs/svg/arch-webrtc-call-center.svg"
-          format="SVG" />
-      </imageobject>
-    </mediaobject>
-  </figure>
+  <sect1 xml:id="rtc-architecture-webrtc-peer-to-peer">
+    <title>WebRTC peer-to-peer calling</title>
 
-  <para><xref linkend="arch-dia-webrtc-call-center"/> demonstrates a
-  more elaborate WebRTC architecture, a customer using a web browser to
-  call a corporate call center.  When a call is made, the request is
-  sent over the WebSocket connection and the media streams pass through
-  the TURN server.  The SIP proxy routes all calls to the corporate PBX
-  which routes the calls to an agent.  The media streams must also pass
-  through the PBX for transcoding from the Opus codec to one of the
-  codecs supported by the desk phones, perhaps G.711 or G.722.</para>
+    <figure float="none" xml:id="arch-dia-webrtc-p2p">
+      <title>WebRTC basic peer-to-peer</title>
 
+      <mediaobject>
+        <imageobject role="print">
+          <imagedata fileref="figs/svg/arch-webrtc.svg" width="3in"
+            format="SVG" />
+        </imageobject>
+
+        <imageobject role="web">
+          <imagedata fileref="figs/svg/arch-webrtc.svg"
+            format="SVG" />
+        </imageobject>
+      </mediaobject>
+    </figure>
+
+    <para><xref linkend="arch-dia-webrtc-p2p"/> demonstrates how two
+    browsers can communicate with each other using WebRTC.  The web
+    browsers start by downloading the HTML, CSS and JavaScript from a
+    normal web server such as Apache <code>httpd</code>.  The JavaScript
+    uses the WebSocket protocol to initiate a connection to the SIP proxy.
+    When a call is made, the request is sent over the WebSocket connection
+    and the media streams pass through the TURN server.  In this case, the
+    browsers are not relaying the media streams through the TURN server,
+    possibly because they have discovered they are both on the same
+    IP network.</para>
+  </sect1>
+
+  <sect1 xml:id="rtc-architecture-webrtc-call-center">
+    <title>WebRTC calling to call centers</title>
+
+    <figure float="none" xml:id="arch-dia-webrtc-call-center">
+      <title>WebRTC from customer web browser to call center</title>
+
+      <mediaobject>
+        <imageobject role="print">
+          <imagedata fileref="figs/svg/arch-webrtc-call-center.svg" width="5in"
+            format="SVG" />
+        </imageobject>
+
+        <imageobject role="web">
+          <imagedata fileref="figs/svg/arch-webrtc-call-center.svg"
+            format="SVG" />
+        </imageobject>
+      </mediaobject>
+    </figure>
+
+    <para><xref linkend="arch-dia-webrtc-call-center"/> demonstrates a
+    more elaborate WebRTC architecture, a customer using a web browser to
+    call a corporate call center.  When a call is made, the request is
+    sent over the WebSocket connection and the media streams pass through
+    the TURN server.  The SIP proxy routes all calls to the corporate PBX
+    which routes the calls to an agent.  The media streams must also pass
+    through the PBX for transcoding from the Opus codec to one of the
+    codecs supported by the desk phones, perhaps G.711 or G.722.</para>
+  </sect1>
+  
 </chapter>

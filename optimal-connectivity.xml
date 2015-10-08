@@ -23,6 +23,198 @@
   problems in the vast majority of cases.  This chapter gives an overview
   of the main concerns.</para>
 
+  <sect1 xml:id="optimal-connectivity-codecs">
+    <title>Codec selection</title>
+
+    <para>Codec is a portmanteau of coder-decoder.  A codec is an algorithm
+    for encoding an audio or video signal for storage or transmission over
+    a digital communications network.  Codecs are responsible for
+    compression of the data stream and may also take some responsibility
+    for error correction, packet loss concealment and silence
+    suppression.</para>
+
+    <para>Each device or softphone typically has one or more codec
+    algorithms included.  Some software, such as the Asterisk PBX, can
+    support additional codecs with the help of modules or plugins.</para>
+
+    <para>The list of codecs supported by a product depends on the age of
+    the product, patents and the type of products it is intended to
+    interact with.  Open source solutions generally avoid patented codecs,
+    although unofficial implementations of them can be found online,
+    such as the popular G.729 codec for Asterisk.</para>
+
+    <table xml:id="codecs-list">
+      <title>Common codecs</title>
+      <tgroup cols="5">
+        <colspec colname="c1" colnum="1" colwidth="1*" />
+        <colspec colname="c2" colnum="2" colwidth="1*" />
+        <colspec colname="c3" colnum="3" colwidth="1*" />
+        <colspec colname="c4" colnum="4" colwidth="1*" />
+        <colspec colname="c5" colnum="5" colwidth="3*" />
+
+        <thead>
+          <row>
+            <entry align="center">Name</entry>
+            <entry align="center">Type</entry>
+            <entry align="center">Bitrate (kbps)</entry>
+            <entry align="center">Patented</entry>
+            <entry align="center">Comments</entry>
+          </row>
+        </thead>
+
+        <tbody>
+          <row>
+            <entry>G.711 (alaw, ulaw)</entry>
+            <entry>audio</entry>
+            <entry>64</entry>
+            <entry>N</entry>
+            <entry>Widely supported in phones, WebRTC browsers, ISDN gateways
+            and virtually everywhere else.  Quality of traditional phone
+            calls.</entry>
+          </row>
+
+          <row>
+            <entry>G.722</entry>
+            <entry>audio</entry>
+            <entry>64</entry>
+            <entry>N</entry>
+            <entry>Supported in most modern software and high quality desk
+            phones.  Transmits higher quality wideband audio in the same
+            64kbps bandwidth used by G.711</entry>
+          </row>
+
+          <row>
+            <entry>Opus</entry>
+            <entry>audio</entry>
+            <entry>6 - 510</entry>
+            <entry>N</entry>
+            <entry>Support in more modern software, WebRTC browsers and some
+            very recent desk phones.</entry>
+          </row>
+
+          <row>
+            <entry>G.729</entry>
+            <entry>audio</entry>
+            <entry>8</entry>
+            <entry>Y</entry>
+            <entry>A low bitrate codec supported in a lot of older VoIP phones
+            and related hardware.  Voice quality less than a standard
+            telephone call.</entry>
+          </row>
+
+          <row>
+            <entry>G.723.1</entry>
+            <entry>audio</entry>
+            <entry>5.3, 6.3</entry>
+            <entry>Y</entry>
+            <entry>An ultra-low bitrate codec support in some older VoIP
+            phones and related hardware.  Voices sound very bad.</entry>
+          </row>
+
+          <row>
+            <entry>GSM full rate</entry>
+            <entry>audio</entry>
+            <entry>13</entry>
+            <entry>N</entry>
+            <entry>The original codec for GSM mobile telephony.  Supported in
+            many older open source products and some VoIP hardware.</entry>
+          </row>
+
+          <row>
+            <entry>iLBC</entry>
+            <entry>audio</entry>
+            <entry>15</entry>
+            <entry>N</entry>
+            <entry>A codec developed for Internet use before Opus.  Supported
+            in many older open source products but not widely supported in
+            VoIP hardware.</entry>
+          </row>
+
+          <row>
+            <entry>speex</entry>
+            <entry>audio</entry>
+            <entry>2-44</entry>
+            <entry>N</entry>
+            <entry>A codec developed for Internet use before Opus.  Supported
+            in many older open source products but not widely supported in
+            VoIP hardware.</entry>
+          </row>
+
+          <row>
+            <entry>VP8</entry>
+            <entry>video</entry>
+            <entry>depends</entry>
+            <entry>N</entry>
+            <entry>Mandatory part of WebRTC, supported in browsers.  Bitrate
+            depends on resolution and frame rate.</entry>
+          </row>
+
+          <row>
+            <entry>H.264</entry>
+            <entry>video</entry>
+            <entry>depends</entry>
+            <entry>Y</entry>
+            <entry>Mandatory part of WebRTC, supported in browsers and in
+            many existing video conferencing hardware products.</entry>
+          </row>
+        </tbody>
+      </tgroup>
+
+    </table>
+
+    <para>The person configuring the software or device can typically
+    select which codecs are permitted and also specify which codecs are
+    preferred over others.</para>
+
+    <para>When a call is made, the endpoints negotiate to select a codec
+    that is supported at both ends.  If both endpoints have no codecs in
+    common, the call is not possible and the user may see a message
+    telling them the call failed.  If both endpoints have more than one
+    codec in common, the exact codec selected in this negotiation algorithm
+    depends on the relative priorities specified by the administrators
+    of each endpoint.</para>
+
+    <para>Some software has the ability to dynamically change the list
+    of permitted codecs.  For example, some mobile apps will only enable
+    high-bandwidth codecs when they detect the mobile device is using wifi
+    or a 4G/LTE network.</para>
+
+    <para>More modern codecs support a variable bit rate that can be
+    changed automatically during a call to adapt to poor network conditions.
+    The Opus codec used for WebRTC has this capability.</para>
+
+    <sect2 xml:id="optimal-connectivity-codecs-recommendations">
+      <title>Recommendations</title>
+
+      <para>Enable as many codecs as possible to maximize the chance of
+      connection.  This reduces the number of calls where the endpoints
+      fail to find a common set of codecs.</para>
+
+      <para>Disable those codecs that won't possibly work given the available
+      bandwidth.  For example, in a remote location with a 128kbit DSL
+      broadband connection it is usually necessary to disable 64kbit codecs
+      like G.711 and G.722 and use codecs that have lower audio quality
+      such as Opus, GSM and G.729.</para>
+
+      <para>However, in a location with good bandwidth, don't disable the
+      low-bit rate/low-quality codecs.  They will still be needed when
+      calling a user who doesn't have great bandwidth.</para>
+
+      <para>Order the remaining codecs based on the quality, with the
+      best quality codec first. G.711 is typically present for
+      compatibility but other codecs like G.722 offer better quality for
+      the same amount of bandwidth, so rate G.722 ahead of G.711 and
+      G.722 will be used whenever possible.</para>
+
+      <para>Example 1: a mobile app: enable, in order of priority
+      starting with the most preferred: Opus, Silk and GSM codecs.</para>
+
+      <para>Example 2: a soft PBX in an office accessed by local users
+      and mobile users: enable, in order of priority starting with the
+      most preferred: Opus, G.722, G.711, Silk, iLBC, GSM, G.729.</para>
+    </sect2>
+  </sect1>
+
   <sect1 xml:id="optimal-connectivity-turn">
     <title>Use ICE and a TURN server</title>
     <para>A TURN server provides a standard way to relay media on behalf

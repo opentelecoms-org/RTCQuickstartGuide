@@ -26,6 +26,7 @@
     <xi:include href="debuild.xml"/>
     <xi:include href="rpmbuild.xml"/>
     <xi:include href="nagios.xml"/>
+    <xi:include href="voip-fraud.xml"/>
 
     <!--<index/> -->
 </book>

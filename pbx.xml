@@ -5,22 +5,284 @@
   <title>PBX Setup</title>
 
   <para>A soft PBX (such as Asterisk or FreeSWITCH) provides features
-  such as voicemail and call queues.  It is perfectly feasible to build
-  an RTC environment without these features.  Many of the typical
+  such as voicemail, menu systems and call queues.  Many of the typical
   features in a soft PBX have a particular focus on voice communications,
   rather than other types of RTC such as IM or video.</para>
 
-  <para>In a federated environment, it is recommended that a SIP proxy
-  is used to handle all connectivity with external parties, including
-  both incoming and outgoing sessions.  The SIP proxy servers have far
-  less features and this inherently makes them easier to configure
-  and secure.</para>
+  <para>It is perfectly feasible to build an RTC environment without these
+  features.  It is recommended that a SIP proxy is used to handle all
+  connectivity with users and any external parties, the reasons for this
+  are explained in <xref linkend="rtc-architecture-sip-proxy"/>.  This
+  also means that it is better to install and test the SIP proxy before
+  making decisions about the selection and design of the soft PBX.</para>
 
-  <para>The soft PBX can be configured to register with the SIP proxy or
-  routing entries can be created in both the SIP proxy and soft PBX to
-  send calls back and forth between them as required.</para>
+  <para>The soft PBX can be configured to make a SIP registration in
+  the SIP proxy or routing entries can be created in both the SIP proxy
+  and soft PBX to send calls back and forth between them as required.</para>
 
-  <para>OpenTelecoms maintains a guide to
-  <link xlink:href="http://www.opentelecoms.org/using-repro-with-asterisk-or-freeswitch">
-  using repro with Asterisk or FreeSWITCH</link>.</para>
+  <para>The configuration and operation of soft PBXes tends to replicate
+  many concepts from the world of traditional telephony.  The fact that
+  many of the features of these products are voice-orientated is an
+  example of this trend.  Many guides on soft PBX configuration tend to
+  focus on the use of dial plans and phone numbers as the dominant
+  currency in the world of legacy communications, while modern
+  unified communications strategies involve <literal>user@domain</literal>
+  addressing similar to other Internet-based services.</para>
+
+  <sect1 xml:id="pbx-all-in-one-myth">
+    <title>The all-in-one myth</title>
+
+    <para>It is tempting to look at a soft PBX as a one-stop-shop for VoIP,
+    with no other product required.  In fact, this is a very limited
+    strategy in terms of features and resilience.</para>
+
+    <para>Many people have a requirement to use existing ISDN lines
+    with their RTC architecture.  With Asterisk and FreeSWITCH both
+    boasting ISDN support, it is tempting to do everything with that
+    single instance of a soft PBX installed on a server with ISDN hardware.
+    </para>
+
+    <para>Modularity is a hallmark of good design in any IT project.
+    Modularity gives you the flexibility to upgrade or modify one component
+    of a system without changing any other component.  Modularity also
+    means that some components are more likely to continue providing
+    service even if something fails.  In the planning of a soft PBX deployment,
+    modularity involves running one instance of the soft PBX just to
+    control the ISDN hardware and running another instance for services
+    such as voicemail and using a SIP proxy to route calls between these
+    different components.</para>
+  </sect1>
+
+  <sect1 xml:id="pbx-asterisk-or-freeswitch">
+    <title>Choosing between Asterisk and FreeSWITCH</title>
+
+    <para>Asterisk is by far one of the most well known open source
+    VoIP server products.  It has a plethora of features and supports a
+    diverse range of connectivity options, from IP based solutions like SIP
+    to legacy technologies like ISDN and POTS.</para>
+
+    <para>FreeSWITCH is a popular alternative to Asterisk,
+    boasting many of the same features, but with a collective ownership
+    model rather than the corporate model that is intertwined with
+    Asterisk's licensing and contributor agreements.</para>
+
+    <para>We consider some of the points where they differ.  Not every
+    point is relevant in every deployment.</para>
+
+    <para>If you are not sure which way to go and if maintaining the soft PBX
+    will not be the primary focus of your job, we suggest using Asterisk
+    because it has official packages but we do not wish to discourage
+    people from considering FreeSWITCH when they understand the issues
+    involved and feel it is the better choice.</para>
+
+    <sect2 xml:id="pbx-asterisk-or-freeswitch-packaging">
+      <title>Official packages</title>
+
+      <para>Asterisk has officially supported packages in many of the popular
+      GNU/Linux distributions.  FreeSWITCH does not.</para>
+
+      <para>FreeSWITCH users have to use unofficial packages from the
+      FreeSWITCH web site or compile from source code.  When packages are
+      made available through an official distribution, like Debian or
+      EPEL, it means they go through a managed release cycle and are
+      subject to a battery of independent tests to ensure the packages
+      don't interfere with any other packages on the same system.
+      </para>
+
+      <para>When something is available in an official package, it
+      also means upgrading the operating system (for example, from
+      Debian 7 to Debian 8) should also upgrade the package in a safe
+      manner.</para>
+    </sect2>
+
+    <sect2 xml:id="pbx-asterisk-or-freeswitch-contributing">
+      <title>Contributing patches</title>
+
+      <para>Many more experienced users of open source software become
+      intimitely familiar with the software they rely on and sometimes
+      they even develop bug fixes or improvements.  It can be tedious
+      to test and re-apply such fixes to each new version of a product
+      and so many people in this situation usually want to contribute their
+      fix to the primary source repository for the project so it will
+      automatically be part of all future releases.</para>
+
+      <para>Some projects welcome these contributions unconditionally
+      and without any specific legal agreement, ownership of the
+      contribution remains the intellectual property of the contributor
+      and other members of the community are simply licensed to use it.
+      </para>
+
+      <para>Some projects ask the contributor to go a step further,
+      giving the founders of the projects some additional rights to include
+      the contribution in commercial products without releasing the source
+      code of the final product.</para>
+
+      <para>Finally, some projects go all the way and don't just ask the
+      contributor for a preferential license, they ask the contributor
+      to grant ownership of all intellectual rights in the contribution
+      to the project's founders or some other entity.</para>
+
+      <para>Asterisk is in second category, asking contributors to give
+      Digium, the company behind Asterisk, a license to redistribute the
+      contributions under alternative terms.  Some projects use this strategy
+      to collect intellectual property rights in a non-profit community
+      foundation but in this case the rights are being granted to Digium, 
+      a company with shareholders.  Another point of contention is that
+      the agreement is one-sided: it does not contain any commitment by
+      Digium to release future versions of the product under any open source
+      license.</para>
+
+      <para>Some contributors are uncomfortable with these contribution terms
+      and some people are unable to make contributions under these terms
+      without violating regulations set by their own employer or funding
+      they receive from public sources.</para>
+    </sect2>
+
+    <sect2 xml:id="pbx-asterisk-or-freeswitch-licensing">
+      <title>Licensing</title>
+
+      <para>Asterisk is distributed under the GPL while FreeSWITCH
+      is using the Mozilla Public License.</para>
+
+      <para>The main distinction between these licenses applied to those
+      users who intend to build their own product around the soft PBX
+      and sell it.  The GPL typically requires people in this situation
+      to either publish the source code of any fixes or enhancements or
+      other components they create as part of their overall solution.
+      Digium has a parallel-licensing strategy, allowing people in this
+      situation to pay a license fee and eliminate the obligations of the
+      GPL.</para>
+
+      <para>The Mozilla Public License used by FreeSWITCH doesn't involve
+      these issues.</para>
+    </sect2>
+
+    <sect2 xml:id="pbx-asterisk-or-freeswitch-community">
+      <title>Community</title>
+
+      <para>The contributor agreement and the licensing strategy have an
+      impact on the type of community that is forming around each product,
+      especially the community of developers contributing to the products.
+      </para>
+
+      <para>Even for users who don't intend to either contribute source code
+      or resell products built from Asterisk or FreeSWITCH, it is important
+      to consider which community is more sustainable in the long term.</para>
+
+      <para>Many people have their own thoughts and feelings about this.
+      It may well be that the existence of both competing products with
+      distinct communities is the most sustainable solution for both.</para>
+    </sect2>
+
+    <sect2 xml:id="pbx-asterisk-or-freeswitch-scalability-and-code-quality">
+      <title>Scalabiltiy and code quality</title>
+
+      <para>One of the reasons that FreeSWITCH was founded is because the
+      creators were not satisfied with the design of Asterisk and did not
+      feel that Asterisk would change.  FreeSWITCH was written from the
+      ground up to address some of those perceived problems.</para>
+
+      <para>One area where such problems exist is in the case of scalability.
+      FreeSWITCH's design is more favorable to large scale operation.</para>
+
+      <para>It should be noted that while the designers of FreeSWITCH have
+      chosen to emphasize different priorities and achieved a more
+      scalable solution, Asterisk has involved in other ways and some
+      people feel the range of features Asterisk offers for developing their
+      customized applications is superior and more relevant to them
+      than scalability.</para>
+    </sect2>
+  </sect1>
+
+  <sect1 xml:id="pbx-asterisk-with-repro">
+    <title>Using Asterisk with the repro SIP proxy</title>
+
+    <para>Setup the SIP proxy as described in
+    <xref linkend="sip-proxy-repro"/>.  Add a UDP transport in
+    <literal>repro.config</literal>, it will be used to communicate with
+    Asterisk.  It is a good idea to ensure that the firewall prevents external
+    hosts from sending any UDP traffic to either the SIP proxy or the SIP port
+    on Asterisk.</para>
+
+    <para>Go to the repro web administration page and click to add a route.
+    Configure the route using the details in
+    <xref linkend="pbx-aterisk-with-repro-route"/>.  Replace
+    <literal>A.B.C.D</literal> with the IP address of the Asterisk server.
+    </para>
+
+    <table xml:id="pbx-aterisk-with-repro-route">
+      <title>repro route configuration</title>
+      <tgroup cols="2">
+        <colspec colname="c1" colnum="1" colwidth="1*" />
+        <colspec colname="c2" colnum="2" colwidth="1*" />
+
+        <thead>
+          <row>
+            <entry align="center">Parameter</entry>
+            <entry align="center">Value</entry>
+          </row>
+        </thead>
+
+        <tbody>
+          <row>
+            <entry>URI</entry>
+            <entry><literal>^sip:([0-9]*)@sip-proxy\.example\.org;.*transport=tls</literal></entry>
+          </row>
+
+          <row>
+            <entry>Destination</entry>
+            <entry><literal>sip:$1@A.B.C.D:5060;transport=udp</literal></entry>
+          </row>
+        </tbody>
+      </tgroup>
+    </table>
+
+    <para>Notice that this route looks for the <literal>transport=tls</literal>
+    parameter.  This means it will only be applied to calls coming from the
+    users.  When a call comes into the SIP proxy from the Asterisk server,
+    it will be coming over the UDP transport and it won't be matched by
+    this route (otherwise it would go into a loop).</para>
+
+    <para>Next, in the repro web administration page, click to add an
+    entry to the ACL.  Add an entry permitting packets from the IP address
+    and SIP port used by the Asterisk server.</para>
+
+    <para>Remember to restart the repro SIP proxy if changes were made to the
+    list of domains or the <literal>repro.config</literal> file.</para>
+
+    <para>In the Asterisk server, setup the <literal>sip.conf</literal> file
+    as demonstrated in <xref linkend="pbx-aterisk-with-repro-sip.conf"/>.
+    In particular, replace <literal>A.B.C.D</literal> with the IP address that the Asterisk
+    server should bind to, this must be a routable IP address on the Asterisk
+    host.</para>
+
+    <example xml:id="pbx-aterisk-with-repro-sip.conf">
+      <title>Asterisk <literal>sip.conf</literal></title>
+      <programlisting format="linespecific">; should match the realm used by the proxy
+realm=sip-proxy.example.org
+domain=sip-proxy.example.org
+fromdomain=sip-proxy.example.org
+port=5060
+bindaddr=A.B.C.D
+
+; follow this pattern to define a user
+[8001]
+username=8001
+secret=whatever
+host=dynamic
+canreinvite=no
+mailbox=8001
+nat=yes</programlisting>
+    </example>
+
+    <para>The Asterisk server will need to be able to send calls to SIP users who
+    are registered with the SIP proxy.  The calls can be routed using the
+    <literal>Dial</literal> command as demonstrated in
+    <xref linkend="pbx-aterisk-with-repro-extensions.conf"/>.</para>
+
+    <example xml:id="pbx-aterisk-with-repro-extensions.conf">
+      <title>Asterisk <literal>extensions.conf</literal></title>
+      <programlisting format="linespecific">exten => _8XXX,n,Dial(SIP/${EXTEN}@sip-proxy.example.org,45)</programlisting>
+    </example>
+  </sect1>
 </chapter>

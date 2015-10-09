@@ -22,7 +22,11 @@
     environment with a bring-your-own (BYO) device policy, the ideal
     setup process should only require the user to enter their SIP/XMPP
     address and their password and the softphone/device should discover
-    all other parameters using DNS NAPTR and DNS SRV queries.</para>
+    all other parameters using DNS NAPTR and DNS SRV queries.
+    For this to be effective, softphones and devices aiming to be used
+    in this way need to ensure they have suitable codec and encryption
+    settings enabled by default so the user won't have to tweak them
+    as recommended in <xref linkend="optimal-connectivity"/>.</para>
 
   </sect1>
 
@@ -32,6 +36,38 @@
     <para>At first glance, dialing a telephone may appear to be a
     trivial task.  Some attention to detail is required to maximize
     user convenience.</para>
+
+    <sect2>
+      <title>Usernames or phone numbers?</title>
+
+      <para>A user may want to call or chat to various people.  For some
+      people, they may only have the email/SIP/XMPP address and for
+      other people they may only have a phone number.</para>
+
+      <para>It is important to select phones that work
+      intuitively for either type of input, an address of the
+      form <literal>user@example.org</literal> or a phone number.
+      It is also important to ensure that the server processes, such
+      as SIP proxies, are correctly configured to route calls to
+      arbitrary Internet addresses.  The repro SIP proxy and most
+      XMPP servers work this way by default.</para>
+
+      <para>Some phones can even help convert from a phone number to
+      a SIP or XMPP address, see <xref linkend="enum"/>.</para>
+
+      <para>If the user has an entry in their address book with both
+      a phone number and an email/SIP/XMPP address, then it is important
+      that the phone gives the user a helpful way to choose which one
+      to dial without asking too many questions about whether the user
+      wants to use SIP or XMPP.  This process can be optimized if the
+      phone uses presence (a buddy list) to work out which contact
+      mechanisms are unreachable.</para>
+
+      <para>All of this can be made easier by using named accounts
+      (like email addresses) instead of extension numbers within the
+      server configuration, this is explained in more detail in
+      <xref linkend="user-authentication-usernames"/>.</para>
+    </sect2>
 
     <sect2>
       <title>Dial plans</title>

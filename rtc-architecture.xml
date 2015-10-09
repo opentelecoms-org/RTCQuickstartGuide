@@ -164,7 +164,9 @@
     be sending the last six digits of each destination DDI that
     has been dialed.  The <emphasis>ingress</emphasis> stage handling
     calls from this ISDN circuit adds the country code and other
-    leading digits to normalize the numbers in the E.164 format.</para>
+    leading digits to normalize the numbers in the E.164 format
+    (see <xref linkend="pstn"/> for more specific details about
+    this type of <emphasis>ingress</emphasis> handling).</para>
 
     <para>When calls are sent to their final destination, whether it is
     a SIP trunking provider, ISDN circuit or a local user, the

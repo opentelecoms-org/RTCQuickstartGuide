@@ -191,7 +191,7 @@
 
       <para>Run the process in debug mode, in the foreground on a terminal,
       to see what it is doing.  Running the <code>repro</code> daemon
-      this way will allow you to see the SIP packets in the console.</para>
+      this way will allow you to see the SIP messages in the console.</para>
     </sect2>
 
     <sect2 xml:id="troubleshooting-webrtc">

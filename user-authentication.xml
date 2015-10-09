@@ -12,6 +12,85 @@
   <sect1 xml:id="user-authentication-credentials">
     <title>Credentials</title>
 
+    <sect2 xml:id="user-authentication-usernames">
+      <title>Personal account names or extension numbers</title>
+
+      <para>An issue that arises early in many discussions about this
+      topic is whether to use email addresses of the form
+      <literal>username@example.org</literal> or to use extension
+      numbers as the account identifiers.</para>
+
+      <para>In most cases, users still need to be able to be contactable
+      using either type of address, but the question remains: should
+      their phone login to the system using a named username or using an
+      extension number?</para>
+
+      <para>Extension numbers are the standard in many traditional phone
+      systems and some people have simply tried to replicate this model
+      when moving to IP-based RTC.</para>
+
+      <para>There are three big reasons why numbers are popular:
+      numbers can be dialed from anywhere else in the PSTN,
+      numbers are easier to dial for people who are not calling from a
+      computer (phones only have 12 buttons) and there is not always
+      a one-to-one mapping between people and phones.  One additional
+      feature of numbers is that they are slightly less personal,
+      somebody does not know exactly who will answer when they
+      call a landline in a house shared by a large family and when
+      somebody leaves a job, their phone number can be assigned to
+      their successor.</para>
+
+      <para>Mobile telephones and smartphones in particular have
+      dramatically reduced the significance of these factors that encouraged
+      the continued use of numbers.  For example, the inconvenience of manually
+      dialing a SIP or XMPP address is not such a big factor because people are
+      more likely to have these details in their address books.</para>
+
+      <para>Phone numbers also have disadvantages.  One of these is the
+      dependency on phone companies, the ITU and government bureaucracies
+      who administer the numbering system.  Users can be forced to change
+      their phone number when changing provider.  Dialing codes change,
+      making it necessary to update old records in an address book.
+      Each group of numbers is tightly bound to the infrastructure of a
+      specific the telephone exchange, leading to inflexibility when relocating
+      or when a local service outage occurs.</para>
+
+      <sect3>
+        <title>Recommendation</title>
+
+        <para>Use alphabetic usernames rather than extension numbers
+        internally.  SIP, XMPP and email each support a slightly different
+        set of characters in usernames so only use the set of characters
+        supported for all protocols.  Wherever a device is being used with
+        named accounts, such as a desktop PC where users login and have
+        access to their own company email account, or a smartphone that
+        is only used by one person and has been configured to access
+        a named email account, provision the same personalized SIP/XMPP
+        address on that device.  Where a device is shared, such as a
+        conference room phone, create a named account for that purpose.</para>
+
+        <para>It is generally helpful if the same username is used for
+        login, email address, SIP and XMPP addresses.  If the login names
+        are not the same as email addresses, use the email addresses as
+        the SIP and XMPP addresses.</para>
+
+        <para>To give users the convenience of dialing extension numbers
+        from regular phones, create mappings from the extension numbers
+        to the usernames.</para>
+
+        <para>This strategy offers significantly more potential for
+        the future as more and more services will rely on usernames and
+        fewer services will place emphasis on phone numbers.</para>
+
+        <para>When using this strategy, it is necessary to implement
+        mappings from phone numbers to usernames as part of the
+        <emphasis>ingress</emphasis> processing and for calls that go
+        out to the PSTN over SIP or ISDN trunks, it is necessary to
+        implement the reverse mapping, ensuring that the caller ID of each
+        outgoing call is personalized based on the internal username.</para>
+      </sect3>
+    </sect2>
+
     <sect2>
       <title>Password encryption</title>
 
@@ -39,7 +118,7 @@
 
       <warning>
         <para>HA1 hash values should be considered as sensitive as
-        unencrypted values.  Even though the plaintext password can't
+        unencrypted passwords.  Even though the plaintext password can't
         be recovered in a simple manner, anybody in possession of the
         HA1 value is able to use it to construct a response to a HTTP
         or SIP DIGEST challenge, thereby impersonating the user who
@@ -140,14 +219,54 @@ $ echo -n "alice@example.org:example.org:secret" | md5sum
 
       <para>Many RTC products have some capability to interact with an
       SQL database to obtain user credentials, configuration settings
-      and routing information.</para>
+      and routing information.  <xref linkend="postgresql-users-repro"/>
+      demonstrates a typical schema.</para>
+
+      <example xml:id="postgresql-users-repro">
+        <title>SQL table for repro users</title>
+        <programlisting format="linespecific">CREATE TABLE users (
+  id SERIAL PRIMARY KEY,
+  username VARCHAR(64) NOT NULL,
+  domain VARCHAR(253),
+  realm VARCHAR(253),
+  passwordHash VARCHAR(32),
+  passwordHashAlt VARCHAR(32),
+  name VARCHAR(256),
+  email VARCHAR(256),
+  forwardAddress VARCHAR(256)
+);</programlisting>
+      </example>
 
       <para>Each product has a different schema, however, it is possible
       to create a user list table that aggregates all the columns
-      required to satisfy multiple RTC servers.  For example, a single
-      user list table can be created for use by <emphasis>Asterisk</emphasis>
-      and <emphasis>repro</emphasis>.  <emphasis>repro</emphasis> simply
-      ignores many of the columns used by <emphasis>Asterisk</emphasis>.</para>
+      required to satisfy multiple processes and then create SQL views to
+      present the data with the column names required by the individual
+      applications.  For example, a single user list table can be created
+      for use by Asterisk (the <literal>sippeers</literal> table) and used
+      by repro (using a view instead of a real <literal>users</literal> table)
+      as demonstrated in <xref linkend="postgresql-view-repro-asterisk"/>.
+      repro simply doesn't require many of the columns used by Asterisk.
+      Notice that Asterisk's <literal>sippeers</literal> table doesn't
+      contain a domain or realm column for each user, these are stored
+      elsewhere in the <literal>sip.conf</literal> file, so for repro, they
+      are specified as constant values in the <literal>SELECT</literal> query.
+      </para>
+
+      <example xml:id="postgresql-view-repro-asterisk">
+        <title>SQL view presenting Asterisk users to repro</title>
+        <programlisting format="linespecific">CREATE VIEW users AS
+  SELECT
+    id,
+    name AS username,
+    'my_domain' AS domain, 
+    'my_realm' AS realm,
+    md5secret AS passwordHash,
+    NULL As passwordHashAlt,
+    NULL AS name,
+    NULL AS email,
+    NULL AS forwardAddress
+  FROM sippeers;</programlisting>
+      </example>
 
       <sect3 xml:id="user-authentication-sql-setup-postgresql">
         <title>Setting up PostgreSQL for SIP users</title>
@@ -170,7 +289,7 @@ $ echo -n "alice@example.org:example.org:secret" | md5sum
         </example>
 
         <example xml:id="postgresql-setup-debian">
-          <title>Configure PostgreSQL</title>
+          <title>Configure PostgreSQL and load schema</title>
           <programlisting format="linespecific">$ sudo su - postgres
 postgres$ createdb repro
 postgres$ psql

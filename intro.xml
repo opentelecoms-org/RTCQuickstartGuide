@@ -35,6 +35,86 @@
     videoconferencing.</para>
   </sect1>
 
+  <sect1 xml:id="intro-p2p">
+    <title>Independent and decentralized alternatives to federation</title>
+
+    <para>Federation takes a lot of power from the telephone industry
+    and places more power and control in the hands of organizations and
+    individuals who run their own servers.  This is generally a good thing
+    for innovation, cost-efficiency, privacy and many other reasons.</para>
+
+    <para>Critics of federation observe that while this model is not
+    as tightly centralized as a traditional telephone network, it is built
+    around a client-server model, leaving power in the hands of those who are
+    able to operate the servers.  Like many Internet-based technologies,
+    it also relies heavily on other centralized services:
+    the DNS protocol and the certificate authorities.</para>
+
+    <sect2>
+      <title>Private networks</title>
+
+      <para>Some operators have created private networks, where users
+      can only call other users with the same softphone.  All the users
+      communicate through a central server.  The operator chooses to
+      locate the server in a location they believe to be secure and
+      where they believe the risk of surveillance is low, such as
+      Switzerland.</para>
+    </sect2>
+
+    <sect2>
+      <title>Decentralized networks</title>
+
+      <para>Various solutions have begun to emerge in the hope of further
+      eliminating these dependencies and offering a genuinely
+      decentralized service.</para>
+
+      <para>A fundamental issue for these alternatives is the addressing
+      scheme.  Some rely on phone numbers and some of these solutions require
+      their users to use an identifier other than a phone number, exchanging
+      the identifiers in person or though some other communications channel.
+      If phone numbers are used, it makes the service more convenient but
+      this implies placing some trust in the phone numbering scheme operated
+      by the telephone industry.
+      </para>
+
+      <para>Another fundamental issue for these services is bootstrapping:
+      how the client finds other peer-to-peer participants the first
+      time the user runs the software.  The current solution to this
+      is usually a central server keeping a list of peers to seed the
+      clients.</para>
+    </sect2>
+
+    <sect2>
+      <title>Conclusion</title>
+
+      <para>While some of these alternatives are promising, none of them
+      offers a silver bullet.  Private and decentralized services are
+      only useful for specific purposes where two people know each other
+      personally, such as calling a spouse, a physician calling a patient
+      or a lawyer communicating with a client.</para>
+
+      <para>For large organizations that deal with other large organizations
+      and with the public in a less personal manner, the decentralized model
+      is not universally applicable and a federated model is more likely to
+      gain traction and meet operational needs.  That said, it is not
+      uncommon for senior executives in some large corporations to seek
+      out specialized communications solutions so they can have private
+      conversations with each other and their closest advisors.</para>
+
+      <para>Decentralized services are not mutually exclusive with
+      federated RTC.  It is quite feasible for an organization to
+      operate standard SIP or XMPP internally but setup a gateway at the
+      edge of their network to accept calls from customers using
+      alternative services.  The external user needs to have some way
+      to be certain that their call is connected to an account
+      controlled by the organization they want to contact and not
+      an imposter or a man-in-the-middle who is relaying the call while
+      monitoring it.
+      </para>
+    </sect2>
+      
+  </sect1>
+
   <sect1 xml:id="intro-sip-or-xmpp">
     <title>Choosing between SIP and XMPP</title>
 

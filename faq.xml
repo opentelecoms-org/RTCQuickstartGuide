@@ -22,7 +22,7 @@
     <para><emphasis>Yes</emphasis>.  Even if you don't care too much about
     security or privacy, TLS helps to reduce the risk of nuisance calls from
     spammers and the risk of impersonation and it also eliminates a range of
-    problems caused by SIP-aware routers that try to modify SIP packets to
+    problems caused by SIP-aware routers that try to modify SIP messages to
     help them through NAT.</para>
   </sect2>
 

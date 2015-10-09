@@ -1,0 +1,161 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<chapter xmlns="http://docbook.org/ns/docbook"
+      xmlns:xlink="http://www.w3.org/1999/xlink" version="5.0"
+      xml:id="pstn">
+  <title>PSTN connectivity</title>
+
+  <para>The Public Switched Telephone Network (PSTN) remains pervasive
+  and convenient for much of the world's population, even though it is
+  also expensive, unsophisticated and insecure.</para>
+
+  <para>In the early days of IP telephony, the PSTN was perceived
+  as something of a security blanket.  Companies would design their IP
+  telephony system to mirror the traditional PBX.  Some would even keep a
+  few analog phone lines connected in case of an "emergency".</para>
+
+  <para>This fear-based approach has gradually been replaced by a more
+  pragmatic approach, relegating the PSTN services to being just one
+  part of the big picture.  A modern RTC-based solution works seamlessly
+  with or without the PSTN.</para>
+
+  <para>The emotional attachment to the PSTN has largely been contained
+  due to two factors: the widespread presence of smartphones as an
+  alternative means of communication that can be used in an emergency
+  and the increased investment in corporate IT networks which need to
+  be always available.</para>
+
+  <para>This chapter looks at PSTN connectivity issues.</para>
+
+  <sect1>
+    <title>Methods of PSTN connectivity</title>
+
+    <para>Anybody, anywhere in the world, can now rent inbound phone
+    numbers and make outgoing calls using SIP trunking providers.
+    This is often the fastest, cheapest and most flexible means of
+    getting connected to the PSTN.  It is often possible to port
+    existing phone numbers from legacy phone companies to SIP operators.
+    </para>
+
+    <para>There are a range of hardware options for joining analog and
+    ISDN telephone lines to an IP network.  One option is to purchase
+    a dedicated media gateway, such as the those promoted
+    by Cisco Systems and other well known vendors.  Another option is
+    to install an ISDN or analog telephony card into a server and
+    run Asterisk or FreeSWITCH, as described in <xref linkend="pbx"/>,
+    configured solely to act as a media gateway.</para>
+
+    <para>If dedicated ISDN links to the telephone company are important,
+    it is worthwhile considering one further permutation: instead of
+    installing the media gateway at the office location, have the ISDN
+    lines installed to a rack in a data center and use VPN or WAN links
+    from the data center to the office.  This can achieve higher resilience
+    and flexibility: if the main office site suffers from any kind of
+    technical or environmental disturbance, calls can be routed from
+    the data center to users at home, on mobile devices or at another
+    branch office or disaster recovery location.</para>
+  </sect1>
+
+  <sect1>
+    <title><emphasis>ingress</emphasis> call handling</title>
+
+    <para>The concept of an <emphasis>ingress</emphasis> module
+    accepting calls from other places such as SIP trunks or ISDN trunks
+    is introduced in <xref linkend="rtc-architecture-routing"/>.</para>
+
+    <para>The <emphasis>ingress</emphasis> stage should, in most cases,
+    normalize both the destination number and the caller ID into the E.164
+    format.  This will assist with both routing and log analysis later on.
+    </para>
+
+    <para>The <emphasis>ingress</emphasis> stage may also convert the
+    destination numbers to the addresses of internal users such as
+    <literal>user@example.org</literal>.  This can also be done at
+    the routing stage.</para>
+  </sect1>
+
+  <sect1>
+    <title><emphasis>egress</emphasis> call handling</title>
+
+    <para>The concept of <emphasis>egress</emphasis> modules preparing calls
+    from the local users to go out to SIP trunks or ISDN trunks
+    is also introduced in <xref linkend="rtc-architecture-routing"/>.</para>
+
+    <para>The <emphasis>egress</emphasis> stage should convert the
+    destination number into the format expected by the telephone
+    company or trunking provider.  For example, they may require a
+    <literal>00</literal> prefix on all numbers qualified with a country
+    code.</para>
+
+    <para>The <emphasis>egress</emphasis> stage is also a good place to
+    set the caller ID.  Some trunking providers automatically set the
+    caller ID for you.  Some allow you to specify the caller ID
+    in the <literal>From</literal> header, as long as the value you
+    use is an inbound number that you have purchased from the same company.
+    If you try to use any other number, it is likely the will replace
+    it with one of your numbers selected at random.  ISDN trunks
+    attached to a soft PBX or media gateway also permit the caller ID
+    number to be set on a per-call basis.</para>
+
+    <para>Setting the caller ID to a constant value is relatively
+    easy within an Asterisk extension as demonstrated in
+    <xref linkend="pstn-asterisk-set-caller-id"/>.</para>
+
+    <example xml:id="pstn-asterisk-set-caller-id">
+      <title>Asterisk <literal>extensions.conf</literal> for specifying caller ID</title>
+      <programlisting format="linespecific">exten => _X.,1,Set(CALLERID(name)=00442071358378)
+exten => _X.,2,Set(CALLERID(number)=00442071358378)</programlisting>
+    </example>
+
+    <para>Instead of hard-coding a constant value, if the users
+    have their own direct phone numbers, a CSV file or Asterisk Realtime
+    SQL lookups could be used to map individual SIP usernames to personal
+    caller-ID values.</para>
+  </sect1>
+
+  <sect1>
+    <title>Emergency calls</title>
+
+    <para>Providing access to dial the emergency services has been
+    a controversial issue for all IP-based telephony.  Users
+    may see a phone and want to use it to make such a call.
+    Anybody installing phones should contemplate what happens in
+    this situation.</para>
+
+    <para>The first thing to note is that not all organizations route
+    emergency calls to the publicly operated emergency call center.
+    Some large organizations and universities route these calls to
+    their internal security office.  The suitability of this approach
+    depends on local laws and the training of the security staff.
+    </para>
+
+    <para>Many SIP providers now offer an option to handle emergency
+    calls.  For this to be effective, the SIP provider usually needs to
+    have accurate records of the addresses where the SIP trunks are
+    used.  For example, care needs to be taken to ensure that emergency calls
+    are not routed from mobile VoIP users when they are off-site, as
+    the emergency services may arrive at the wrong location.</para>
+
+    <para>Another option is to have a single physical phone line or
+    GSM SIP gateway attached to the IP phone system solely for routing
+    emergency calls.  All other calls would be routed to the normal
+    SIP providers.</para>
+
+    <para>If it is not technically feasible to route calls to the
+    emergency service number, it may be useful to provide a brief
+    recorded message telling the user to call emergency services from
+    another phone.  After playing the message once or twice, the
+    PBX should hang up, so the user knows that the call is not being
+    routed.</para>
+
+    <para>In the early days of telephony, not every home or office
+    had a telephone.  In Britain, which is known for its distinctive
+    red phone boxes, the police force took responsibility for installing many
+    <emphasis>blue</emphasis> phone boxes for use by police and people
+    without a telephone.  Some people feel that it is important for the
+    emergency services to be proactive again and ensure that emergency
+    call centers have a presence on the Internet, accepting calls directly
+    from users of SIP and XMPP.
+    </para>
+  </sect1>
+
+</chapter>

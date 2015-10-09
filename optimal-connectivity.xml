@@ -13,7 +13,24 @@
 
   <para>Metcalfe's law tells us that the value of a telecommunications
   network is proportional to the square of the number of connected users
-  of the system (n<superscript>2</superscript>).</para>
+  of the system (n<superscript>2</superscript>), demonstrated in
+  <xref linkend="metcalfe-quadratic"/>.</para>
+
+  <figure float="none" xml:id="metcalfe-quadratic">
+    <title>Metcalfe's law</title>
+
+    <mediaobject>
+      <imageobject role="print">
+        <imagedata fileref="figs/gnuplot/metcalfe_quadratic.svg" width="5in"
+          format="SVG" />
+      </imageobject>
+
+      <imageobject role="web">
+        <imagedata fileref="figs/gnuplot/metcalfe_quadratic.svg"
+          format="SVG" />
+      </imageobject>
+    </mediaobject>
+  </figure>
 
   <para>Therefore, the benefit of making the solution work for all those
   users who may suffer in certain NAT environments does not just have a
@@ -226,7 +243,12 @@
     there is a commercial imperative to use encryption.  Just as HTTP
     sessions can be encrypted with HTTPS, RTP streams can be encrypted
     using SRTP.  SRTP is optimized for the real-time nature of the media
-    stream and it permits packet loss.</para>
+    stream and it permits packet loss.  However, thanks to the way that
+    SRTP has involved, just looking for the encryption setting and turning
+    it on may lead to a big loss in compatability with other users
+    if the products you are using don't support the right combination
+    of encryption protocols.  We consider the issues here and then
+    provide some recommendations.</para>
 
     <para>While SRTP itself is relatively standard, there are several
     different ways to exchange keys for an SRTP session.  If the two
@@ -408,16 +430,16 @@
   </sect1>
 
   <sect1 xml:id="optimal-connectivity-tls">
-    <title>Use the TLS transport for SIP packets</title>
-    <para>When SIP packets are sent over UDP, there are several things
+    <title>Use the TLS transport for SIP signalling</title>
+    <para>When SIP messages are sent over UDP, there are several things
     that go wrong.  The first problem is that large SIP messages can be
     fragmented by the IP stack and some fragments are not delivered.</para>
 
-    <para>When ICE is used, the SIP packet contains a larger SDP body to
+    <para>When ICE is used, the SIP message contains a larger SDP body to
     encapsulate the ICE candidates.  When a softphone attempts a video call,
     the combination of the video and audio descriptors further enlarges
     the SDP.  More and more frequently in modern RTC deployments, SIP
-    packets sent over UDP exceed the maximum transmission unit and are
+    messages sent over UDP exceed the maximum transmission unit and are
     subject to fragmentation.  IP packet fragments are not always routed
     correctly by other intermediate network components.  This was not a
     problem in the early days of SIP when the vast majority of devices only
@@ -426,12 +448,12 @@
 
     <para>A more obscure issue is the presence of routers in homes and
     small offices that claim to have <emphasis>SIP helper</emphasis>
-    capabilities.  These routers try to modify the SIP packets to help
+    capabilities.  These routers try to modify the SIP messages to help
     them through NAT.  In reality, the modifications made by the router
     can clash with the ICE protocol or other NAT discovery techniques
     used by the phone or the server.</para>
 
-    <para>Sending all the SIP packets over a TLS connection eliminates all
+    <para>Sending all the SIP messages over a TLS connection eliminates all
     of these problems.  While there is slightly more effort involved to
     create a certificate for the server, it saves an enormous amount of
     ongoing support effort.</para>

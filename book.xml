@@ -21,6 +21,7 @@
     <xi:include href="enum.xml"/>
     <xi:include href="troubleshooting.xml"/>
     <xi:include href="pbx.xml"/>
+    <xi:include href="pstn.xml"/>
     <xi:include href="faq.xml"/>
     <xi:include href="community-support.xml"/>
     <xi:include href="debuild.xml"/>

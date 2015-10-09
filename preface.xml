@@ -5,11 +5,27 @@
   <title>Preface</title>
 
   <sect2>
+    <title>Mission</title>
+
+    <para>This book aims to provide practical strategies for deploying
+    RTC with the technology available today.</para>
+  </sect2>
+
+  <sect2>
+    <title>Vision</title>
+
+    <para>A world where open standards and free software are the foundation
+    of personal and business communications, enabling genuine innovation
+    and the emergence of more disruptive technologies.</para>
+  </sect2>
+
+  <sect2>
     <title>Who is this document for?</title>
 
-    <para>IT managers, system administrators, developers, web designers
-    and IT users who want best-practice Real-Time Communications (RTC)
-    technology for business or private use.</para>
+    <para>IT managers, system administrators, developers, web designers,
+    product managers and IT users who want best-practice
+    Real-Time Communications (RTC) technology for business or
+    private use.</para>
   </sect2>
 
   <sect2>
@@ -44,6 +60,12 @@
     <para><emphasis>Control:</emphasis> recognize callers who are already
     logged in to your web site and route their call efficiently based on
     language, account size or other factors.</para>
+
+    <para><emphasis>Innovation:</emphasis> in traditional phone companies,
+    technical innovation has slowed.  Open standards and free
+    software allow individuals and businesses of any size to engage
+    in genuine innovation, creating new and original services that run
+    across the network.</para>
   </sect2>
 
   <sect2>

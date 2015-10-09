@@ -131,31 +131,81 @@
       to authorize the streaming session.  The prompt usually allows
       the user to choose which devices will be used if they have more
       than one webcam or microphone/audio source.</para>
+    </sect2>
+
+    <sect2>
+      <title>Authentication</title>
+
+      <para>Authentication between a browser and a server can take
+      place in various ways.  If a WebSocket connection is used for
+      signalling and if a user has a client certificate in their
+      browser then it should theoretically be possible to use the
+      certificate to authenticate the WebSocket connection.  In
+      practice, this is supported by the <emphasis>repro</emphasis>
+      SIP proxy but it is not yet supported by the browsers.</para>
+
+      <para>Another possibility is the use of cookies or WebSocket
+      URL parameters.  Browser security mechanisms (to protect
+      users from cross-site-scripting) only allow cookies to be used
+      if the web server and WebSocket server have the same domain name.
+      If the servers don't use the same domain, URL parameters must be
+      used instead of the cookie.  The web server serving the HTML and
+      JavaScript can send an authentication token to the browser as a cookie
+      and the browser can then present this to the WebSocket signalling
+      server.  If using the URL parameter method, the script running
+      on the server-side usually constructs a WebSocket URL and embeds it
+      in the HTML sent to the browser.  When the JavaScript activates the
+      WebSocket connection, the request-URL, including the parameters,
+      are sent in the WebSocket upgrade request.  Both of these
+      mechanisms are supported in the <emphasis>repro</emphasis>
+      SIP proxy.</para>
+
+      <para>Standard SIP DIGEST authentication can also be used over
+      the WebSocket transport.  One benefit of DIGEST authentication
+      is that challenges can be sent from SIP proxies or other
+      network components behind the WebSocket server.</para>
 
       <sect3>
-        <title>Authentication</title>
+        <title>Cookie and URL parameter authentication in repro</title>
 
-        <para>Authentication between a browser and a server can take
-        place in various ways.  If a WebSocket connection is used for
-        signalling and if a user has a client certificate in their
-        browser then it should theoretically be possible to use the
-        certificate to authenticate the WebSocket connection.  In
-        practice, this is supported by the <emphasis>repro</emphasis>
-        SIP proxy but it is not yet supported by the browsers.</para>
+        <para>To use either of these mechanisms with the repro
+        SIP proxy, simply make sure that there is a value for the
+        <literal>WSCookieAuthSharedSecret</literal> parameter
+        in <literal>repro.config</literal>.  If desired, the actual
+        cookie or URL parameter names can be customized, otherwise they
+        use default values.</para>
 
-        <para>Another possibility is the use of cookies or WebSocket
-        URL parameters.  The web server serving the HTML and JavaScript
-        can send an authentication token to the browser and the browser
-        can then present this to the WebSocket signalling server, as
-        a cookie header or as part of the request-URL of the WebSocket
-        upgrade when it establishes a connection.  Both of these
-        mechanisms are also present in the <emphasis>repro</emphasis>
-        SIP proxy.</para>
+        <example xml:id="webrtc-auth-repro.config">
+          <title><literal>repro.config</literal> settings for cookie and URL parameter authentication</title>
+          <programlisting format="linespecific">WSCookieAuthSharedSecret = some-random-string
 
-        <para>Standard SIP DIGEST authentication can also be used over
-        the WebSocket transport.  One benefit of DIGEST authentication
-        is that challenges can be sent from SIP proxies or other
-        network components behind the WebSocket server.</para>
+# Names of the cookies to use for the cookie authentication protocol
+# These are the default values:
+#WSCookieNameInfo = WSSessionInfo
+#WSCookieNameExtra = WSSessionExtra
+#WSCookieNameMAC = WSSessionMAC
+
+# Name of the extension header that must match the content of
+# the authenticated WSSessionExtra cookie
+#WSCookieExtraHeaderName = X-WS-Session-Extra</programlisting>
+        </example>
+
+        <para>To send the authentication values as URL parameters,
+        the WebSocket URL passed to JSCommunicator or JsSIP may resemble
+        <literal>wss://ws.example.org:8443/WSSessionInfo=1%3A1429975989%3A142997
+ 6889%3A%2A%40example.org%3A%2A%40%2A;WSSessionExtra=;WSSessionM
+ AC=7bf9ed44bfe7e10153762639419c52fd712de58e</literal>.</para>
+
+        <para>Notice that the parameters are sent with the semicolon
+        as a separator, do not send them as query parameters with the
+        ampersand (&amp;) separator.  The value of each parameter has to
+        be URL encoded (for example, using the <code>urlencode()</code>
+        function in PHP).  This is demonstrated in the DruCall source
+        code.</para>
+
+        <para>Further details and examples are present in the
+        <link xlink:href="http://www.resiprocate.org/SIP_Over_WebSocket_Cookies">page on the reSIProcate project wiki</link>.</para>
+
       </sect3>
     </sect2>
 

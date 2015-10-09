@@ -122,6 +122,97 @@
     relaying all the media streams on their behalf.</para>
   </sect1>
 
+  <sect1 xml:id="rtc-architecture-routing">
+    <title>Routing calls within a site</title>
+
+    <figure float="none" xml:id="arch-dia-routing">
+      <title>Four stages of call routing</title>
+
+      <mediaobject>
+        <imageobject role="print">
+          <imagedata fileref="figs/svg/arch-routing.svg" width="5in"
+            format="SVG" />
+        </imageobject>
+
+        <imageobject role="web">
+          <imagedata fileref="figs/svg/arch-routing.svg"
+            format="SVG" />
+        </imageobject>
+      </mediaobject>
+    </figure>
+
+    <para>If you have just started looking at the configuration
+    of a SIP proxy or soft PBX, you have probably observed that the
+    scripting languages provide almost infinite flexibility to
+    route the calls in different ways.  If you have been working
+    with such configurations for a while, you may have seen some that
+    have become tremendously convoluted.</para>
+
+    <para><xref linkend="arch-dia-routing"/> demonstrates
+    a high-level approach to routing calls within your site, whether
+    you are using a single SIP proxy or soft PBX or a combination
+    of different components.</para>
+
+    <para>There are four general stages.</para>
+
+    <para>All calls, whether they come from SIP trunking providers, ISDN
+    or local users should start in an <emphasis>ingress</emphasis> stage.
+    The goal of the <emphasis>ingress</emphasis> stage is simply
+    normalizing the numbers into a standard form that will be
+    useful in all further stages of call processing.  For example, if
+    calls are coming in over an ISDN connection the provider may only
+    be sending the last six digits of each destination DDI that
+    has been dialed.  The <emphasis>ingress</emphasis> stage handling
+    calls from this ISDN circuit adds the country code and other
+    leading digits to normalize the numbers in the E.164 format.</para>
+
+    <para>When calls are sent to their final destination, whether it is
+    a SIP trunking provider, ISDN circuit or a local user, the
+    final stage it should go through is an <emphasis>egress</emphasis>
+    stage.  The format of the number/address usually needs to be
+    modified again in the <emphasis>egress</emphasis> stage.  For example,
+    some providers expect E.164 numbers to have a 00 prefix, as this is
+    the dialing prefix many countries use to call international numbers.
+    </para>
+
+    <para>Many deployments involve some services where calls are handled by
+    an application.  This is the <emphasis>application</emphasis> stage.
+    These applications are typically voicemail services, call queues
+    and DTMF-driven menus.</para>
+
+    <para>Finally, all these stages are joined together by a
+    <emphasis>routing</emphasis> stage.  The routing stage accepts calls
+    from the <emphasis>ingress</emphasis> stage, considers both the
+    source of the call and the desired destination (both of which
+    have been normalized already) and decides where to send them in
+    the <emphasis>egress</emphasis> and <emphasis>application</emphasis>
+    stages.</para>
+
+    <para>All these stages can be implemented in a single system such
+    as an Asterisk PBX.  For ease of administration, it is advisable
+    to break the <literal>extensions.conf</literal> file up into
+    different files for each stage as demonstrated in
+    <xref linkend="arch-routing-asterisk-extensions"/>.</para>
+
+    <para>The more powerful approach is to transpose this paradigm over
+    several individual processes and devices.  For example, the
+    <emphasis>ingress</emphasis> stage for calls from local users
+    may be implemented in the SIP proxy and the <emphasis>ingress</emphasis>
+    stage for calls from an ISDN circuit may be implemented using the
+    configuration file in a media gateway.</para>
+
+    <example xml:id="arch-routing-asterisk-extensions">
+      <title>Splitting Asterisk <literal>extensions.conf</literal></title>
+      <programlisting format="linespecific">#include "/etc/asterisk/extensions/ingress/local_users.conf"
+#include "/etc/asterisk/extensions/ingress/trunks.conf"
+#include "/etc/asterisk/extensions/routing.conf"
+#include "/etc/asterisk/extensions/applications.conf"
+#include "/etc/asterisk/extensions/egress/local_users.conf"
+#include "/etc/asterisk/extensions/egress/trunks.conf"</programlisting>
+    </example>
+
+  </sect1>
+
   <sect1 xml:id="rtc-architecture-webrtc-peer-to-peer">
     <title>WebRTC peer-to-peer calling</title>
 

@@ -215,6 +215,185 @@
     </sect2>
   </sect1>
 
+  <sect1 xml:id="optimal-connectivity-rtp-encryption">
+    <title>Media stream encryption compatibility</title>
+
+    <para>RTC voice and video (media) streams are almost always
+    transmitted using Real Time Protocol (RTP).</para>
+
+    <para>Encrypting RTP streams is a popular requirement.  Some organizations
+    are subject to regulations requiring encryption.  In other cases,
+    there is a commercial imperative to use encryption.  Just as HTTP
+    sessions can be encrypted with HTTPS, RTP streams can be encrypted
+    using SRTP.  SRTP is optimized for the real-time nature of the media
+    stream and it permits packet loss.</para>
+
+    <para>While SRTP itself is relatively standard, there are several
+    different ways to exchange keys for an SRTP session.  If the two
+    endpoints trying to setup a call are not trying to use the same
+    method for key exchange, or if one of them hasn't enabled encryption
+    at all, <emphasis>the call will not connect</emphasis>.
+    To meet our goal of maximizing connectivity, these mismatches must
+    be avoided.</para>
+
+    <para>The original method of key exchange for SRTP involves exchanging
+    SDES keys through the signalling channel, which may be a SIP or XMPP
+    connection.  Most of the original products supporting this standard
+    take an all-or-nothing approach: if encryption is disabled,
+    they will only talk to other endpoints without encryption and if
+    encryption is enabled, they will only talk to other endpoints
+    capable of the same key exchange protocol.</para>
+
+    <para>One disadvantage of sending the keys through the signalling
+    channel is that the operator of the SIP proxy can easily observe
+    the keys and use them to decrypt the RTP streams.  Another risk
+    is that the end-user has no way to know if a man-in-the-middle
+    has swapped the keys, decrypting the streams, recording or modifying
+    them and then sending them on to the other endpoint using a different
+    key.  Two alternative solutions to these problems have emerged.</para>
+
+    <para>Phil Zimmerman, the legendary creator of PGP encryption,
+    created the ZRTP key exchange protocol.  When the endpoints support
+    ZRTP, they typically send signalling messages (SDP) specifying that
+    regular, unencrypted RTP will be used for the call.  When the
+    call is answered, each endpoint tries to send some special ZRTP
+    "hello" packets to the peer on the port normally used for the RTP.
+    At this stage, the phones will indicate to the users that they are
+    in a call without encryption.  If the endpoints both support ZRTP
+    then they recognize the "hello" packets from the peer and they
+    perform a key exchange using the Diffie-Hellman algorithm.  Once
+    the key exchange is completed, the interface on the phone changes
+    somehow to advise the user that the call is now encrypted.
+    Due to the nature of the Diffie-Hellman algorithm and the verification
+    of the algorithm by a short authentication string (SAS) that the users
+    read to each other, the keys can not be observed or substituted by
+    any man-in-the-middle.</para>
+
+    <para>Nonetheless, the use of the SAS may appear slightly geeky and
+    it is only valid if you know the other person personally and can
+    <emphasis>recognize their voice</emphasis> when they are reading the
+    SAS to you.  If you are calling an organization, such as the call
+    center at the bank or a Government department, the person you are
+    speaking to is likely to be a complete stranger, you will not have
+    be familiar with the sound of their voice when they read the SAS
+    and so you will not be able to rely on this algorithm.</para>
+
+    <para>The DTLS-SRTP standard provides another alternative,
+    although on its own, it does not provide certainty that there is
+    no man-in-the-middle.  DTLS-SRTP provides a way to use DTLS key
+    agreement before starting SRTP media streams.  To provide security
+    against a man-in-the-middle, DTLS-SRTP can be combined with another
+    mechanism for the exchange of key fingerprints.  For example, RFC 5763
+    specifies a mechanism for exchanging tamper-proof key fingerprints
+    in SDP using SIP Identity (RFC 4474).</para>
+
+    <para>DTLS-SRTP is the mechanism that has been chosen for the WebRTC
+    standard and it is widely implemented in web browsers.  It is also
+    supported by the Asterisk and FreeSWITCH projects and some softphones
+    including Jitsi.</para>
+
+    <para>ZRTP is also supported in a number of products, including
+    Asterisk, FreeSWITCH and the Jitsi softphone.  ZRTP is not currently
+    supported in WebRTC browsers although it is preferred by products
+    that focus on the privacy of personal communication between
+    people who know each other, such as the Lumicall app.</para>
+
+    <sect2 xml:id="optimal-connectivity-rtp-encryption-multi">
+      <title>Supporting multiple schemes</title>
+
+      <para>For encryption to be effective, users must know when it is
+      working.  For this reason, many products started out with a
+      simple all-or-nothing approach.  If the encryption setting is
+      enabled, the product will only permit calls to and from peers using
+      them same encryption settings.  Users could then conclude that any
+      call that connects successfully is encrypted correctly.</para>
+
+      <para>Furthermore, the way that an SDP offer/answer exchange is
+      designed, a media descriptor either has crypto attributes or it
+      doesn't.  There is no simple way for an endpoint to insert
+      the attributes in the SDP and hint that they are optional.
+      If they are present, the peer must act as if they are mandatory
+      and reject the call if it is not capable of using encryption.
+      </para>
+
+      <para>Some phones have an option to send two media descriptors in SDP,
+      one of them with crypto attributes and the other without.  However,
+      some other phones don't understand this type of SDP and reject the
+      call completely, so it is not a reliable strategy.</para>
+
+      <para>Some phones have an option to try the call with encryption
+      enabled and if it is rejected, automatically try again without
+      encryption.  This strategy is not glamorous but it has wider
+      compatibility.</para>
+    </sect2>
+
+    <sect2 xml:id="optimal-connectivity-rtp-encryption-recommendations">
+      <title>Recommendations for maximizing connectivity</title>
+
+      <para>Generally, SDES SRTP should be avoided and should not enabled
+      except for very specific cases.  Do not enable SDES SRTP for arbitrary
+      calls across the Internet as a means to improve compatability: the
+      risks outweigh the benefits.  The cases where you may use SDES SRTP
+      include situations where you have IP phones that don't support any
+      other form of encryption and connections to SIP trunking providers
+      who don't support any other form of encryption.  In these special
+      cases, ensure that the SDES SRTP calls are only possible for
+      the specific IP addresses or SIP accounts that you designate.
+      Note that when you configure a connection profile in the PBX to use
+      this encryption mode with certain peers, it may not be able to use
+      the same connection profile for any other peers who don't use
+      SDES SRTP.  This is the all-or-nothing scenario.</para>
+
+      <para>When making calls, do not try to use the approach that involves
+      sending multiple media descriptors, one with crypto attributes
+      and the other without.  For all other calls, use software that tries
+      to make the call using DTLS-SRTP and if that fails retries the call
+      using ZRTP.  If encryption is not essential for you, allow calls
+      to proceed even when ZRTP does not secure a connection.</para>
+
+      <para>When receiving calls, be willing to accept calls using either
+      DTLS-SRTP or ZRTP and possibly without any encryption at all, depending
+      upon your requirements.  A SIP proxy can inspect the SDP to determine
+      which type of encryption is attempted and route the call appropriately.
+      For example, depending upon which attributes are present, the SIP
+      proxy could route the call to an Asterisk <literal>sip.conf</literal>
+      profile with DTLS-SRTP support or to another profile with ZRTP support.
+      Alternatively, you may use a softphone that is capable of recognizing
+      and accepting either type of encryption.</para>
+
+      <para>Throughout this guide, we present further details about how
+      to achieve all of the above with the products described herein.</para>
+    </sect2>
+
+    <sect2 xml:id="optimal-connectivity-rtp-encryption-recommendations-sec">
+      <title>Recommendations for security</title>
+
+      <para>The recommendations in the previous section will help optimize
+      connectivity, by enabling more calls to connect successfully.
+      Additional steps are required to ensure you fully benefit from the
+      security that encryption can provide, these are described here.</para>
+
+      <para>If you are enabling and relying on DTLS-SRTP with SIP, make sure
+      you also use SIP Identity (RFC 4474) and use SIP Identity to
+      authenticate the key fingerprints (RFC 5763).</para>
+
+      <para>If you pass calls through intermediate network components
+      such as Session Border Controllers or a PBX where the media streams
+      are decrypted and re-encrypted, you need to think carefully about
+      the impact on authentication.  For example, you may configure the PBX
+      to enforce identity verification and then tell users that all calls
+      that have come through the PBX can be trusted.</para>
+
+      <para>If using phones or softphones that are configured to work
+      with or without encryption (this is referred to as
+      <emphasis>opportunistic encryption</emphasis>), it is very desirable
+      for them to give the user an indication about whether each
+      call is encrypted.  Otherwise, the user should be told to assume
+      that calls are not encrypted.</para>
+    </sect2>
+
+  </sect1>
+
   <sect1 xml:id="optimal-connectivity-turn">
     <title>Use ICE and a TURN server</title>
     <para>A TURN server provides a standard way to relay media on behalf

@@ -54,6 +54,11 @@
           <entry><literal>0 1 3478 turn-server.example.org.</literal></entry>
         </row>
         <row>
+          <entry><literal>_turn._udp</literal></entry>
+          <entry><literal>SRV</literal></entry>
+          <entry><literal>0 1 3478 turn-server.example.org.</literal></entry>
+        </row>
+        <row>
           <entry><literal>_sips._tcp</literal></entry>
           <entry><literal>SRV</literal></entry>
           <entry><literal>0 1 5061 sip-proxy.example.org.</literal></entry>
@@ -154,7 +159,8 @@ sip-proxy          IN     CNAME  server1
 xmpp-gw            IN     CNAME  server1
 
 ; DNS SRV for STUN / TURN
-_stun._udp  IN SRV    0 1 3467 turn-server.example.org.
+_stun._udp  IN SRV    0 1 3478 turn-server.example.org.
+_turn._udp  IN SRV    0 1 3478 turn-server.example.org.
 
 ; DNS SRV and NAPTR records for SIP
 _sips._tcp  IN SRV    0 1 5061 sip-proxy.example.org.

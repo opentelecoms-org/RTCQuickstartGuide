@@ -1,4 +1,4 @@
-set terminal svg size 300,400 dynamic enhanced fname 'arial'  fsize 10 mousing name 'Metcalfe' butt solid 
+set terminal svg size 300,400 dynamic enhanced fname 'arial'  fsize 10 name 'Metcalfe' butt solid
 set output 'metcalfe_quadratic.svg'
 set key inside left top vertical Right noreverse enhanced autotitles box linetype -1 linewidth 1.000
 set samples 200

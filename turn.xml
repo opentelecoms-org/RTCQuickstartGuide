@@ -96,7 +96,7 @@ AltStunPort = 3479
 # your domain goes here, it must match the value used
 # to hash your passwords if they are already hashed
 # using the HA1 algorithm:
-AuthenticationRealm = sip5060.net
+AuthenticationRealm = example.org
 
 UserDatabaseFile = /etc/reTurn/users.txt
 UserDatabaseHashedPasswords = true </programlisting>

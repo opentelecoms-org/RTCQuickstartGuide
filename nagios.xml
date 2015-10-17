@@ -63,7 +63,7 @@ define command {
       <title>Sample service check for STUN/TURN</title>
       <programlisting format="linespecific">define service{
         use                             generic-service
-        host_name                       stun-server.example.org
+        host_name                       turn-server.example.org
         service_description             STUN/TURN
         check_command                   check_stun
 }</programlisting>
@@ -77,7 +77,7 @@ define command {
         use                             generic-service
         host_name                       server1
         service_description             SIPS
-        check_command                   check_sip_tls_port!sip-server.sip5060.net!5061
+        check_command                   check_sip_tls_port!sip-server.example.org!5061
 }</programlisting>
     </example>
 
@@ -87,7 +87,7 @@ define command {
         use                             generic-service
         host_name                       server1
         service_description             SIPS 443
-        check_command                   check_sip_tls_port!sip-server.sip5060.net!443
+        check_command                   check_sip_tls_port!sip-server.example.org!443
 }</programlisting>
     </example>
 

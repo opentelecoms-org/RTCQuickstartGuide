@@ -10,6 +10,11 @@ set -e
 #  exit 1
 #fi
 
+(
+  cd figs/gnuplot
+  ./build.sh
+)
+
 STYLESHEET_BASE=/usr/share/xml/docbook/stylesheet/nwalsh
 PAPER_SIZE=A4
 

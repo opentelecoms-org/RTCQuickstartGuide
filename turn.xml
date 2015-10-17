@@ -92,6 +92,7 @@
 TurnAddress = 198.51.100.19
 TurnV6Address = 2001:DB8:1000:2000::19
 AltStunAddress = 198.51.100.20
+AltStunPort = 3479
 # your domain goes here, it must match the value used
 # to hash your passwords if they are already hashed
 # using the HA1 algorithm:

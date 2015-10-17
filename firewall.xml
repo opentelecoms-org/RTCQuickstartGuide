@@ -49,6 +49,14 @@
             <entry>3478</entry>
           </row>
           <row>
+            <entry>STUN NAT discovery (RFC 3489)</entry>
+            <entry>UDP</entry>
+            <entry>Any</entry>
+            <entry>Any</entry>
+            <entry><literal>198.51.100.19</literal>, <literal>198.51.100.20</literal></entry>
+            <entry>3479</entry>
+          </row>
+          <row>
             <entry>SIP signalling</entry>
             <entry>TCP</entry>
             <entry>Any</entry>

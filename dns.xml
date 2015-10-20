@@ -78,6 +78,11 @@
           <entry><literal>NAPTR</literal></entry>
           <entry><literal>10 0 "s" "SIPS+D2T" "" _sips._tcp.example.org.</literal></entry>
         </row>
+        <row>
+          <entry><literal>@</literal></entry>
+          <entry><literal>NAPTR</literal></entry>
+          <entry><literal>10 0 "s" RELAY:turn.udp "" _turn._udp.example.org.</literal></entry>
+        </row>
       </tbody>
     </tgroup>
   </table>
@@ -165,6 +170,7 @@ _turn._udp  IN SRV    0 1 3478 turn-server.example.org.
 ; DNS SRV and NAPTR records for SIP
 _sips._tcp  IN SRV    0 1 5061 sip-proxy.example.org.
 @           IN NAPTR  10 0 "s" "SIPS+D2T" "" _sips._tcp.example.org.
+@           IN NAPTR  10 0 "s" RELAY:turn.udp "" _turn._udp.example.org.
 
 ; DNS SRV records for XMPP Server and Client modes:
 _xmpp-client._tcp  IN     SRV    5 0 5222 xmpp-gw.example.org.

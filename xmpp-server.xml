@@ -12,8 +12,9 @@
     Latest releases of <emphasis>Prosody</emphasis> are being made
     available as packages on the major Linux distributions.</para>
 
-    <para>You can also use <emphasis>ejabberd</emphasis> or another
-    server if you prefer.</para>
+    <para>You can also use <emphasis>ejabberd</emphasis>,
+    <emphasis>jabberd2</emphasis> or another server if you
+    prefer.</para>
 
   </sect1>
 
@@ -189,6 +190,81 @@ $ sudo addgroup ejabberd ssl-cert </programlisting>
       <emphasis role="bold">http://server1.example.org:5280</emphasis>,
       log in and set up the user accounts.</para>
     </sect2>
+  </sect1>
+
+  <sect1 xml:id="xmpp-server-jabberd2">
+    <title>jabberd2 XMPP server</title>
+
+    <sect2>
+      <title>Package installation</title>
+
+      <para>Install the package using the appropriate tool, as
+      demonstrated in <xref linkend="jabberd2-install-debian"/> and
+      <xref linkend="jabberd2-install-redhat"/>.</para>
+
+      <example xml:id="jabberd2-install-debian">
+        <title>Installing <emphasis>jabberd2</emphasis> on
+        Debian/Ubuntu</title>
+
+        <programlisting format="linespecific">$ sudo apt-get install jabberd2
+$ sudo addgroup jabber ssl-cert </programlisting>
+      </example>
+
+      <example xml:id="jabberd2-install-redhat">
+        <title>Install <emphasis>jabberd2</emphasis> on
+        Fedora/RHEL/CentOS</title>
+
+        <programlisting format="linespecific">$ sudo yum install jabberd
+$ sudo addgroup jabberd ssl-cert </programlisting>
+      </example>
+    </sect2>
+
+    <sect2>
+      <title>Configuration</title>
+
+      <para>jabberd2's configuration files are in
+      <code>/etc/jabberd2/</code> (Debian/Ubuntu) or
+      <code>/etc/jabberd/</code> (Fedora/RHEL/CentOS).  It can use the
+      certificates created in <xref linkend="tls"/>. jabberd2 is
+      modular and each of the components needs to be
+      configured.</para>
+
+      <para>The most basic jabberd configuration requires setting the
+      hostname of the server in c2s.xml as demonstrated in <xref
+      linkend="jabberd2-c2s-hostname-config"/> and the JID domain in
+      sm.xml as demonstrated in <xref
+      linkend="jabberd2-sm-domain-config"/> The default storage module
+      in sm.xml and authreg module in c2s.xml are sqlite which works
+      well for most installations.</para>
+
+      <example xml:id="jabberd2-c2s-hostname-config">
+        <title><code>jabberd2</code> c2s.xml example</title>
+
+        <programlisting format="linespecific">&lt;id password-change='mu'
+   require-starttls='mu'
+   cachain='/etc/ssl/public/example.org.pem'
+   pemfile='/etc/ssl/private/example.org-key.pem'&gt;
+xmpp-gw.example.org
+&lt;/id&gt;</programlisting>
+      </example>
+
+      <example xml:id="jabberd2-sm-domain-config">
+        <title><code>jabberd2</code> sm.xml example</title>
+
+        <programlisting format="linespecific">&lt;id&gt;example.org&lt;/id&gt;</programlisting>
+      </example>
+
+    </sect2>
+
+    <sect2>
+      <title>Further reading</title>
+
+      <para>The <link xlink:href="http://jabberd2.org">jabberd2 web
+      site</link> gives more detailed documentation about setting up
+      the server.</para>
+
+    </sect2>
+
   </sect1>
 
 </chapter>

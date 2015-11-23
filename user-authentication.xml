@@ -5,7 +5,7 @@
   <title>User and credential storage</title>
 
   <para>Most of the products described in this document, including
-  SIP proxies, XMPP servers, TURN servers and soft PBXes offer a range
+  SIP proxy servers, XMPP servers, TURN servers and soft PBXes offer a range
   of choices for maintaining a user database and storing user
   credentials.</para>
 

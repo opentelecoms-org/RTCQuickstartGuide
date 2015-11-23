@@ -498,7 +498,7 @@
     To avoid these problems, it is recommended that the WebSocket
     connection should always use TLS (WebRTC clients uses a
     <code>wss://</code> URL instead of a <code>ws://</code> URL) and the
-    port 443 only.  Many HTTP proxies are correctly configured to allow
+    port 443 only.  Many HTTP proxy servers are correctly configured to allow
     the web browser to use the HTTP <code>CONNECT</code> method to
     initiate pass-through connections to <code>https://</code> URLs using
     the default port, 443.  Sometimes, however, the HTTP proxy does not

@@ -162,7 +162,7 @@
 
       <para>Standard SIP DIGEST authentication can also be used over
       the WebSocket transport.  One benefit of DIGEST authentication
-      is that challenges can be sent from SIP proxies or other
+      is that challenges can be sent from SIP proxy servers or other
       network components behind the WebSocket server.</para>
 
       <sect3>

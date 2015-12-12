@@ -46,7 +46,7 @@ $XSLTPROC_HTML -o testoutput/single/book.html ${STYLESHEET_BASE}/xhtml/docbook.x
 
 ln -s ../../figs testoutput/multi
 #ln -s ${BOOTSTRAP_HOME}/* testoutput/multi
-$XSLTPROC_HTML --stringparam base.dir testoutput/multi/ --param use.id.as.filename 1 ${STYLESHEET_BASE}/xhtml/chunk.xsl book.xml
+$XSLTPROC_HTML --stringparam base.dir testoutput/multi/ --param use.id.as.filename 1 --param chunk.first.sections 1 ${STYLESHEET_BASE}/xhtml/chunk.xsl book.xml
 #$XSLTPROC_HTML --stringparam base.dir testoutput/multi/ book-chunk.xsl book.xml
 
 # Build the PDF document

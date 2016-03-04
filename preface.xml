@@ -4,40 +4,40 @@
       xml:id="preface">
   <title>Preface</title>
 
-  <sect2>
+  <section>
     <title>Mission</title>
 
     <para>This book aims to provide practical strategies for deploying
     RTC with the technology available today.</para>
-  </sect2>
+  </section>
 
-  <sect2>
+  <section>
     <title>Vision</title>
 
     <para>A world where open standards and free software are the foundation
     of personal and business communications, enabling genuine innovation
     and the emergence of more disruptive technologies.</para>
-  </sect2>
+  </section>
 
-  <sect2>
+  <section>
     <title>Who is this document for?</title>
 
     <para>IT managers, system administrators, developers, web designers,
     product managers and IT users who want best-practice
     Real-Time Communications (RTC) technology for business or
     private use.</para>
-  </sect2>
+  </section>
 
-  <sect2>
+  <section>
     <title>What is Free RTC?</title>
 
     <para>Running your own, independent, federated and peer-to-peer RTC
     solutions, including instant messaging (IM), voice-over-IP (VoIP),
     video/webcam, social networking and WebRTC, using open standards and,
     in many cases, free, open source software.</para>
-  </sect2>
+  </section>
 
-  <sect2>
+  <section>
     <title>Why?</title>
 
     <para>There are many reasons organizations and individuals need to
@@ -66,9 +66,9 @@
     software allow individuals and businesses of any size to engage
     in genuine innovation, creating new and original services that run
     across the network.</para>
-  </sect2>
+  </section>
 
-  <sect2>
+  <section>
     <title>How?</title>
 
     <para>This documentation aims to help you choose strong, best of breed,
@@ -83,7 +83,7 @@
     Fedora and Red Hat/RHEL/CentOS), most IT professionals will be able
     to set this up in less than one day, the most experienced reader
     will find that it can be set up in less than an hour.</para>
-  </sect2>
+  </section>
 
 </preface>
 

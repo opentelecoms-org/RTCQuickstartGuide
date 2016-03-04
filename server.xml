@@ -39,7 +39,7 @@
   <link tag="block" xlink:href="http://debian-handbook.info">
   Debian Administrator's Handbook</link>.</para>
 
-  <sect2>
+  <section>
     <title>Debian/Ubuntu servers</title>
     <para>To set up both of the IP addresses on the same box (as required
     by the ICE/STUN/TURN protocol), modify the
@@ -67,9 +67,9 @@ iface eth0 inet6 static
 
     <para>Notice the line using the <code>ip addr add</code> command to
     add the additional IP address.</para>
-  </sect2>
+  </section>
 
-  <sect2>
+  <section>
     <title>Fedora, RHEL and CentOS servers</title>
 
     <para>To set up both of the IP addresses on the same box (as required
@@ -77,6 +77,6 @@ iface eth0 inet6 static
     <link xlink:href="http://docs.fedoraproject.org/en-US/Fedora/17/html/System_Administrators_Guide/s2-networkscripts-interfaces-alias.html">
     alias and clone files</link> for network interfaces</para>
 
-  </sect2>
+  </section>
 
 </chapter>

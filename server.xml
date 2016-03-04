@@ -36,7 +36,8 @@
 
   <para>If you are not familiar with server installation, a useful
   resource is the
-  <link tag="block" xlink:href="http://debian-handbook.info">
+  <!-- <link tag="block" xlink:href="http://debian-handbook.info"> -->
+  <link xlink:href="http://debian-handbook.info">
   Debian Administrator's Handbook</link>.</para>
 
   <section>

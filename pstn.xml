@@ -102,7 +102,7 @@
 
     <example xml:id="pstn-asterisk-set-caller-id">
       <title>Asterisk <literal>extensions.conf</literal> for specifying caller ID</title>
-      <programlisting format="linespecific">exten => _X.,1,Set(CALLERID(name)=00442071358378)
+      <programlisting linenumbering="numbered">exten => _X.,1,Set(CALLERID(name)=00442071358378)
 exten => _X.,2,Set(CALLERID(number)=00442071358378)</programlisting>
     </example>
 

@@ -48,7 +48,7 @@
 
     <example xml:id="server-network-setup-debian">
       <title>Adding IP addresses in <code>/etc/network/interfaces</code></title>
-      <programlisting format="linespecific">allow-hotplug eth0
+      <programlisting linenumbering="numbered">allow-hotplug eth0
 iface eth0 inet static
         address 198.51.100.19
         netmask 255.255.255.0

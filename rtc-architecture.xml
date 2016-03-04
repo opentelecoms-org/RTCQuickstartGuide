@@ -205,7 +205,7 @@
 
     <example xml:id="arch-routing-asterisk-extensions">
       <title>Splitting Asterisk <literal>extensions.conf</literal></title>
-      <programlisting format="linespecific">#include "/etc/asterisk/extensions/ingress/local_users.conf"
+      <programlisting linenumbering="numbered">#include "/etc/asterisk/extensions/ingress/local_users.conf"
 #include "/etc/asterisk/extensions/ingress/trunks.conf"
 #include "/etc/asterisk/extensions/routing.conf"
 #include "/etc/asterisk/extensions/applications.conf"

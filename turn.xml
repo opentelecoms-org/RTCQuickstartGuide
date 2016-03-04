@@ -67,12 +67,12 @@
 
       <example xml:id="return-install-debian">
         <title>Installing <code>reTurnServer</code> on Debian/Ubuntu</title>
-        <programlisting format="linespecific">$ sudo apt-get install resiprocate-turn-server </programlisting>
+        <programlisting linenumbering="numbered">$ sudo apt-get install resiprocate-turn-server </programlisting>
       </example>
 
       <example xml:id="return-install-redhat">
         <title>Install <code>reTurnServer</code> on Fedora/RHEL/CentOS</title>
-        <programlisting format="linespecific">$ sudo yum install resiprocate-turn-server </programlisting>
+        <programlisting linenumbering="numbered">$ sudo yum install resiprocate-turn-server </programlisting>
       </example>
 
     </sect2>
@@ -88,7 +88,7 @@
 
       <example xml:id="return-config-sample">
         <title><code>reTurnServer.config</code> entries</title>
-        <programlisting format="linespecific"># your IP addresses go here:
+        <programlisting linenumbering="numbered"># your IP addresses go here:
 TurnAddress = 198.51.100.19
 TurnV6Address = 2001:DB8:1000:2000::19
 AltStunAddress = 198.51.100.20
@@ -113,7 +113,7 @@ UserDatabaseHashedPasswords = true </programlisting>
       <example xml:id="return-restart-systemd">
         <title>Restarting the <code>reTurnServer</code> daemon
         (<code>systemd</code>)</title>
-        <programlisting format="linespecific">$ sudo systemctl restart resiprocate-turn-server
+        <programlisting linenumbering="numbered">$ sudo systemctl restart resiprocate-turn-server
 Restarting TURN relay: reTurnServer.
 $ </programlisting>
       </example>
@@ -125,7 +125,7 @@ $ </programlisting>
       <example xml:id="return-test-netstat">
         <title>Using <code>netstat</code> to verify
         <code>reTurnServer</code> is running</title>
-        <programlisting format="linespecific">$ sudo netstat -nlp | grep reTurnServer
+        <programlisting linenumbering="numbered">$ sudo netstat -nlp | grep reTurnServer
 udp   0   0 198.51.100.19:3478       0.0.0.0:*              2460/reTurnServer
 udp   0   0 198.51.100.20:3478       0.0.0.0:*              2460/reTurnServer
 ...  </programlisting>
@@ -172,7 +172,7 @@ udp   0   0 198.51.100.20:3478       0.0.0.0:*              2460/reTurnServer
         <example xml:id="return-psql-crontab">
           <title><code>crontab</code> entry for
           <code>psql-user-extract</code></title>
-          <programlisting format="linespecific">* * * * * /usr/lib/resiprocate/reTurnServer/psql-user-extract </programlisting>
+          <programlisting linenumbering="numbered">* * * * * /usr/lib/resiprocate/reTurnServer/psql-user-extract </programlisting>
         </example>
 
         <para><code>psql-user-extract</code> requires a configuration
@@ -181,7 +181,7 @@ udp   0   0 198.51.100.20:3478       0.0.0.0:*              2460/reTurnServer
 
         <example xml:id="return-psql-cfg">
           <title>Sample <code>/etc/reTurn/psql-user-extract.config</code></title>
-          <programlisting format="linespecific">psql_conninfo = "dbname=repro user=repro host=localhost password=foobar"
+          <programlisting linenumbering="numbered">psql_conninfo = "dbname=repro user=repro host=localhost password=foobar"
 
 # create this directory if it doesn't exist
 dest_file = "/var/cache/reTurn/users.txt"
@@ -203,12 +203,12 @@ auth_user_alt = True</programlisting>
 
     <example xml:id="turn-stun-client-install-debian">
       <title>Installing the <code>stun</code> client utility</title>
-      <programlisting format="linespecific">$ sudo apt-get install stun</programlisting>
+      <programlisting linenumbering="numbered">$ sudo apt-get install stun</programlisting>
     </example>
 
     <example xml:id="turn-stun-client-test">
       <title>Using the <code>stun</code> client utility</title>
-      <programlisting format="linespecific">$ stun turn-server.example.org
+      <programlisting linenumbering="numbered">$ stun turn-server.example.org
 STUN client version 0.96
 Primary: Firewall
 Return value is 0x00000b</programlisting>

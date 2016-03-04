@@ -11,12 +11,12 @@
 
   <example xml:id="rpmbuild-install-rpmbuild">
     <title>Installing the <code>rpmbuild</code> command</title>
-    <programlisting format="linespecific">$ sudo yum install rpm-build</programlisting>
+    <programlisting linenumbering="numbered">$ sudo yum install rpm-build</programlisting>
   </example>
 
   <example xml:id="rpmbuild-install-build-deps">
     <title>Installing the compiler and dependencies</title>
-    <programlisting format="linespecific">$ sudo yum install gcc-c++ libtool automake autoconf \
+    <programlisting linenumbering="numbered">$ sudo yum install gcc-c++ libtool automake autoconf \
     asio-devel boost-devel cajun-jsonapi-devel c-ares-devel \
     cppunit-devel gperf db4-cxx-devel db4-devel openssl-devel \
     mysql-devel pcre-devel perl popt-devel python-devel \
@@ -25,7 +25,7 @@
 
   <example xml:id="rpmbuild-setup">
     <title>Creating the <code>rpmbuild</code> directories</title>
-    <programlisting format="linespecific">$ mkdir ~/rpms
+    <programlisting linenumbering="numbered">$ mkdir ~/rpms
 $ cd ~/rpms
 $ mkdir BUILD BUILDROOT \
         RPMS/i386 RPMS/noarch RPMS/x86_64 \
@@ -39,7 +39,7 @@ $ </programlisting>
 
   <example xml:id="rpmbuild-create-rpms">
     <title>Running the <code>rpmbuild</code> command</title>
-    <programlisting format="linespecific">$ wget http://.../resiprocate-1.9.8.tar.gz
+    <programlisting linenumbering="numbered">$ wget http://.../resiprocate-1.9.8.tar.gz
 $ rpmbuild -tb resiprocate-1.9.8.tar.gz</programlisting>
   </example>
 

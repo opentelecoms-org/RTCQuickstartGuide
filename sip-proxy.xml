@@ -328,7 +328,7 @@ Restarting repro</programlisting>
       <xref linkend="repro-adding-domain"/> demonstrates how to add the
       domain <emphasis>example.org</emphasis>.</para>
 
-      <figure float="none" xml:id="repro-adding-domain">
+      <figure floatstyle="none" xml:id="repro-adding-domain">
         <title>repro web administration: adding a domain</title>
 
         <mediaobject>
@@ -367,7 +367,7 @@ Restarting repro</programlisting>
       demonstrates adding a user called <emphasis>alice</emphasis> to
       the domain <emphasis>example.org</emphasis>:</para>
 
-      <figure float="none" xml:id="repro-add-alice">
+      <figure floatstyle="none" xml:id="repro-add-alice">
         <title>repro web administration: adding a user</title>
 
         <mediaobject>
@@ -386,7 +386,7 @@ Restarting repro</programlisting>
       <para>The list of all users can be easily viewed, as demonstrated
       in <xref linkend="repro-show-users"/>.</para>
 
-      <figure float="none" xml:id="repro-show-users">
+      <figure floatstyle="none" xml:id="repro-show-users">
         <title>repro web administration: listing users</title>
 
         <mediaobject>
@@ -414,7 +414,7 @@ Restarting repro</programlisting>
       <xref linkend="repro-add-route"/> demonstrates how to set up the
       number <emphasis role="bold">8001</emphasis> for Alice.</para>
 
-      <figure float="none" xml:id="repro-add-route">
+      <figure floatstyle="none" xml:id="repro-add-route">
         <title>repro web administration: adding a route</title>
 
         <mediaobject>
@@ -433,7 +433,7 @@ Restarting repro</programlisting>
       <para>Once the numbers have been added, it is easy to view them all
       using the `Show Routes' page:</para>
 
-      <figure float="none" xml:id="repro-show-routes">
+      <figure floatstyle="none" xml:id="repro-show-routes">
         <title>repro web administration: listing routes</title>
 
         <mediaobject>
@@ -455,7 +455,7 @@ Restarting repro</programlisting>
       many different results), an example is given in
       <xref linkend="repro-test-routes"/>.</para>
 
-      <figure float="none" xml:id="repro-test-routes">
+      <figure floatstyle="none" xml:id="repro-test-routes">
         <title>repro web administration: routing test</title>
 
         <mediaobject>

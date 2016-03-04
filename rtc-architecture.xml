@@ -9,7 +9,7 @@
 
   <sect1 xml:id="rtc-architecture-big-picture">
     <title>The big picture</title>
-    <figure float="none" xml:id="arch-dia-1">
+    <figure floatstyle="none" xml:id="arch-dia-1">
       <title>Overview</title>
   
       <mediaobject>
@@ -97,7 +97,7 @@
   <sect1 xml:id="rtc-architecture-federation-sip">
     <title>SIP federation between two autonomous sites</title>
 
-    <figure float="none" xml:id="arch-dia-fed-sip">
+    <figure floatstyle="none" xml:id="arch-dia-fed-sip">
       <title>SIP federation between two sites</title>
   
       <mediaobject>
@@ -125,7 +125,7 @@
   <sect1 xml:id="rtc-architecture-routing">
     <title>Routing calls within a site</title>
 
-    <figure float="none" xml:id="arch-dia-routing">
+    <figure floatstyle="none" xml:id="arch-dia-routing">
       <title>Four stages of call routing</title>
 
       <mediaobject>
@@ -218,7 +218,7 @@
   <sect1 xml:id="rtc-architecture-webrtc-peer-to-peer">
     <title>WebRTC peer-to-peer calling</title>
 
-    <figure float="none" xml:id="arch-dia-webrtc-p2p">
+    <figure floatstyle="none" xml:id="arch-dia-webrtc-p2p">
       <title>WebRTC basic peer-to-peer</title>
 
       <mediaobject>
@@ -249,7 +249,7 @@
   <sect1 xml:id="rtc-architecture-webrtc-call-center">
     <title>WebRTC calling to call centers</title>
 
-    <figure float="none" xml:id="arch-dia-webrtc-call-center">
+    <figure floatstyle="none" xml:id="arch-dia-webrtc-call-center">
       <title>WebRTC from customer web browser to call center</title>
 
       <mediaobject>

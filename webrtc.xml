@@ -291,7 +291,7 @@
       JSCommunicator so it also provides a very good example of how to
       adapt JSCommunicator to other CMS platforms.</para>
 
-      <figure float="none" xml:id="drucall-stack-dia">
+      <figure floatstyle="none" xml:id="drucall-stack-dia">
         <title>DruCall/JSCommunicator/JsSIP software stack</title>
 
         <mediaobject>

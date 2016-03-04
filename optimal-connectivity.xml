@@ -16,7 +16,7 @@
   of the system (n<superscript>2</superscript>), demonstrated in
   <xref linkend="metcalfe-quadratic"/>.</para>
 
-  <figure float="none" xml:id="metcalfe-quadratic">
+  <figure floatstyle="none" xml:id="metcalfe-quadratic">
     <title>Metcalfe's law</title>
 
     <mediaobject>

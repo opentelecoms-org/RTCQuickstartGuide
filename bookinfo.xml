@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<bookinfo xmlns="http://docbook.org/ns/docbook"
+<info xmlns="http://docbook.org/ns/docbook"
           xmlns:xlink="http://www.w3.org/1999/xlink" version="5.0">
   <author>
     <personname><link xlink:href="http://danielpocock.com">Daniel Pocock</link></personname>
@@ -10,4 +10,4 @@
     <year>2013</year><year>2014</year><year>2015</year>
     <holder>Daniel Pocock</holder>
   </copyright>
-</bookinfo>
+</info>

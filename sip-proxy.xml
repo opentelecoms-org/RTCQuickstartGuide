@@ -169,9 +169,9 @@ Transport5Type = TCP
 Transport5RecordRouteUri = sip:198.51.100.19:5060;transport=TCP
 
 # Transport6 is the IPv6 version of Transport6
-Transport5Interface = 2001:DB8:1000:2000::19:5060
-Transport5Type = TCP
-Transport5RecordRouteUri = sip:2001:DB8:1000:2000::19:5060;transport=TCP
+Transport6Interface = 2001:DB8:1000:2000::19:5060
+Transport6Type = TCP
+Transport6RecordRouteUri = sip:2001:DB8:1000:2000::19:5060;transport=TCP
 
 HttpBindAddress = 198.51.100.19, 2001:DB8:1000:2000::19
 HttpAdminUserFile = /etc/repro/users.txt

@@ -35,18 +35,33 @@
         </row>
         <row>
           <entry><literal>turn-server</literal></entry>
-          <entry><literal>CNAME</literal></entry>
-          <entry><literal>server1</literal></entry>
+          <entry><literal>A</literal></entry>
+          <entry><literal>198.51.100.19</literal></entry>
+        </row>
+        <row>
+          <entry><literal>turn-server</literal></entry>
+          <entry><literal>AAAA</literal></entry>
+          <entry><literal>2001:DB8:1000:2000::19</literal></entry>
         </row>
         <row>
           <entry><literal>sip-proxy</literal></entry>
-          <entry><literal>CNAME</literal></entry>
-          <entry><literal>server1</literal></entry>
+          <entry><literal>A</literal></entry>
+          <entry><literal>198.51.100.19</literal></entry>
+        </row>
+        <row>
+          <entry><literal>sip-proxy</literal></entry>
+          <entry><literal>AAAA</literal></entry>
+          <entry><literal>2001:DB8:1000:2000::19</literal></entry>
         </row>
         <row>
           <entry><literal>xmpp-gw</literal></entry>
-          <entry><literal>CNAME</literal></entry>
-          <entry><literal>server1</literal></entry>
+          <entry><literal>A</literal></entry>
+          <entry><literal>198.51.100.19</literal></entry>
+        </row>
+        <row>
+          <entry><literal>xmpp-gw</literal></entry>
+          <entry><literal>AAAA</literal></entry>
+          <entry><literal>2001:DB8:1000:2000::19</literal></entry>
         </row>
         <row>
           <entry><literal>_stun._udp</literal></entry>
@@ -158,10 +173,16 @@
 server1            IN     A      198.51.100.19
 server1            IN     AAAA   2001:DB8:1000:2000::19
 
-; some convenient CNAMEs
-turn-server        IN     CNAME  server1
-sip-proxy          IN     CNAME  server1
-xmpp-gw            IN     CNAME  server1
+; Use different names for each service.
+; Don't use CNAMEs, the SRV records (further down)
+; can't point to CNAME records.
+turn-server        IN     A      198.51.100.19
+turn-server        IN     AAAA   2001:DB8:1000:2000::19
+sip-proxy          IN     A      198.51.100.19
+sip-proxy          IN     AAAA   2001:DB8:1000:2000::19
+xmpp-gw            IN     A      198.51.100.19
+xmpp-gw            IN     AAAA   2001:DB8:1000:2000::19
+
 
 ; DNS SRV for STUN / TURN
 _stun._udp  IN SRV    0 1 3478 turn-server.example.org.

@@ -13,16 +13,40 @@
   this documentation.</para>
 
   <para>The prices of TLS certificates vary significantly.  It is not
-  necessarily useful to purchase the most expensive one.  You do need to
-  make sure that the certificate issued by the Certificate Authority (CA)
-  includes both the <emphasis>TLS client</emphasis> and
-  <emphasis>TLS server</emphasis> Extended Key Usage extensions, some
+  necessarily useful to purchase the most expensive one.</para>
+
+  <para>The free TLS certificates from the
+  <link xlink:href="https://letsencrypt.org/">Let's Encrypt Project</link>,
+  which is supported by the EFF and Linux Foundation, are a good choice
+  for the vast majority of RTC projects, including WebRTC.  Let's Encrypt
+  is not just a new Certificate Authority, they also promote the use
+  of an automated tool for the acquisition and renewal of certificates.
+  This dramatically reduces the amount of manual effort involved in using
+  certificates, especially for people who host multiple sites and domains.
+  That said, the initial version of the Let's Encrypt tool has been
+  designed for use with web servers and some manual tweaking is
+  required to use it with SIP, XMPP, WebSocket and TURN servers.
+  Early versions of the tool also failed to operate correctly on
+  some servers with IPv6 addresses and some Apache configurations,
+  although most of these issues were resolved by mid-2016.</para>
+
+  <para>You do need to make sure that the certificate issued by the
+  Certificate Authority (CA) includes both the <emphasis>TLS client</emphasis>
+  and <emphasis>TLS server</emphasis> Extended Key Usage (EKU) extensions, some
   only include the latter.  The free certificates from
   <emphasis>StartSSL/StartCom</emphasis> do not have the
   <emphasis>TLS client</emphasis> extension and can't be used.  The
   <link xlink:href="https://www.gandi.net/ssl/standard#single">Gandi.net SSL
   Standard certificate</link> which costs about $16 (free with a
   domain registration or transfer) is known to be suitable.</para>
+
+  <para>If you are using some older IP desk phones, the phones
+  may not have support for the Let's Encrypt root certificate in
+  their firmware.  If this is the case, you may need to update the firmware,
+  obtain a newer model phone or use certificates from a more established
+  Certificate Authority.  For example, some older Polycom phones do
+  not work with Let's Encrypt but they work fine with the low cost
+  Gandi.net certificates.</para>
 
   <sect1 xml:id="tls-common-name">
     <title>Certificate Common Name</title>
@@ -51,7 +75,8 @@
     <literal>subjectAltName</literal> that specifies the domain alone.  For
     the <literal>example.org</literal> domain, the certificate should include
     <literal>CN=example.org</literal> or
-    <literal>subjectAltName=example.org</literal>.</para>
+    <literal>subjectAltName=example.org</literal> and not something like
+    <literal>CN=www.example.org</literal>.</para>
 
     <para>In a <emphasis>wildcard certificate</emphasis>, the CN will
     include an asterisk (<literal>*</literal>), for example,
@@ -72,7 +97,9 @@
 
     <para>The correct domain needs to be specified when creating the
     <emphasis>certificate signing request</emphasis> (CSR) and should be
-    confirmed by the CA in their web-based ordering form.</para>
+    confirmed by the CA in their web-based ordering form.  If using
+    the Let's Encrypt utility to obtain certificates, this part of
+    the process is automated.</para>
   </sect1>
 
   <sect1 xml:id="tls-install-openssl">
@@ -94,8 +121,61 @@
     </example>
   </sect1>
 
+  <sect1 xml:id="tls-install-certbot">
+    <title>Install the Let's Encrypt <literal>certbot</literal> utility</title>
+
+    <para>If you have decided to use Let's Encrypt certificates,
+    it is necessary to install the <literal>certbot</literal> utility
+    or an equivalent utility implementing the
+    <link xlink:href="https://en.wikipedia.org/wiki/Automated_Certificate_Management_Environment">Automated Certificate Management Environment (ACME)</link>.
+    Install <literal>certbot</literal> using the package manager as
+    demonstrated in
+    <xref linkend="tls-install-certbot-debian"/> and
+    <xref linkend="tls-install-certbot-redhat"/>.</para>
+
+    <example xml:id="tls-install-certbot-debian">
+      <title>Installing <literal>certbot</literal> on Debian/Ubuntu</title>
+      <programlisting format="linespecific">$ sudo apt-get install -t jessie-backports ssl-cert certbot</programlisting>
+    </example>
+
+    <example xml:id="tls-install-certbot-redhat">
+      <title>Installing <literal>certbot</literal> on Fedora/RHEL/CentOS</title>
+      <programlisting format="linespecific">$ sudo yum install certbot</programlisting>
+    </example>
+  </sect1>
+
+  <sect1 xml:id="tls-install-certificate-certbot">
+    <title>Install a TLS certificate using Let's Encrypt (certbot)</title>
+
+    <para>If using a web server for exactly the same domain name
+    as your RTC service, it is possible to use the <literal>certbot</literal>
+    command for your web server to setup the certificate the first time.
+    </para>
+
+    <para>If there is no HTTPS web server for the domain, it is possible
+    to use the <literal>certbot certonly</literal> sub-command
+    to request a certificate.</para>
+
+    <para>As the <literal>certbot</literal> utility is still quite new
+    and evolving, it is recommend that you consult the
+    <link xlink:href="https://certbot.eff.org/"><literal>certbot</literal>
+    web site</link> for the most up-to-date detailed instructions.</para>
+
+    <para>After running <literal>certbot</literal>, the certificate
+    files will be present at locations such as
+    <literal>/etc/letsencrypt/live/example.org/fullchain.pem</literal>
+    and the private key files will be present at locations such as
+    <literal>/etc/letsencrypt/live/example.org/privkey.pem</literal>
+    </para>
+  </sect1>
+
   <sect1 xml:id="tls-install-certificate">
-    <title>Install a TLS certificate</title>
+    <title>Install a TLS certificate manually</title>
+
+    <para>If you have decided not to use Let's Encrypt and
+    <literal>certbot</literal>, use these instructions to create
+    your certificate(s) manually.  Otherwise, this section can be
+    skipped.</para>
 
     <para>On each Linux platform, there are different locations for
     private key files and local server certificates.  To simplify the

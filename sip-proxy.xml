@@ -128,8 +128,12 @@ Transport1Type = TLS
 Transport1TlsDomain = example.org
 Transport1TlsClientVerification = Optional
 Transport1RecordRouteUri = sip:example.org;transport=TLS
+# Configuration for manually maintained TLS certificates:
 Transport1TlsPrivateKey = /etc/ssl/private/example.org-key.pem
 Transport1TlsCertificate = /etc/ssl/public/example.org.pem
+# Configuration for certificates obtained using Let's Encrypt / certbot:
+#Transport1TlsPrivateKey = /etc/letsencrypt/live/example.org/privkey.pem
+#Transport1TlsCertificate = /etc/letsencrypt/live/example.org/fullchain.pem
 
 # Transport2 is the IPv6 version of Transport1
 Transport2Interface = 2001:DB8:1000:2000::19:5061
@@ -137,8 +141,12 @@ Transport2Type = TLS
 Transport2TlsDomain = example.org
 Transport2TlsClientVerification = Optional
 Transport2RecordRouteUri = sip:example.org;transport=TLS
+# Configuration for manually maintained TLS certificates:
 Transport2TlsPrivateKey = /etc/ssl/private/example.org-key.pem
 Transport2TlsCertificate = /etc/ssl/public/example.org.pem
+# Configuration for certificates obtained using Let's Encrypt / certbot:
+#Transport2TlsPrivateKey = /etc/letsencrypt/live/example.org/privkey.pem
+#Transport2TlsCertificate = /etc/letsencrypt/live/example.org/fullchain.pem
 
 # Transport3 will be for SIP over WebSocket (WebRTC) connections
 # We use port 8443 here but you could use 443 instead
@@ -149,8 +157,12 @@ Transport3TlsDomain = example.org
 # don't currently appear to be able to, so leave it as None:
 Transport3TlsClientVerification = None
 Transport3RecordRouteUri = sip:example.org;transport=WSS
+# Configuration for manually maintained TLS certificates:
 Transport3TlsPrivateKey = /etc/ssl/private/example.org-key.pem
 Transport3TlsCertificate = /etc/ssl/public/example.org.pem
+# Configuration for certificates obtained using Let's Encrypt / certbot:
+#Transport3TlsPrivateKey = /etc/letsencrypt/live/example.org/privkey.pem
+#Transport3TlsCertificate = /etc/letsencrypt/live/example.org/fullchain.pem
 
 # Transport4 is the IPv6 version of Transport3
 Transport4Interface = 2001:DB8:1000:2000::19:8443
@@ -158,8 +170,12 @@ Transport4Type = WSS
 Transport4TlsDomain = example.org
 Transport4TlsClientVerification = None
 Transport4RecordRouteUri = sip:example.org;transport=WSS
+# Configuration for manually maintained TLS certificates:
 Transport4TlsPrivateKey = /etc/ssl/private/example.org-key.pem
 Transport4TlsCertificate = /etc/ssl/public/example.org.pem
+# Configuration for certificates obtained using Let's Encrypt / certbot:
+#Transport4TlsPrivateKey = /etc/letsencrypt/live/example.org/privkey.pem
+#Transport4TlsCertificate = /etc/letsencrypt/live/example.org/fullchain.pem
 
 # Transport5: this could be for TCP connections to an Asterisk server
 # in your internal network.  Don't allow port 5060 through the external

@@ -57,19 +57,34 @@ $ sudo addgroup prosody ssl-cert </programlisting>
 
       <para>Using the example provided, create configuration files for
       each domain you want to host under <code>/etc/prosody/conf.d</code>.
-      <xref linkend="prosody-domain-config"/> demonstrates the minimum
-      configuration for a domain.</para>
+      <xref linkend="prosody-domain-config-certbot"/> demonstrates the minimum
+      configuration for a domain using Let's Encrypt certificates and
+      <xref linkend="prosody-domain-config-manual"/> demonstrates the
+      equivalent configuration for a domain using manually maintained
+      certificates.</para>
 
-      <example xml:id="prosody-domain-config">
-        <title>Domain configuration file</title>
+      <example xml:id="prosody-domain-config-certbot">
+        <title>Domain configuration file (Let's Encrypt / <literal>certbot</literal>)</title>
 
         <programlisting format="linespecific">-- Section for VirtualHost example.com
 
 VirtualHost "example.org"
 	ssl = {
-		key = "/etc/ssl/private/example.org-key.pem";
-		certificate = "/etc/ssl/public/example.org.pem";
+		key = "/etc/letsencrypt/live/example.org/privkey.pem";
+		certificate = "/etc/letsencrypt/live/example.org/fullchain.pem";
 	} </programlisting>
+      </example>
+
+      <example xml:id="prosody-domain-config-manual">
+        <title>Domain configuration file (manual)</title>
+
+        <programlisting format="linespecific">-- Section for VirtualHost example.com
+
+VirtualHost "example.org"
+        ssl = {
+                key = "/etc/ssl/private/example.org-key.pem";
+                certificate = "/etc/ssl/public/example.org.pem";
+        } </programlisting>
       </example>
 
       <para>Edit the file <code>/etc/prosody/prosody.cfg.lua</code>.  This

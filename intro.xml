@@ -59,6 +59,12 @@
       locate the server in a location they believe to be secure and
       where they believe the risk of surveillance is low, such as
       Switzerland.</para>
+
+      <para><link xlink:href="https://en.wikipedia.org/wiki/Signal_(software)">Signal</link>,
+      the successor to RedPhone and TextSecure from Open Whisper Systems,
+      operates through privately run servers.  Administrators of the servers
+      are able to observe who is calling who but without knowing what they
+      are saying.</para>
     </sect2>
 
     <sect2>
@@ -66,7 +72,10 @@
 
       <para>Various solutions have begun to emerge in the hope of further
       eliminating these dependencies and offering a genuinely
-      decentralized service.</para>
+      decentralized service.  In a truly decentralized service,
+      the developer/founder of the service is not even able to see
+      which users are calling each other, making it more secure
+      than privately run services such as Signal.</para>
 
       <para>A fundamental issue for these alternatives is the addressing
       scheme.  Some rely on phone numbers and some of these solutions require
@@ -82,6 +91,14 @@
       time the user runs the software.  The current solution to this
       is usually a central server keeping a list of peers to seed the
       clients.</para>
+
+      <para>Examples of some decentralized and peer-to-peer networks include
+      the <link xlink:href="https://ring.cx">Ring softphone from
+      Savoir Faire Linux</link>, using the
+      <link xlink:href="https://github.com/savoirfairelinux/opendht">OpenDHT</link>
+      network, the <link xlink:href="http://tox.chat/">Tox app</link>
+      and the <link xlink:href="https://matrix.org/">Matrix.org</link>
+      service.</para>
     </sect2>
 
     <sect2>

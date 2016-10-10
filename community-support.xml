@@ -23,6 +23,19 @@
     <title>Mailing lists</title>
 
     <sect2>
+      <title>Major announcements</title>
+
+      <para>The
+      <link xlink:href="http://lists.freertc.org/mailman/listinfo/announce">
+      Free-RTC-Announce mailing list</link> is a low-volume mailing list
+      where you can receive important announcements about Free RTC products,
+      community activities and events.  The list is fully moderated and aims
+      not to send more than one announcement per week.  Please go ahead
+      and <link xlink:href="http://lists.freertc.org/mailman/listinfo/announce">
+      subscribe now</link>.</para>
+    </sect2>
+
+    <sect2>
       <title>Strategy and advocacy</title>
 
       <para>The

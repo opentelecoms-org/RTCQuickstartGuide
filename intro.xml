@@ -191,21 +191,41 @@
     <para>RTC is possible using a range of operating systems, including
     those popular on desktop computers, servers and smartphones.  This guide
     does not recommend a specific operating system.  However, we believe that
-    the most recent stable releases of popular GNU/Linux distributions,
+    for people who want to mix and match individual packages, the most
+    recent stable releases of popular GNU/Linux distributions,
     including Debian, Ubuntu and Fedora, provide a convenient way to get all
-    the necessary software in ready-to-run packages.</para>
+    the necessary software in ready-to-run packages.  For people
+    who want a turn-key solution, it may be better to choose one of the
+    self-installing or ready-to-run RTC or groupware solutions.</para>
 
-    <para>Users of Red Hat Enterprise Linux, CentOS, openSUSE, SLES and
-    other platforms may need to build the packages manually using
-    <code>rpmbuild</code> as described in <xref linkend="rpmbuild"/>.</para>
+    <sect2>
+      <title>Using a ready-to-run or turn-key solution</title>
+      <para>There are various turn-key solutions for building
+      servers for RTC or generic office/groupware purposes.  These
+      typically run off a live ISO image, provide a script to pre-install
+      and configure packages or they are an image for a platform like
+      Docker.</para>
 
-    <para>Several of the components described in this guide have been
-    tested on a much wider range of platforms.  The
-    <emphasis>reSIProcate</emphasis> products, including the
-    <emphasis>repro</emphasis> SIP proxy and <emphasis>reTurn</emphasis> TURN
-    server, are extremely versatile and known to run successfully on Microsoft
-    Windows, Apple OS, iOS, BSD variants, Android and several Linux based
-    routers including OpenWRT, CeroWRT and DD-WRT.</para>
+      <para>Examples of these platforms include <link
+      xlink:href="http://WikiSuite.org">WikiSuite</link> (based on
+      RHEL) and <link xlink:href="https://www.turnkeylinux.org/">
+      Turnkey Linux</link> (based on Debian).</para>
+    </sect2>
+
+    <sect2>
+      <title>Using a generic GNU/Linux distribution</title>
+      <para>Users of Red Hat Enterprise Linux, CentOS, openSUSE, SLES and
+      other platforms may need to build the packages manually using
+      <code>rpmbuild</code> as described in <xref linkend="rpmbuild"/>.</para>
+
+      <para>Several of the components described in this guide have been
+      tested on a much wider range of platforms.  The
+      <emphasis>reSIProcate</emphasis> products, including the
+      <emphasis>repro</emphasis> SIP proxy and <emphasis>reTurn</emphasis> TURN
+      server, are extremely versatile and known to run successfully on Microsoft
+      Windows, Apple OS, iOS, BSD variants, Android and several Linux based
+      routers including OpenWRT, CeroWRT and DD-WRT.</para>
+    </sect2>
   </sect1>
 
   <sect1 xml:id="intro-latest-versions">

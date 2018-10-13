@@ -131,7 +131,7 @@
       <para>In various countries, it is possible to have your phone
       numbers registered in the public ENUM tree for <code>e164.arpa</code>.
       Wikipedia maintains a
-      <link xlink:href="http://en.wikipedia.org/wiki/Telephone_number_mapping#External_links">
+      <link xlink:href="https://en.wikipedia.org/wiki/Telephone_number_mapping#External_links">
       detailed list of national ENUM registries</link>.</para>
     </sect2>
 
@@ -147,7 +147,7 @@
       periodically by a <code>cron</code> job.</para>
 
       <para>If your phone numbers are available in a local LDAP server, the
-      <link xlink:href="http://www.opentelecoms.org/dlz-ldap-enum">dlz-ldap-enum
+      <link xlink:href="https://opentelecoms.org/dlz-ldap-enum">dlz-ldap-enum
       </link> module can be used in a <emphasis>Bind9</emphasis> DNS name
       server to support real-time queries.</para>
     </sect2>

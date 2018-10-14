@@ -39,7 +39,7 @@ $ </programlisting>
 
   <example xml:id="rpmbuild-create-rpms">
     <title>Running the <code>rpmbuild</code> command</title>
-    <programlisting format="linespecific">$ wget http://.../resiprocate-1.9.8.tar.gz
+    <programlisting format="linespecific">$ wget https://.../resiprocate-1.9.8.tar.gz
 $ rpmbuild -tb resiprocate-1.9.8.tar.gz</programlisting>
   </example>
 

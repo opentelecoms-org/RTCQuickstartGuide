@@ -24,7 +24,7 @@
     <example xml:id="nagios-plugin-stun-configuration">
       <title>Sample <code>/etc/nagios-plugins/config/stun.cfg</code></title>
       <programlisting format="linespecific"># can be used to check STUN and TURN servers
-# uses script from http://karlsbakk.net/asterisk/scripts/check_stun
+# uses script from https://karlsbakk.net/asterisk/scripts/check_stun
 define command {
         command_name check_stun
         command_line /usr/local/lib/nagios/plugins/check_stun $HOSTADDRESS$

@@ -52,7 +52,7 @@
 
       <para>SMTP is a much older protocol than SIP and XMPP and while it
       does now boast support for STARTTLS,
-      <link xlink:href="http://tools.ietf.org/html/rfc6125#appendix-B.4">
+      <link xlink:href="https://tools.ietf.org/html/rfc6125#appendix-B.4">
       it doesn't clearly specify a mechanism for validation of message
       headers against the certificates</link>.</para>
     </sect2>

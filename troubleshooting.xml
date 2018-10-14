@@ -30,7 +30,7 @@
       instead of Hangouts.  Google provides a link for this:
       <code>https://plus.google.com/downgrade/</code>.  The XMPP Foundation
       maintains a
-      <link xlink:href="http://wiki.xmpp.org/web/Jabber_Hosting_Possibilities">
+      <link xlink:href="https://wiki.xmpp.org/web/Jabber_Hosting_Possibilities">
       list of hosting companies who provide fully functional XMPP
       support</link>.</para>
     </sect2>
@@ -113,7 +113,7 @@
 
       <para>Ensure log messages are being aggregated by
       <emphasis>Syslog</emphasis>.  Using a tool like
-      <link xlink:href="http://loganalyzer.adiscon.com/">
+      <link xlink:href="https://loganalyzer.adiscon.com/">
       <emphasis>LogAnalyzer</emphasis></link> to visualize the log
       messages in colour makes it much easier to spot unusual activity.</para>
 

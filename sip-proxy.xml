@@ -270,7 +270,7 @@ Database101Password = abc</programlisting>
 
       <para>If you need help with the configuration settings, please join
       the mailing list
-      <link xlink:href="http://list.resiprocate.org/mailman/listinfo/repro-users">
+      <link xlink:href="https://list.resiprocate.org/mailman/listinfo/repro-users">
       repro-users</link> and the <emphasis>reSIProcate</emphasis> team
       will try to help.</para>
 
@@ -489,7 +489,7 @@ Restarting repro</programlisting>
 
       <para>If you need help with the configuration settings, please join
       the mailing list
-      <link xlink:href="http://list.resiprocate.org/mailman/listinfo/repro-users">
+      <link xlink:href="https://list.resiprocate.org/mailman/listinfo/repro-users">
       repro-users</link> and the <emphasis>reSIProcate</emphasis> team
       will try to help.</para>
     </sect2>
@@ -504,7 +504,7 @@ Restarting repro</programlisting>
       as demonstrated in <xref linkend="kamailio-install-debian"/>.
       Fedora, RHEL and CentOS users need to manually add the appropriate
       repository from
-      <link xlink:href="http://rpm.kamailio.org/">
+      <link xlink:href="https://www.kamailio.org/wiki/packages/rpms">
       <emphasis>rpm.kamailio.org</emphasis></link> and then use
       <code>yum</code> to install, as demonstrated in
       <xref linkend="kamailio-install-redhat"/>.</para>

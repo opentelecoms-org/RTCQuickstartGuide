@@ -96,7 +96,7 @@
       the <link xlink:href="https://ring.cx">Ring softphone from
       Savoir Faire Linux</link>, using the
       <link xlink:href="https://github.com/savoirfairelinux/opendht">OpenDHT</link>
-      network, the <link xlink:href="http://tox.chat/">Tox app</link>
+      network, the <link xlink:href="https://tox.chat/">Tox app</link>
       and the <link xlink:href="https://matrix.org/">Matrix.org</link>
       service.</para>
     </sect2>
@@ -207,7 +207,7 @@
       Docker.</para>
 
       <para>Examples of these platforms include <link
-      xlink:href="http://WikiSuite.org">WikiSuite</link> (based on
+      xlink:href="https://WikiSuite.org">WikiSuite</link> (based on
       RHEL) and <link xlink:href="https://www.turnkeylinux.org/">
       Turnkey Linux</link> (based on Debian).</para>
     </sect2>

@@ -204,7 +204,7 @@
         code.</para>
 
         <para>Further details and examples are present in the
-        <link xlink:href="http://www.resiprocate.org/SIP_Over_WebSocket_Cookies">page on the reSIProcate project wiki</link>.</para>
+        <link xlink:href="https://www.resiprocate.org/SIP_Over_WebSocket_Cookies">page on the reSIProcate project wiki</link>.</para>
 
       </sect3>
     </sect2>
@@ -247,7 +247,7 @@
 
       <para>For those interested in using SIP for WebRTC signalling,
       the most compelling solution now involves a combination of JsSIP and
-      <link xlink:href="http://jscommunicator.org">
+      <link xlink:href="https://jscommunicator.org">
       <emphasis>JSCommunicator</emphasis></link>.  JsSIP provides the
       low-level support for SIP message parsing.  JSCommunicator provides
       a high-level API and even a fragment of HTML that can be embedded
@@ -283,7 +283,7 @@
 
       <para>For <emphasis>Drupal</emphasis> web sites, adding WebRTC
       is as simple as adding the
-      <link xlink:href="http://drucall.org"><emphasis>DruCall</emphasis></link>
+      <link xlink:href="https://www.drucall.org"><emphasis>DruCall</emphasis></link>
       module and pointing it to a SIP proxy such as <emphasis>repro</emphasis>.
       </para>
 

@@ -168,7 +168,7 @@ $ echo -n "alice@example.org:example.org:secret" | md5sum
       challenge/response without the SIP proxy having a copy of the
       password or HA1 value at all.  This is implemented by the
       <emphasis>FreeRADIUS</emphasis> project in the module
-      <link xlink:href="http://wiki.freeradius.org/modules/Rlm_digest">
+      <link xlink:href="https://wiki.freeradius.org/modules/Rlm_digest">
       <code>rlm_digest</code></link> and supported by all the major
       SIP proxy servers.</para>
 

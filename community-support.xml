@@ -47,7 +47,7 @@
     <sect2>
       <title>Collaboration between operators and service providers</title>
 
-      <para>The <link xlink:href="http://mail.jabber.org/mailman/listinfo/operators">
+      <para>The <link xlink:href="https://mail.jabber.org/mailman/listinfo/operators">
       XSF XMPP operators mailing list</link> enables discussion of issues
       between organizations managing XMPP servers of any size.</para>
     </sect2>
@@ -56,12 +56,12 @@
       <title>Server support</title>
 
       <para>The
-      <link xlink:href="http://list.resiprocate.org/mailman/listinfo/repro-users">
+      <link xlink:href="https://list.resiprocate.org/mailman/listinfo/repro-users">
       reSIProcate <code>repro</code> users mailing list</link> provides
       community support for people setting up and operating the
       <code>repro</code> SIP proxy server.</para>
 
-      <para>The <link xlink:href="http://prosody.im/discuss#mailing_lists">Prosody
+      <para>The <link xlink:href="https://prosody.im/discuss#mailing_lists">Prosody
       users mailing list</link> provides community support for people
       setting up and operating the <emphasis>Prosody</emphasis> XMPP
       server.</para>

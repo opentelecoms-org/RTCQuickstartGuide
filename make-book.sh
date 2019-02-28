@@ -2,6 +2,8 @@
 
 set -e
 
+# apt install docbook-xsl docbook-xsl-ns docbook5-xml
+
 #BOOTSTRAP_HOME=~/src/bootstrap/current
 
 #if [ ! -e ${BOOTSTRAP_HOME}/js/bootstrap.js ];
@@ -27,6 +29,8 @@ XSLTPROC_HTML="$XSLTPROC"
 # Validate the XML
 
 xmllint \
+    --nonet \
+    --path '/usr/share/xml/docbook/schema/rng/5.0' \
     --relaxng http://www.docbook.org/xml/5.0/rng/docbookxi.rng \
     --noout book.xml
 

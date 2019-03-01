@@ -10,7 +10,10 @@
     and Mac OS.</para>
 
     <para>Many users will get high quality audio by connecting a
-    headset to the 3.5mm audio socket on their computer.  However, using
+    headset to the 3.5mm audio socket on their computer.  On many modern laptops,
+    the 3.5mm connector is a <link xlink:href="https://en.wikipedia.org/wiki/Phone_connector_(audio)#TRRS_standards">
+    TRRS</link> socket that integrates the microphone and stereo headphones into a
+    single connection, as used on many popular mobile phones.  However, using
     headsets with a USB connector yields better results in some cases.</para>
 
     <para>The <link xlink:href="http://www.jitsi.org">Jitsi</link> softphone is
@@ -87,10 +90,21 @@
     <para>On the Android platform, there are several popular free,
     open source SIP applications including
     <link xlink:href="http://www.lumicall.org">Lumicall</link> and
-    <emphasis>CSipSimple</emphasis>.</para>
+    <emphasis>CSipSimple</emphasis> and the popular XMPP client
+    <emphasis>Conversations</emphasis>.</para>
 
-    <para>Users of the Apple iPhone may want to consider a proprietary
-    app such as
+    <para>All the leading free/open source Android apps can be downloaded
+    from the <link xlink:href="https://f-droid.org">F-Droid</link>
+    app store or the Google Play app store.</para>
+
+    <para>Users of the Apple iPhone have reported success with the
+    iOS version of <link xlink:href="https://www.linphone.org/">Linphone</link>
+    (<link xlink:href="https://itunes.apple.com/us/app/linphone/id360065638?mt=8">
+    iTunes download link</link>).
+    A particular challenge for iPhone users is that apps can't keep
+    background connections to arbitrary SIP servers open for receiving
+    incoming calls.  This is a restriction that Apple has imposed for all
+    apps.  iPhone users may also want to consider a proprietary app such as
     <link xlink:href="http://www.counterpath.com/bria-iphone-edition.html">Bria
     for iPhone</link>.</para>
   </sect1>

@@ -252,6 +252,16 @@ EOF </programlisting>
     <para>The certificate is now ready for use by both the SIP and
     XMPP servers.  It can also be used to secure a web server, SMTP
     server or any other application.</para>
+<example xml:id="tls-selfsign-certificate-commands">
+      <title>Self signing the certificate</title>
+      <para>It is not highly recommended but if you would like to create a self signed certificate, you can use the following command.</para>
+      <programlisting format="linespecific">
+$ sudo openssl x509 -req -days 365 -in ${CSR_PEM} \ 
+        -signkey ${PRIVATE_KEY_PEM} \ 
+        -out ${CERT_DIR}/${MY_DOMAIN}.pem 
+</programlisting>
+    </example>
+
   </sect1>
 
 </chapter>

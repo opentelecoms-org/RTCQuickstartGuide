@@ -258,7 +258,7 @@
 
     <example xml:id="pbx-aterisk-with-repro-sip.conf">
       <title>Asterisk <literal>sip.conf</literal></title>
-      <programlisting format="linespecific">; should match the realm used by the proxy
+      <programlisting linenumbering="numbered">; should match the realm used by the proxy
 realm=sip-proxy.example.org
 domain=sip-proxy.example.org
 fromdomain=sip-proxy.example.org
@@ -282,7 +282,7 @@ nat=yes</programlisting>
 
     <example xml:id="pbx-aterisk-with-repro-extensions.conf">
       <title>Asterisk <literal>extensions.conf</literal></title>
-      <programlisting format="linespecific">exten => _8XXX,n,Dial(SIP/${EXTEN}@sip-proxy.example.org,45)</programlisting>
+      <programlisting linenumbering="numbered">exten => _8XXX,n,Dial(SIP/${EXTEN}@sip-proxy.example.org,45)</programlisting>
     </example>
   </sect1>
 </chapter>

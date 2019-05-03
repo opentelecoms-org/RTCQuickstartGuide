@@ -83,7 +83,7 @@
 
     <example xml:id="enum-query-dig">
       <title>Using <code>dig</code> to perform ENUM queries</title>
-      <programlisting format="linespecific">$ dig -t naptr 4.4.2.2.3.3.5.6.8.1.4.4.e164.arpa
+      <programlisting linenumbering="numbered">$ dig -t naptr 4.4.2.2.3.3.5.6.8.1.4.4.e164.arpa
 
 ; > DiG 9.8.4-rpz2+rl005.12-P1 > -t naptr 4.4.2.2.3.3.5.6.8.1.4.4.e164.arpa
 ;; global options: +cmd
@@ -162,12 +162,12 @@
 
         <example xml:id="dlzldapenum-install-debian">
           <title>Installing <code>dlz-ldap-enum</code> on Debian/Ubuntu</title>
-          <programlisting format="linespecific">$ sudo apt-get install dlz-ldap-enum</programlisting>
+          <programlisting linenumbering="numbered">$ sudo apt-get install dlz-ldap-enum</programlisting>
         </example>
 
         <example xml:id="dlzldapenum-install-redhat">
           <title>Install <code>dlz-ldap-enum</code> on Fedora/RHEL/CentOS</title>
-          <programlisting format="linespecific">$ sudo yum install dlz-ldap-enum</programlisting>
+          <programlisting linenumbering="numbered">$ sudo yum install dlz-ldap-enum</programlisting>
         </example>
       </sect3>
 
@@ -186,7 +186,7 @@
 
         <example xml:id="dlzldapenum-config-sample">
           <title>Sample <code>dlz_ldap_enum.conf</code></title>
-          <programlisting format="linespecific">dlz "example" {
+          <programlisting linenumbering="numbered">dlz "example" {
     database "dlopen /usr/lib/dlz-ldap-enum/dlz_ldap_enum.so 2
         v3 simple {cn=admin,dc=example,dc=org} {secret} {127.0.0.1}
         e164-addr.example.org
@@ -207,12 +207,12 @@
 
         <example xml:id="dlzldapenum-named-config-sample-debian">
           <title>Additions to <code>named.conf</code> for Debian/Ubuntu</title>
-          <programlisting format="linespecific">include "/etc/bind/dlz_ldap_enum.conf";</programlisting>
+          <programlisting linenumbering="numbered">include "/etc/bind/dlz_ldap_enum.conf";</programlisting>
         </example>
 
         <example xml:id="dlzldapenum-named-config-sample-redhat">
           <title>Additions to <code>named.conf</code> for Fedora/RHEL/CentOS</title>
-          <programlisting format="linespecific">include "/etc/named/dlz_ldap_enum.conf";</programlisting>
+          <programlisting linenumbering="numbered">include "/etc/named/dlz_ldap_enum.conf";</programlisting>
         </example>
 
       </sect3>

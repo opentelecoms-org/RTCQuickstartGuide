@@ -112,12 +112,12 @@
 
     <example xml:id="tls-install-openssl-debian">
       <title>Installing <literal>openssl</literal> on Debian/Ubuntu</title>
-      <programlisting format="linespecific">$ sudo apt-get install ssl-cert openssl</programlisting>
+      <programlisting linenumbering="numbered">$ sudo apt-get install ssl-cert openssl</programlisting>
     </example>
 
     <example xml:id="tls-install-openssl-redhat">
       <title>Installing <literal>openssl</literal> on Fedora/RHEL/CentOS</title>
-      <programlisting format="linespecific">$ sudo yum install openssl</programlisting>
+      <programlisting linenumbering="numbered">$ sudo yum install openssl</programlisting>
     </example>
   </sect1>
 
@@ -189,7 +189,7 @@
 
     <example xml:id="tls-pki-location-debian">
       <title>PKI directories (Debian/Ubuntu)</title>
-      <programlisting format="linespecific">$ PKI_HOME=/etc/ssl
+      <programlisting linenumbering="numbered">$ PKI_HOME=/etc/ssl
 $ PRIVATE_KEY_DIR=${PKI_HOME}/private
 $ CERT_DIR=${PKI_HOME}/public
 $ CSR_DIR=${PKI_HOME}/csr</programlisting>
@@ -197,7 +197,7 @@ $ CSR_DIR=${PKI_HOME}/csr</programlisting>
 
     <example xml:id="tls-pki-location-redhat">
       <title>PKI directories (Fedora/RHEL/CentOS)</title>
-      <programlisting format="linespecific">$ PKI_HOME=/etc/pki/tls
+      <programlisting linenumbering="numbered">$ PKI_HOME=/etc/pki/tls
 $ PRIVATE_KEY_DIR=${PKI_HOME}/private
 $ CERT_DIR=${PKI_HOME}/certs
 $ CSR_DIR=${PKI_HOME}/csr</programlisting>
@@ -205,7 +205,7 @@ $ CSR_DIR=${PKI_HOME}/csr</programlisting>
 
     <example xml:id="tls-keypair-and-csr">
       <title>Creating RSA key pair and CSR</title>
-      <programlisting format="linespecific">$ MY_DOMAIN=example.org
+      <programlisting linenumbering="numbered">$ MY_DOMAIN=example.org
 $ sudo mkdir -p $PRIVATE_KEY_DIR
 $ PRIVATE_KEY_PEM=${PRIVATE_KEY_DIR}/${MY_DOMAIN}-key.pem
 $ CSR_PEM=${CSR_DIR}/${MY_DOMAIN}-csr.pem
@@ -235,7 +235,7 @@ $ sudo cat ${CSR_PEM} </programlisting>
 
     <example xml:id="tls-install-certificate-commands">
       <title>Installing the certificate</title>
-      <programlisting format="linespecific">$ sudo cat > /etc/ssl/public/${MY_DOMAIN}.pem &lt;&lt; EOF
+      <programlisting linenumbering="numbered">$ sudo cat > /etc/ssl/public/${MY_DOMAIN}.pem &lt;&lt; EOF
 -----BEGIN CERTIFICATE-----
 MIIHWTCCBUGgAwIBAgIDCkGKMA0GCSqGSIb3DQEBCwUAMHkxEDAOBgNVBAoTB1Jv
 b3QgQ0ExHjAcBgNVBAsTFWh0dHA6Ly93d3cuY2FjZXJ0Lm9yZzEiMCAGA1UEAxMZ

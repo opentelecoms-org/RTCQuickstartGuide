@@ -31,13 +31,13 @@
       <example xml:id="prosody-install-debian">
         <title>Installing <emphasis>Prosody</emphasis> on Debian/Ubuntu</title>
 
-        <programlisting format="linespecific">$ sudo apt-get install prosody
+        <programlisting linenumbering="numbered">$ sudo apt-get install prosody
 $ sudo addgroup prosody ssl-cert </programlisting>
       </example>
 
       <example xml:id="prosody-install-redhat">
         <title>Install <emphasis>Prosody</emphasis> on Fedora/RHEL/CentOS</title>
-        <programlisting format="linespecific">$ sudo yum install prosody
+        <programlisting linenumbering="numbered">$ sudo yum install prosody
 $ sudo addgroup prosody ssl-cert </programlisting>
       </example>
     </sect2>
@@ -66,7 +66,7 @@ $ sudo addgroup prosody ssl-cert </programlisting>
       <example xml:id="prosody-domain-config-certbot">
         <title>Domain configuration file (Let's Encrypt / <literal>certbot</literal>)</title>
 
-        <programlisting format="linespecific">-- Section for VirtualHost example.com
+        <programlisting linenumbering="numbered">-- Section for VirtualHost example.com
 
 VirtualHost "example.org"
 	ssl = {
@@ -97,7 +97,7 @@ VirtualHost "example.org"
       <example xml:id="prosody-restart">
         <title>Restarting the <code>prosody</code> daemon (<code>systemd</code>)</title>
 
-        <programlisting format="linespecific">$ sudo systemctl restart prosody
+        <programlisting linenumbering="numbered">$ sudo systemctl restart prosody
 Restarting prosody </programlisting>
       </example>
 
@@ -117,7 +117,7 @@ Restarting prosody </programlisting>
 
       <example xml:id="prosody-add-user">
         <title>Using <code>prosodyctl</code> to add a user</title>
-        <programlisting format="linespecific">$ sudo prosodyctl adduser alice@example.org </programlisting>
+        <programlisting linenumbering="numbered">$ sudo prosodyctl adduser alice@example.org </programlisting>
       </example>
 
       <para>To use LDAP authentication, make sure that
@@ -129,7 +129,7 @@ Restarting prosody </programlisting>
         <title><code>prosody.cfg.lua</code> settings for
         <code>mod_auth_ldap</code></title>
 
-        <programlisting format="linespecific">authentication = "ldap"
+        <programlisting linenumbering="numbered">authentication = "ldap"
 ldap_server = "ldap-server.example.org"
 ldap_rootdn = ""
 ldap_password = ""
@@ -166,7 +166,7 @@ ldap_mode = "bind" </programlisting>
         <title>Installing <emphasis>ejabberd</emphasis> on
         Debian/Ubuntu</title>
 
-        <programlisting format="linespecific">$ sudo apt-get install ejabberd
+        <programlisting linenumbering="numbered">$ sudo apt-get install ejabberd
 $ sudo addgroup ejabberd ssl-cert </programlisting>
       </example>
 
@@ -174,7 +174,7 @@ $ sudo addgroup ejabberd ssl-cert </programlisting>
         <title>Install <emphasis>ejabberd</emphasis> on
         Fedora/RHEL/CentOS</title>
 
-        <programlisting format="linespecific">$ sudo yum install ejabberd
+        <programlisting linenumbering="numbered">$ sudo yum install ejabberd
 $ sudo addgroup ejabberd ssl-cert </programlisting>
       </example>
     </sect2>
@@ -189,7 +189,7 @@ $ sudo addgroup ejabberd ssl-cert </programlisting>
       <example xml:id="ejabberd-interface-config">
         <title><code>ejabberd</code> interface example</title>
 
-        <programlisting format="linespecific">{listen,
+        <programlisting linenumbering="numbered">{listen,
  [
   {5222, ejabberd_c2s, [
                         {access, c2s},
@@ -221,7 +221,7 @@ $ sudo addgroup ejabberd ssl-cert </programlisting>
         <title>Installing <emphasis>jabberd2</emphasis> on
         Debian/Ubuntu</title>
 
-        <programlisting format="linespecific">$ sudo apt-get install jabberd2
+        <programlisting linenumbering="numbered">$ sudo apt-get install jabberd2
 $ sudo addgroup jabber ssl-cert </programlisting>
       </example>
 
@@ -229,7 +229,7 @@ $ sudo addgroup jabber ssl-cert </programlisting>
         <title>Install <emphasis>jabberd2</emphasis> on
         Fedora/RHEL/CentOS</title>
 
-        <programlisting format="linespecific">$ sudo yum install jabberd
+        <programlisting linenumbering="numbered">$ sudo yum install jabberd
 $ sudo addgroup jabberd ssl-cert </programlisting>
       </example>
     </sect2>
@@ -255,7 +255,7 @@ $ sudo addgroup jabberd ssl-cert </programlisting>
       <example xml:id="jabberd2-c2s-hostname-config">
         <title><code>jabberd2</code> c2s.xml example</title>
 
-        <programlisting format="linespecific">&lt;id password-change='mu'
+        <programlisting linenumbering="numbered">&lt;id password-change='mu'
    require-starttls='mu'
    cachain='/etc/ssl/public/example.org.pem'
    pemfile='/etc/ssl/private/example.org-key.pem'&gt;
@@ -266,7 +266,7 @@ xmpp-gw.example.org
       <example xml:id="jabberd2-sm-domain-config">
         <title><code>jabberd2</code> sm.xml example</title>
 
-        <programlisting format="linespecific">&lt;id&gt;example.org&lt;/id&gt;</programlisting>
+        <programlisting linenumbering="numbered">&lt;id&gt;example.org&lt;/id&gt;</programlisting>
       </example>
 
     </sect2>

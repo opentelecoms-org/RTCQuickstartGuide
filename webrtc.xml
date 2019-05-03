@@ -177,7 +177,7 @@
 
         <example xml:id="webrtc-auth-repro.config">
           <title><literal>repro.config</literal> settings for cookie and URL parameter authentication</title>
-          <programlisting format="linespecific">WSCookieAuthSharedSecret = some-random-string
+          <programlisting linenumbering="numbered">WSCookieAuthSharedSecret = some-random-string
 
 # Names of the cookies to use for the cookie authentication protocol
 # These are the default values:
@@ -291,7 +291,7 @@
       JSCommunicator so it also provides a very good example of how to
       adapt JSCommunicator to other CMS platforms.</para>
 
-      <figure float="none" xml:id="drucall-stack-dia">
+      <figure floatstyle="none" xml:id="drucall-stack-dia">
         <title>DruCall/JSCommunicator/JsSIP software stack</title>
 
         <mediaobject>

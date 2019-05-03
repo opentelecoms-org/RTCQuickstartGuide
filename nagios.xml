@@ -23,7 +23,7 @@
 
     <example xml:id="nagios-plugin-stun-configuration">
       <title>Sample <code>/etc/nagios-plugins/config/stun.cfg</code></title>
-      <programlisting format="linespecific"># can be used to check STUN and TURN servers
+      <programlisting linenumbering="numbered"># can be used to check STUN and TURN servers
 # uses script from http://karlsbakk.net/asterisk/scripts/check_stun
 define command {
         command_name check_stun
@@ -33,7 +33,7 @@ define command {
 
     <example xml:id="nagios-plugin-sip-tls-configuration">
       <title>Sample <code>/etc/nagios-plugins/config/sip.cfg</code></title>
-      <programlisting format="linespecific"># uses script from https://github.com/ibc/nagios-sip-plugin
+      <programlisting linenumbering="numbered"># uses script from https://github.com/ibc/nagios-sip-plugin
 define command {
         command_name check_sip_tls
         command_line /usr/local/lib/nagios/plugins/check_sip2 -t tls -p $ARG2$ -T 5 -s $ARG1$
@@ -42,7 +42,7 @@ define command {
 
     <example xml:id="nagios-plugin-xmpp-configuration">
       <title>Sample <code>/etc/nagios-plugins/config/xmpp.cfg</code></title>
-      <programlisting format="linespecific"># uses script from https://exchange.icinga.org/jandd/check_xmppng
+      <programlisting linenumbering="numbered"># uses script from https://exchange.icinga.org/jandd/check_xmppng
 # Debian/Ubuntu: apt-get install nagios-check-xmppng
 define command {
         command_name check_xmpp
@@ -61,7 +61,7 @@ define command {
 
     <example xml:id="nagios-check-stun-configuration">
       <title>Sample service check for STUN/TURN</title>
-      <programlisting format="linespecific">define service{
+      <programlisting linenumbering="numbered">define service{
         use                             generic-service
         host_name                       turn-server.example.org
         service_description             STUN/TURN
@@ -73,7 +73,7 @@ define command {
 
     <example xml:id="nagios-check-sip-tls-configuration">
       <title>Sample service check for SIP over TLS</title>
-      <programlisting format="linespecific">define service{
+      <programlisting linenumbering="numbered">define service{
         use                             generic-service
         host_name                       server1
         service_description             SIPS
@@ -83,7 +83,7 @@ define command {
 
     <example xml:id="nagios-check-sip-tls-configuration-443">
       <title>Sample service check for SIP over TLS (port 443)</title>
-      <programlisting format="linespecific">define service{
+      <programlisting linenumbering="numbered">define service{
         use                             generic-service
         host_name                       server1
         service_description             SIPS 443
@@ -95,7 +95,7 @@ define command {
 
     <example xml:id="nagios-check-xmpp-configuration">
       <title>Sample service check for XMPP</title>
-      <programlisting format="linespecific">define service{
+      <programlisting linenumbering="numbered">define service{
         use                             generic-service
         host_name                       server1
         service_description             XMPP

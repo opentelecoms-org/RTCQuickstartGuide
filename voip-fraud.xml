@@ -69,12 +69,12 @@
       </para>
 
       <itemizedlist>
-        <listitem>Calls to premium rate numbers</listitem>
-        <listitem>Reverse charge calls charged at a rate in excess of $___ per minute</listitem>
-        <listitem>Calls to numbers where a share of the call charge is paid out to the recipient of the call (such as the UK 0871 numbers)</listitem>
-        <listitem>Premium-rate text messaging services</listitem>
-        <listitem>Data roaming charges</listitem>
-        <listitem>Data charges for data usage in excess of bundled data allowances</listitem>
+        <listitem><para>Calls to premium rate numbers</para></listitem>
+        <listitem><para>Reverse charge calls charged at a rate in excess of $___ per minute</para></listitem>
+        <listitem><para>Calls to numbers where a share of the call charge is paid out to the recipient of the call (such as the UK 0871 numbers)</para></listitem>
+        <listitem><para>Premium-rate text messaging services</para></listitem>
+        <listitem><para>Data roaming charges</para></listitem>
+        <listitem><para>Data charges for data usage in excess of bundled data allowances</para></listitem>
       </itemizedlist>
 
       <para>This letter has been sent to you by recorded delivery and takes

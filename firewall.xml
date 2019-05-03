@@ -204,7 +204,7 @@
 
     <example xml:id="firewall-setup-iptables-example">
       <title>Firewall setup with <code>iptables</code></title>
-      <programlisting format="linespecific">iptables -I INPUT -p udp -d 198.51.100.19 --dport 3478 -j ACCEPT
+      <programlisting linenumbering="numbered">iptables -I INPUT -p udp -d 198.51.100.19 --dport 3478 -j ACCEPT
 iptables -I INPUT -p udp -d 198.51.100.20 --dport 3478 -j ACCEPT
 iptables -I INPUT -p udp -d 198.51.100.19 \
         --dport 49152:65535 -j ACCEPT

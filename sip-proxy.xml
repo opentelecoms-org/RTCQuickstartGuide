@@ -82,13 +82,13 @@
 
       <example xml:id="repro-install-debian">
         <title>Installing <code>repro</code> on Debian/Ubuntu</title>
-        <programlisting format="linespecific">$ sudo apt-get install repro
+        <programlisting linenumbering="numbered">$ sudo apt-get install repro
 $ sudo addgroup repro ssl-cert</programlisting>
       </example>
 
       <example xml:id="repro-install-redhat">
         <title>Install <code>repro</code> on Fedora/RHEL/CentOS</title>
-        <programlisting format="linespecific">$ sudo yum install resiprocate-repro
+        <programlisting linenumbering="numbered">$ sudo yum install resiprocate-repro
 $ sudo addgroup repro ssl-cert</programlisting>
       </example>
     </sect2>
@@ -117,7 +117,7 @@ $ sudo addgroup repro ssl-cert</programlisting>
 
       <example xml:id="repro-config-file">
         <title>Sample values for <code>repro.config</code></title>
-        <programlisting format="linespecific"># To trust email certificates as SIP client certificates:
+        <programlisting linenumbering="numbered"># To trust email certificates as SIP client certificates:
 TLSUseEmailAsSIP = true
 
 # Transport1 will be for SIP over TLS connections
@@ -250,7 +250,7 @@ EnableCertificateAuthenticator = True</programlisting>
 
       <example xml:id="repro-postgresql-example">
         <title>Using <emphasis>PostgreSQL</emphasis></title>
-        <programlisting format="linespecific">DefaultDatabase = 101
+        <programlisting linenumbering="numbered">DefaultDatabase = 101
 
 Database101Type = postgresql
 Database101ConnInfo = host=pg1 port=5432 dbname=repro user=repro password=abc</programlisting>
@@ -258,7 +258,7 @@ Database101ConnInfo = host=pg1 port=5432 dbname=repro user=repro password=abc</p
 
       <example xml:id="repro-mysql-example">
         <title>Using <emphasis>MySQL</emphasis></title>
-        <programlisting format="linespecific">DefaultDatabase = 101
+        <programlisting linenumbering="numbered">DefaultDatabase = 101
 
 Database101Type = mysql
 Database101Host = mysql1
@@ -281,7 +281,7 @@ Database101Password = abc</programlisting>
       <example xml:id="repro-htdigest-example">
         <title>Using <code>htdigest</code> to set <code>admin</code> user
         password</title>
-        <programlisting format="linespecific">$ sudo htdigest -c /etc/repro/users.txt repro admin
+        <programlisting linenumbering="numbered">$ sudo htdigest -c /etc/repro/users.txt repro admin
 Adding password for admin in realm repro.
 New password: 
 Re-type new password: 
@@ -293,7 +293,7 @@ $ </programlisting>
 
       <example xml:id="repro-restart">
         <title>Restarting the <code>repro</code> daemon (<code>systemd</code>)</title>
-        <programlisting format="linespecific">$ sudo systemctl restart repro
+        <programlisting linenumbering="numbered">$ sudo systemctl restart repro
 Restarting repro</programlisting>
       </example>
     </sect2>
@@ -310,7 +310,7 @@ Restarting repro</programlisting>
       <example xml:id="openssl-sclient-debian">
         <title>Using <code>s_client</code> to test SIP ports
         (Debian/Ubuntu)</title>
-        <programlisting format="linespecific">$ openssl s_client -connect sip-proxy.example.org:5061 \
+        <programlisting linenumbering="numbered">$ openssl s_client -connect sip-proxy.example.org:5061 \
         -CApath /etc/ssl/certs
 ...
      Verify return code: 0 (ok)
@@ -319,7 +319,7 @@ Restarting repro</programlisting>
 
       <example xml:id="openssl-sclient-redhat">
         <title>Using <code>s_client</code> to test SIP ports (Fedora/RHEL/CentOS)</title>
-        <programlisting format="linespecific">$ openssl s_client -connect sip-proxy.example.org:5061 \
+        <programlisting linenumbering="numbered">$ openssl s_client -connect sip-proxy.example.org:5061 \
         -CAfile /etc/ssl/certs/ca-bundle.crt
 ...
      Verify return code: 0 (ok)
@@ -344,7 +344,7 @@ Restarting repro</programlisting>
       <xref linkend="repro-adding-domain"/> demonstrates how to add the
       domain <emphasis>example.org</emphasis>.</para>
 
-      <figure float="none" xml:id="repro-adding-domain">
+      <figure floatstyle="none" xml:id="repro-adding-domain">
         <title>repro web administration: adding a domain</title>
 
         <mediaobject>
@@ -383,7 +383,7 @@ Restarting repro</programlisting>
       demonstrates adding a user called <emphasis>alice</emphasis> to
       the domain <emphasis>example.org</emphasis>:</para>
 
-      <figure float="none" xml:id="repro-add-alice">
+      <figure floatstyle="none" xml:id="repro-add-alice">
         <title>repro web administration: adding a user</title>
 
         <mediaobject>
@@ -402,7 +402,7 @@ Restarting repro</programlisting>
       <para>The list of all users can be easily viewed, as demonstrated
       in <xref linkend="repro-show-users"/>.</para>
 
-      <figure float="none" xml:id="repro-show-users">
+      <figure floatstyle="none" xml:id="repro-show-users">
         <title>repro web administration: listing users</title>
 
         <mediaobject>
@@ -430,7 +430,7 @@ Restarting repro</programlisting>
       <xref linkend="repro-add-route"/> demonstrates how to set up the
       number <emphasis role="bold">8001</emphasis> for Alice.</para>
 
-      <figure float="none" xml:id="repro-add-route">
+      <figure floatstyle="none" xml:id="repro-add-route">
         <title>repro web administration: adding a route</title>
 
         <mediaobject>
@@ -449,7 +449,7 @@ Restarting repro</programlisting>
       <para>Once the numbers have been added, it is easy to view them all
       using the `Show Routes' page:</para>
 
-      <figure float="none" xml:id="repro-show-routes">
+      <figure floatstyle="none" xml:id="repro-show-routes">
         <title>repro web administration: listing routes</title>
 
         <mediaobject>
@@ -471,7 +471,7 @@ Restarting repro</programlisting>
       many different results), an example is given in
       <xref linkend="repro-test-routes"/>.</para>
 
-      <figure float="none" xml:id="repro-test-routes">
+      <figure floatstyle="none" xml:id="repro-test-routes">
         <title>repro web administration: routing test</title>
 
         <mediaobject>
@@ -511,13 +511,13 @@ Restarting repro</programlisting>
 
       <example xml:id="kamailio-install-debian">
         <title>Installing <code>kamailio</code> on Debian/Ubuntu</title>
-        <programlisting format="linespecific">$ sudo apt-get install kamailio
+        <programlisting linenumbering="numbered">$ sudo apt-get install kamailio
 $ sudo addgroup kamailio ssl-cert </programlisting>
       </example>
 
       <example xml:id="kamailio-install-redhat">
         <title>Install <code>kamailio</code> on Fedora/RHEL/CentOS</title>
-        <programlisting format="linespecific">$ sudo yum install kamailio
+        <programlisting linenumbering="numbered">$ sudo yum install kamailio
 $ sudo addgroup kamailio ssl-cert </programlisting>
       </example>
     </sect2>
@@ -535,7 +535,7 @@ $ sudo addgroup kamailio ssl-cert </programlisting>
 
       <example xml:id="kamailio-restart">
         <title>Restarting the <code>kamailio</code> daemon (<code>systemd</code>)</title>
-        <programlisting format="linespecific">$ sudo systemctl restart kamailio
+        <programlisting linenumbering="numbered">$ sudo systemctl restart kamailio
 Restarting kamailio</programlisting>
       </example>
     </sect2>

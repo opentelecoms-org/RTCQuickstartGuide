@@ -169,7 +169,7 @@
 
     <example xml:id="dns-bind-example-zone">
       <title>ISC Bind zone file entries</title>
-      <programlisting format="linespecific">; the server where everything will run
+      <programlisting linenumbering="numbered">; the server where everything will run
 server1            IN     A      198.51.100.19
 server1            IN     AAAA   2001:DB8:1000:2000::19
 
@@ -207,7 +207,7 @@ _xmpp-server._tcp  IN     SRV    5 0 5269 xmpp-gw.example.org.</programlisting>
 
     <example xml:id="dns-dig-example">
       <title>Inspecting DNS entries with <code>dig</code></title>
-      <programlisting format="linespecific">$ dig -t naptr +short example.org
+      <programlisting linenumbering="numbered">$ dig -t naptr +short example.org
 10 0 "s" "SIPS+D2T" "" _sips._tcp.example.org.
 
 $ dig -t srv +short _sips._tcp.example.org.

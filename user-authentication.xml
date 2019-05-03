@@ -138,7 +138,7 @@
       <example xml:id="auth-make-ha1">
         <title>Computing HA1</title>
 
-        <programlisting format="linespecific">$ echo -n "alice:example.org:secret" | md5sum
+        <programlisting linenumbering="numbered">$ echo -n "alice:example.org:secret" | md5sum
 543e1aec5d3614f03141652d6ada51b2  -
 $ echo -n "alice@example.org:example.org:secret" | md5sum
 1441a999b257bcd0cf5166930039876a  -</programlisting>
@@ -202,7 +202,7 @@ $ echo -n "alice@example.org:example.org:secret" | md5sum
         <title><emphasis>OpenLDAP</emphasis> ACL for protecting
         <code>ha1Password</code></title>
 
-        <programlisting format="linespecific">    access to attr=ha1Password
+        <programlisting linenumbering="numbered">    access to attr=ha1Password
         by self =xw
         by dn="cn=sip-proxy,dc=example,dc=org" read
         by anonymous auth
@@ -224,7 +224,7 @@ $ echo -n "alice@example.org:example.org:secret" | md5sum
 
       <example xml:id="postgresql-users-repro">
         <title>SQL table for repro users</title>
-        <programlisting format="linespecific">CREATE TABLE users (
+        <programlisting linenumbering="numbered">CREATE TABLE users (
   id SERIAL PRIMARY KEY,
   username VARCHAR(64) NOT NULL,
   domain VARCHAR(253),
@@ -254,7 +254,7 @@ $ echo -n "alice@example.org:example.org:secret" | md5sum
 
       <example xml:id="postgresql-view-repro-asterisk">
         <title>SQL view presenting Asterisk users to repro</title>
-        <programlisting format="linespecific">CREATE VIEW users AS
+        <programlisting linenumbering="numbered">CREATE VIEW users AS
   SELECT
     id,
     name AS username,
@@ -285,12 +285,12 @@ $ echo -n "alice@example.org:example.org:secret" | md5sum
 
         <example xml:id="postgresql-install-debian">
           <title>Install <emphasis>PostgreSQL</emphasis> on Debian or Ubuntu</title>
-          <programlisting format="linespecific">$ sudo apt-get install postgresql postgresql-client</programlisting>
+          <programlisting linenumbering="numbered">$ sudo apt-get install postgresql postgresql-client</programlisting>
         </example>
 
         <example xml:id="postgresql-setup-debian">
           <title>Configure PostgreSQL and load schema</title>
-          <programlisting format="linespecific">$ sudo su - postgres
+          <programlisting linenumbering="numbered">$ sudo su - postgres
 postgres$ createdb repro
 postgres$ psql
 postgres=# create user repro password 'abc';
